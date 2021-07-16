@@ -8,6 +8,7 @@
 
 using namespace std;
 
+
 class Texture {
 	public:
 		GLuint ID;
@@ -21,5 +22,6 @@ class Texture {
 		void Unbind();
 		void Delete();
 };
+
 
 #endif

@@ -230,5 +230,7 @@ namespace roml {
 	float radians(float deg) {
 		return deg * (M_PI / 180.0);
 	}
+
+
 #endif
 }

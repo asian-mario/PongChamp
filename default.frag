@@ -53,7 +53,7 @@ vec4 directLight(){
 
 
 	vec3 normal = normalize(Normal);
-	vec3 lightDirection = normalize(vec3(1.0f, 1.0f, 0.0f));
+	vec3 lightDirection = normalize(vec3(0.0f, 0.0f, 1.0f));
 	float diffuse = max(dot(normal, lightDirection), 0.0f);
 
 	float specularLight = 0.50f;
@@ -95,5 +95,5 @@ void main(){
 
 
 	//outputs final color
-   FragColor = pointLight();
+   FragColor = directLight();
 }

@@ -3,6 +3,9 @@
 Texture::Texture(const char* image, const char* texType, GLuint slot, GLenum format, GLenum pixelType) {
 	type = texType;
 
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 	int widthImg, heightImg, numColCh; //image width & height and amount of colour channels
 	//flips image to the correct side
 	stbi_set_flip_vertically_on_load(true);
@@ -41,18 +44,28 @@ Texture::Texture(const char* image, const char* texType, GLuint slot, GLenum for
 
 }
 
+
 void Texture::texUnit(Shader& shader, const char* uniform, GLuint unit) {
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 	GLuint tex0uni = glGetUniformLocation(shader.ID, uniform);
 	shader.Activate();
 	glUniform1i(tex0uni, unit);
 }
 
 void Texture::Bind() {
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 	glActiveTexture(GL_TEXTURE0 + unit);
 	glBindTexture(GL_TEXTURE_2D, ID);
 }
 
 void Texture::Unbind() {
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
 

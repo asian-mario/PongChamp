@@ -28,10 +28,9 @@
 
 using namespace std;
 
-const unsigned int width = 800;
-const unsigned int height = 800;
+const unsigned int width = 1920;
+const unsigned int height = 1080;
 
-// make the decltype slightly easier to the eye
 using seconds_t = std::chrono::seconds;
 
 // return the same type as seconds.count() below does.
@@ -51,35 +50,10 @@ decltype(seconds_t().count()) get_millis_since_epoch()
 	return seconds.count();
 }
 
-
-/* 
-In the background the previous frame shown is being overwritten with new information, these are called buffers
-front buffer = seen/read
-back buffer = written
-
-Vertex data: Vertex Shader > Shape Assembly > Geo Shader > Rasterization (Mathematical shape into pixels) > Fragment Shader (Adds colours to pixels, depends on a lot) > tests and blending
-
-index buffers tell open GL the oder to connect the vertices together, uses indices
-
-#version 330 core
-layout (location = 0) in vec3 aPos; uses layout with the location of 0 for the aPos. also says that there is a vec3 datatype
-void main()
+bool circintersects(glm::vec3 circle, glm::vec3 rect, double circleRadius)
 {
-gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0); asign gl_position with all needed positions
+	return (pow(circleRadius, 2) - pow((rect.x - circle.x), 2)) >= 0;
 }
-kind of 'outputs' gl_Position
-
-#version 330 core
-out vec4 FragColor; outputs a vec4 colour
-void main()
-{
-   FragColor = vec4(0.8f, 0.3f, 0.02f, 1.0f); what the colour is (i think its orange)
-}
-
-
-uniforms are like universal variables that can be accessed by other shaders and can be accessed from the main function
-
-*/
 
 
 
@@ -96,47 +70,36 @@ int main() {
 	//Had to remake this whole thing 
 	Vertex vertices[] =
 	{//     CO-ORDINATES                     /        COLOURS               /         TEXTURE CO-ORDS  /                NORMALS   //
-		Vertex{glm::vec3(-0.5f, 0.0f, 0.5f),  glm::vec3(0.83f, 0.70f, 0.44f),  glm::vec3(0.0f, -1.0f, 0.0f),          glm::vec2(0.0f, 0.0f)},  //Bottom Side
-		Vertex{glm::vec3(-0.5f, 0.0f, -0.5f),  glm::vec3(0.83f, 0.70f, 0.44f),   glm::vec3(0.0f, -1.0f, 0.0f),        glm::vec2(0.0f, 5.0f)},  //Bottom Side   
-		Vertex{glm::vec3(0.5f, 0.0f, -0.5f),   glm::vec3(0.83f, 0.70f, 0.44f),   glm::vec3(0.0f, -1.0f, 0.0f),        glm::vec2(5.0f, 5.0f)},  //Bottom Side 
-		Vertex{glm::vec3(0.5f, 0.0f, 0.5f),    glm::vec3(0.83f, 0.70f, 0.44f),    glm::vec3(0.0f, -1.0f, 0.0f),       glm::vec2(5.0f, 0.0f)},  //Bottom Side   
+		Vertex{glm::vec3(-0.5f, -0.5f, 0.0f),  glm::vec3(1.0f, 1.0f, 1.0f),  glm::vec3(0.0f, -1.0f, 0.0f),          glm::vec2(0.0f, 0.0f)},
+		Vertex{glm::vec3(-0.5f, 0.5f, 0.0f),  glm::vec3(1.0f, 1.0f, 1.0f),   glm::vec3(0.0f, -1.0f, 0.0f),        glm::vec2(0.0f, 5.0f)},
+		Vertex{glm::vec3(0.5f, 0.5f, 0.0f),   glm::vec3(1.0f, 1.0f, 1.0f),   glm::vec3(0.0f, -1.0f, 0.0f),        glm::vec2(5.0f, 5.0f)},
+		Vertex{glm::vec3(0.5f, -0.5f, 0.0f),    glm::vec3(1.0f, 1.0f, 1.0f),    glm::vec3(0.0f, -1.0f, 0.0f),       glm::vec2(5.0f, 0.0f)}
 
-		Vertex{glm::vec3(-0.5f, 0.0f, 0.5f),   glm::vec3(0.83f, 0.70f, 0.44f),    glm::vec3(-0.8f, 0.5f, 0.0f),       glm::vec2(0.0f, 0.0f)},     //Left Side
-		Vertex{glm::vec3(-0.5f, 0.0f, -0.5f),   glm::vec3(0.83f, 0.70f, 0.44f),    glm::vec3(-0.8f, 0.5f, 0.0f),      glm::vec2(5.0f, 0.0f)},  //Left Side
-		Vertex{glm::vec3(0.0f, 0.8f, 0.0f),     glm::vec3(0.92f, 0.86f, 0.76f),      glm::vec3(-0.8f, 0.5f, 0.0f),    glm::vec2(2.5f, 5.0f)},   //Left Side
-
-		Vertex{glm::vec3(-0.5f, 0.0f, -0.5f),   glm::vec3(0.83f, 0.70f, 0.44f),     glm::vec3(0.0f, 0.5f, -0.8f),     glm::vec2(5.0f, 0.0f)},  //Non-facing side
-		Vertex{glm::vec3(0.5f, 0.0f, -0.5f),     glm::vec3(0.83f, 0.70f, 0.44f),    glm::vec3(0.0f, 0.5f, -0.8f),     glm::vec2(0.0f, 0.0f)},  //Non-facing side  
-		Vertex{glm::vec3(0.0f, 0.8f, 0.0f),      glm::vec3(0.92f, 0.86f, 0.76f),      glm::vec3(0.0f, 0.5f, -0.8f),   glm::vec2(2.5f, 5.0f)},    //Non-facing side 
-
-		Vertex{glm::vec3(0.5f, 0.0f, -0.5f),     glm::vec3(0.83f, 0.70f, 0.44),      glm::vec3(0.8f, 0.5f, 0.0f),     glm::vec2(0.0f, 0.0f)},   //Right Side
-		Vertex{glm::vec3(0.5f, 0.0f, 0.5f),      glm::vec3(0.83f, 0.70f, 0.44),      glm::vec3(0.8f, 0.5f, 0.0f),     glm::vec2(5.0f, 0.0f)},  //Right Side   
-		Vertex{glm::vec3(0.0f, 0.8f, 0.0f),      glm::vec3(0.92f, 0.86f, 0.76),      glm::vec3(0.8f, 0.5f, 0.0f),     glm::vec2(2.5f, 5.0f)},  //Right Side  
-
-
-		Vertex{glm::vec3(0.5f, 0.0f, 0.5f),      glm::vec3(0.83f, 0.70f, 0.44f),       glm::vec3(0.0f, 0.5f, 0.8f),     glm::vec2(5.0f, 0.0f)},  //Facing Side   
-		Vertex{glm::vec3(-0.5f, 0.0f, 0.5f),     glm::vec3(0.83f, 0.70f, 0.44f),       glm::vec3(0.0f, 0.5f, 0.8f),     glm::vec2(0.0f, 0.0f)},  //Facing Side     
-		Vertex{glm::vec3(0.0f, 0.8f, 0.0f),      glm::vec3(0.92f, 0.86f, 0.76f),       glm::vec3(0.0f, 0.5f, 0.8f),     glm::vec2(2.5f, 5.0f)}  //Facing Side    
-
-		/*-1.0f, 0.0f, 1.0f,    0.0f, 0.0f, 0.0f,             0.0f, 0.0f,              0.0f, 1.0f, 0.0f,
-		-1.0f, 0.0f, -1.0f,    0.0f, 0.0f, 0.0f,             0.0f, 1.0f,              0.0f, 1.0f, 0.0f,
-		1.0f, 0.0f, -1.0f,    0.0f, 0.0f, 0.0f,             1.0f, 1.0f,              0.0f, 1.0f, 0.0f,
-		1.0f, 0.0f, 1.0f,    0.0f, 0.0f, 0.0f,             1.0f, 0.0f,              0.0f, 1.0f, 0.0f*/
 	};
 
 	//index buffer
 	GLuint indices[] = {
-		0, 1, 2, //Bottom Side
-		0, 2, 3, //Bottom Side
-		4, 6, 5, //Left Side
-		7, 9, 8, //Non-facing side
-		10, 12, 11, //Right side
-		13, 15, 14 //Facing side
-
-		/*0, 1, 2,
-		0, 2, 3*/
+		0, 2 ,1,
+		0, 3, 2 
 
 	};
+	Vertex ballvert[] =
+	{//     CO-ORDINATES                     /        COLOURS               /         TEXTURE CO-ORDS  /                NORMALS   //
+		Vertex{glm::vec3(-0.1f, -0.1f, 0.0f),  glm::vec3(1.0f, 1.0f, 1.0f),  glm::vec3(0.0f, -1.0f, 0.0f),          glm::vec2(0.0f, 0.0f)},
+		Vertex{glm::vec3(-0.1f, 0.1f, 0.0f),  glm::vec3(1.0f, 1.0f, 1.0f),   glm::vec3(0.0f, -1.0f, 0.0f),        glm::vec2(0.0f, 1.0f)},
+		Vertex{glm::vec3(0.1f, 0.1f, 0.0f),   glm::vec3(1.0f, 1.0f, 1.0f),   glm::vec3(0.0f, -1.0f, 0.0f),        glm::vec2(1.0f, 1.0f)},
+		Vertex{glm::vec3(0.1f, -0.1f, 0.0f),    glm::vec3(1.0f, 1.0f, 1.0f),    glm::vec3(0.0f, -1.0f, 0.0f),       glm::vec2(1.0f, 0.0f)}
+
+	};
+
+	//index buffer
+	GLuint ballindices[] = {
+		0, 2 ,1,
+		0, 3, 2
+
+	};
+
+
 
 	//Making a cube that will be our light source
 	Vertex lightVertices[] = {
@@ -169,7 +132,17 @@ int main() {
 
 	//------------------------------------------------------------------------------------------------
 
-	GLFWwindow* window = glfwCreateWindow(width, height, "OpenGL Testing", NULL, NULL); //Width, Height, Name, Fullscreen, ~
+	auto monitor = glfwGetPrimaryMonitor();
+	const GLFWvidmode* mode = glfwGetVideoMode(monitor);
+
+	glfwWindowHint(GLFW_RED_BITS, mode->redBits);
+	glfwWindowHint(GLFW_GREEN_BITS, mode->greenBits);
+	glfwWindowHint(GLFW_BLUE_BITS, mode->blueBits);
+	glfwWindowHint(GLFW_REFRESH_RATE, mode->refreshRate);
+	glfwWindowHint(GLFW_DECORATED, GLFW_FALSE);
+
+	GLFWwindow* window = glfwCreateWindow(mode->width, mode->height, "My Title", NULL, NULL);
+	glfwSetWindowMonitor(window, NULL, 0, 0, mode->width, mode->height, mode->refreshRate);
 	if (window == NULL) {
 		cout << "Failed to create a window" << endl; //Just checking if the window failed to create
 		glfwTerminate();
@@ -181,57 +154,96 @@ int main() {
 
 	glViewport(0, 0, width, height); //where we want the opengl to show stuff
 
+
 	Texture textures[]{
 		//----------TEXTURES-------------------------------
-		Texture("planks.png", "diffuse", 0, GL_RGBA, GL_UNSIGNED_BYTE),
-		Texture("planksSpec.png", "specular", 1, GL_RED, GL_UNSIGNED_BYTE)
+		Texture("white.png", "diffuse", 0, GL_RGBA, GL_UNSIGNED_BYTE),
+		Texture("white.png", "specular", 1, GL_RED, GL_UNSIGNED_BYTE)
 		//-------------------------------------------------
+	};
+
+	Texture circle[]{
+		Texture("circle.png", "diffuse", 0, GL_RGBA, GL_UNSIGNED_BYTE)
 	};
 
 
 	//Creates shadeprogram from default.vert and default.frag
 	Shader shaderProgram("Default.vert", "default.frag");
-	std::vector <Vertex> verts(vertices, vertices + sizeof(vertices) / sizeof(Vertex));
-	std::vector <GLuint> ind(indices, indices + sizeof(indices) / sizeof(GLuint));
-	std::vector <Texture> tex(textures, textures + sizeof(textures) / sizeof(Texture));
-	Mesh pyramid(verts, ind, tex);
+	std::vector <Vertex> sqrverts(vertices, vertices + sizeof(vertices) / sizeof(Vertex));
+	std::vector <GLuint> sqrinds(indices, indices + sizeof(indices) / sizeof(GLuint));
+	std::vector <Texture> defaultTex(textures, textures + sizeof(textures) / sizeof(Texture));
+	std::vector <Vertex> ballsverts(ballvert, ballvert + sizeof(ballvert) / sizeof(Vertex));
+	std::vector <GLuint> ballinds(ballindices, ballindices + sizeof(ballindices) / sizeof(GLuint));
+	std::vector <Texture> ballTex(circle, circle + sizeof(circle) / sizeof(Texture));
+	Mesh pad1(sqrverts, sqrinds, defaultTex);
+	Mesh pad2(sqrverts, sqrinds, defaultTex);
+	Mesh barrierUp(sqrverts, sqrinds, defaultTex);
+	Mesh barrierDown(sqrverts, sqrinds, defaultTex);
+	Mesh ball(ballsverts, ballinds, ballTex);
 
 	Shader lightShader("light.vert", "light.frag");
 	//GLuint uniID = glGetUniformLocation(shaderProgram.ID, "scale"); //get uniform reference value (stored in uniID)
 	GLuint timeID = glGetUniformLocation(shaderProgram.ID, "time");
 
-
-	auto startTime = get_millis_since_epoch();
-
 	//-----------------------------Lights------------------------------------------------------------------
 	std::vector <Vertex> lightVerts(lightVertices, lightVertices + sizeof(lightVertices) / sizeof(Vertex));
 	std::vector <GLuint> lightInd(lightIndices, lightIndices + sizeof(lightIndices) / sizeof(GLuint));
-	Mesh light(lightVerts, lightInd, tex); //The tex is just a placeholder
+	Mesh light(lightVerts, lightInd, defaultTex); //The tex is just a placeholder
 	//-----------------------------Lights------------------------------------------------------------------
 
 	glm::vec4 lightColor = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
-	glm::vec3 lightPos = glm::vec3(0.5f, 0.5f, 0.5f);
+	glm::vec3 lightPos = glm::vec3(0.0f, 0.5f, 0.5f);
 	glm::mat4 lightModel = glm::mat4(1.0f);
 
+	//--------------------------------------------MESH-----------------------------------------------------
 
-	//--------------Pyramid---------------------------------
-	//Angle input
-	float angle = 0;
-	glm::vec3 scalepyr = glm::vec3(1.0f, 1.0f, 1.0f);
-	glm::vec3 rotpyr = glm::vec3(1.0f, 1.0f, 1.0f);
+	//--------------Paddle1---------------------------------
+	glm::vec3 scalepad = glm::vec3(0.015f, 0.2f, 1.0f);
+	glm::vec3 rotpad = glm::vec3(0.0f, 0.0f, 0.0f);
 
-	glm::vec3 pyramidPos = glm::vec3(0.0f, 0.0f, 0.0f); //X, Y, Z
-	glm::mat4 pyramidModel = glm::mat4(1.0f);
+	glm::vec3 padPos = glm::vec3(-0.75f, 0.0f, 0.0f); //X, Y, Z
+	glm::mat4 padModel = glm::mat4(1.0f);
 
-	//--------------Pyramid---------------------------------
+	//--------------Paddle1---------------------------------
 
+	//--------------Paddle2---------------------------------
+	glm::vec3 scalepad2 = glm::vec3(0.015f, 0.2f, 1.0f);
+	glm::vec3 rotpad2 = glm::vec3(0.0f, 0.0f, 0.0f);
 
-	glClearColor(0.07f, 0.13f, 0.17f, 1.0f); //clears the colour of current background and replaces it. also this is navy blue
+	glm::vec3 padPos2 = glm::vec3(0.75f, 0.0f, 0.0f); //X, Y, Z
+	glm::mat4 padModel2 = glm::mat4(1.0f);
+	//--------------Paddle2---------------------------------
+
+	//--------------BarrierUp-------------------------------
+	glm::vec3 scaleBU = glm::vec3(1.7f, 0.05f, 1.0f);
+
+	glm::vec3 posBU = glm::vec3(0.0f, 0.85f, 0.0f); //X, Y, Z
+	glm::mat4 modelBU = glm::mat4(1.0f);
+	//--------------BarrierUp-------------------------------
+
+	//--------------BarrierDown-------------------------------
+	glm::vec3 scaleBD = glm::vec3(1.7f, 0.05f, 1.0f);
+
+	glm::vec3 posBD = glm::vec3(0.0f, -0.85f, 0.0f); //X, Y, Z
+	glm::mat4 modelBD = glm::mat4(1.0f);
+	//--------------BarrierDown-------------------------------
+
+	//--------------BALL--------------------------------------
+	glm::vec3 scaleC = glm::vec3(0.096f, 0.191f, 1.0f);
+
+	glm::vec3 posC = glm::vec3(-0.02f, 0.0f, 0.0f); //X, Y, Z
+	glm::mat4 modelC = glm::mat4(1.0f);
+
+	glm::vec3 ballSpeedVec = glm::vec3(0.0f);
+	ballSpeedVec.x = -0.005f;
+	//--------------BALL--------------------------------------
+
+	//--------------------------------------------MESH-----------------------------------------------------
+
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f); 
 	glClear(GL_COLOR_BUFFER_BIT); //le execute with the color buffer
 	glfwSwapBuffers(window);
 
-	float rotation = 0.0f;
-	double prevTime = get_millis_since_epoch();
 	glEnable(GL_DEPTH_TEST); //fixes depth issues
 
 	//GUI
@@ -241,52 +253,93 @@ int main() {
 	ImGui::StyleColorsDark();
 
 
-
+	
 	Camera camera(width, height, glm::vec3(0.0f, 0.0f, 2.0f));
+
 	while (!glfwWindowShouldClose(window)) {
 
-		glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
+		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-
-		//-------Stinky 3D (Note: I am using GLM's types. Not functions)-----------
-		double crntTime = get_millis_since_epoch();
-		if (crntTime - prevTime >= 1 / 60) { //change rotation half a degree every 1/60 of a millisecond
-			rotation += 0.1f;
-			prevTime = crntTime;
-		}
-		glm::mat4 model = glm::mat4(1.0f);
-		glm::mat4 view = glm::mat4(1.0f);
-		glm::mat4 proj = glm::mat4(1.0f);
-
-		//Tells opengl what shader program we're gonna use
-		shaderProgram.Activate();
 
 		//---------------------------------------------------------------------------------------------------------------------------------
 		lightModel = roml::translate(lightModel, lightPos);
 
-		//-----------------------Pyramid Control-----------------------------
-		/*pyramidModel = roml::rotate(pyramidModel, roml::radians(angle), 'Y');*/
-		glm::mat4 Loc = roml::translate(glm::mat4(1.0f), pyramidPos);
-		glm::mat4 Soc = roml::scale(glm::mat4(1.0f), scalepyr);
+		//-----------------------Paddle1 Control-----------------------------
+		glm::mat4 Loc = roml::translate(glm::mat4(1.0f), padPos);
+		glm::mat4 Soc = roml::scale(glm::mat4(1.0f), scalepad);
 
-		glm::mat4 rotX = roml::rotate(glm::mat4(1.0f), roml::radians(rotpyr.x), 'X');
-		glm::mat4 rotY = roml::rotate(glm::mat4(1.0f), roml::radians(rotpyr.y), 'Y');
-		glm::mat4 rotZ = roml::rotate(glm::mat4(1.0f), roml::radians(rotpyr.z), 'Z');
+		glm::mat4 rotX = roml::rotate(glm::mat4(1.0f), roml::radians(rotpad.x), 'X');
+		glm::mat4 rotY = roml::rotate(glm::mat4(1.0f), roml::radians(rotpad.y), 'Y');
+		glm::mat4 rotZ = roml::rotate(glm::mat4(1.0f), roml::radians(rotpad.z), 'Z');
 		glm::mat4 Rot = rotZ * rotY * rotX;
-		pyramidModel = Loc * Rot * Soc;
-		//-----------------------Pyramid Control-----------------------------
+		padModel = Loc * Rot * Soc;
+		//-----------------------Paddle1 Control-----------------------------
 
-		//Exporting data
+		//-----------------------Paddle2 Control----------------------------
+		glm::mat4 Loc2 = roml::translate(glm::mat4(1.0f), padPos2);
+		glm::mat4 Soc2 = roml::scale(glm::mat4(1.0f), scalepad2);
+
+		glm::mat4 rotX2 = roml::rotate(glm::mat4(1.0f), roml::radians(rotpad2.x), 'X');
+		glm::mat4 rotY2 = roml::rotate(glm::mat4(1.0f), roml::radians(rotpad2.y), 'Y');
+		glm::mat4 rotZ2 = roml::rotate(glm::mat4(1.0f), roml::radians(rotpad2.z), 'Z');
+		glm::mat4 Rot2 = rotZ2 * rotY2 * rotX2;
+		padModel2 = Loc2 * Rot2 * Soc2;
+		//-----------------------Paddle2 Control----------------------------
+
+		//-----------------------BarrierUp Control--------------------------
+		glm::mat4 LocB = roml::translate(glm::mat4(1.0f), posBU);
+		glm::mat4 SocB = roml::scale(glm::mat4(1.0f), scaleBU);
+
+		modelBU = LocB * SocB;
+		//-----------------------BarrierUp Control--------------------------
+
+		//-----------------------BarrierDown Control--------------------------
+		glm::mat4 LocB2 = roml::translate(glm::mat4(1.0f), posBD);
+		glm::mat4 SocB2 = roml::scale(glm::mat4(1.0f), scaleBD);
+
+		modelBD = LocB2 * SocB2;
+		//-----------------------BarrierUp Control--------------------------
+
+
+		//-----------------------Ball--------------------------
+		glm::mat4 LocBall = roml::translate(glm::mat4(1.0f), posC);
+		glm::mat4 SocBall = roml::scale(glm::mat4(1.0f), scaleC);
+
+		modelC = LocBall * SocBall;
+		//-----------------------Ball--------------------------
+
+		//Exporting data & Render
 		lightShader.Activate();
 		glUniformMatrix4fv(glGetUniformLocation(lightShader.ID, "model"), 1, GL_FALSE, glm::value_ptr(lightModel));
 		glUniform4f(glGetUniformLocation(lightShader.ID, "lightColor"), lightColor.x, lightColor.y, lightColor.z, lightColor.w);
+
 		shaderProgram.Activate();
-		glUniformMatrix4fv(glGetUniformLocation(shaderProgram.ID, "model"), 1, GL_FALSE, glm::value_ptr(pyramidModel));
+		glUniformMatrix4fv(glGetUniformLocation(shaderProgram.ID, "model"), 1, GL_FALSE, glm::value_ptr(padModel));
 		glUniform4f(glGetUniformLocation(shaderProgram.ID, "lightColor"), lightColor.x, lightColor.y, lightColor.z, lightColor.w);
 		glUniform3f(glGetUniformLocation(shaderProgram.ID, "lightPos"), lightPos.x, lightPos.y, lightPos.z);
+		pad1.Draw(shaderProgram, camera);
+
+		glUniformMatrix4fv(glGetUniformLocation(shaderProgram.ID, "model"), 1, GL_FALSE, glm::value_ptr(padModel2));
+		glUniform4f(glGetUniformLocation(shaderProgram.ID, "lightColor"), lightColor.x, lightColor.y, lightColor.z, lightColor.w);
+		glUniform3f(glGetUniformLocation(shaderProgram.ID, "lightPos"), lightPos.x, lightPos.y, lightPos.z);
+		pad2.Draw(shaderProgram, camera);
+
+		glUniformMatrix4fv(glGetUniformLocation(shaderProgram.ID, "model"), 1, GL_FALSE, glm::value_ptr(modelBU));
+		glUniform4f(glGetUniformLocation(shaderProgram.ID, "lightColor"), lightColor.x, lightColor.y, lightColor.z, lightColor.w);
+		glUniform3f(glGetUniformLocation(shaderProgram.ID, "lightPos"), lightPos.x, lightPos.y, lightPos.z);
+		barrierUp.Draw(shaderProgram, camera);
+
+		glUniformMatrix4fv(glGetUniformLocation(shaderProgram.ID, "model"), 1, GL_FALSE, glm::value_ptr(modelBD));
+		glUniform4f(glGetUniformLocation(shaderProgram.ID, "lightColor"), lightColor.x, lightColor.y, lightColor.z, lightColor.w);
+		glUniform3f(glGetUniformLocation(shaderProgram.ID, "lightPos"), lightPos.x, lightPos.y, lightPos.z);
+		barrierDown.Draw(shaderProgram, camera);
+
+		glUniformMatrix4fv(glGetUniformLocation(shaderProgram.ID, "model"), 1, GL_FALSE, glm::value_ptr(modelC));
+		glUniform4f(glGetUniformLocation(shaderProgram.ID, "lightColor"), lightColor.x, lightColor.y, lightColor.z, lightColor.w);
+		glUniform3f(glGetUniformLocation(shaderProgram.ID, "lightPos"), lightPos.x, lightPos.y, lightPos.z);
+		ball.Draw(shaderProgram, camera);
+
 		//---------------------------------------------------------------------------------------------------------------------------------
-		camera.Inputs(window); //Yay inputs!
 		//Updates and exports camera matrix to the vert shader
 		camera.updateMatrix(45.0f, 0.1f, 100.0f);
 
@@ -294,77 +347,73 @@ int main() {
 		ImGui_ImplGlfwGL3_NewFrame();
 
 		//---------------DRAW------------------
-		pyramid.Draw(shaderProgram, camera);
 		light.Draw(lightShader, camera);
 		//---------------DRAW------------------
 
-		{
-			ImGui::Begin("Debug Light");
+		//-------------------------------------COLLISION-----------------------------------------
 
-			bool resetPos = false;
-			ImGui::Text("Light Controls");
-			ImGui::Dummy(ImVec2(0.0f, 5.0f));
-			ImGui::SliderFloat("Translation X", &lightPos.x, -10.0f, 10.0f);
-			ImGui::SliderFloat("Translation Y", &lightPos.y, -10.0f, 10.0f);
-			ImGui::SliderFloat("Translation Z", &lightPos.z, -10.0f, 10.0f);
-			if (ImGui::Button("Reset Position"))
-				resetPos = true;
+		glm::vec3 padWorldPos = padModel * glm::vec4(padPos, 1.0f);
+		glm::vec3 ballWorldPos = modelC * glm::vec4(posC, 1.0f);
+		//float rad = 0.0702019f;
+		float rad = 0.0004f;
+		bool intersect = circintersects(ballWorldPos, padWorldPos, rad);
 
-			if (resetPos == true) {
-				lightPos = glm::vec3(0.5f, 0.5f, 0.5f);
-			}
-			ImGui::Dummy(ImVec2(0.0f, 5.0f));
-			ImGui::ColorEdit4("Color", (float*)&lightColor); // Edit 4 floats representing a color
+		
 
-			ImGui::Dummy(ImVec2(0.0f, 5.0f));
-			ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-
-			ImGui::End();
+		if (intersect) {
+			ballSpeedVec.x = -ballSpeedVec.x;
 		}
+		
+		
+		//-------------------------------------COLLISION-----------------------------------------
+		
+		posC += ballSpeedVec;
 
+
+	//---------------------------DEBUG----------------------------------
 		{
-			ImGui::Begin("Debug Mesh");
+			ImGui::Begin("Debug Paddle 1");
 
 			bool resetScale = false;
 			bool resetPos = false;
 			bool resetRot = false;
 			ImGui::Text("Mesh Controls");
 			ImGui::Dummy(ImVec2(0.0f, 5.0f));
-			ImGui::SliderFloat("Scale X", &scalepyr.x, 0.0f, 10.0f);
-			ImGui::SliderFloat("Scale Y", &scalepyr.y, 0.0f, 10.0f);
-			ImGui::SliderFloat("Scale Z", &scalepyr.z, 0.0f, 10.0f);
+			ImGui::SliderFloat("Scale X", &scalepad.x, 0.0f, 10.0f);
+			ImGui::SliderFloat("Scale Y", &scalepad.y, 0.0f, 10.0f);
+			ImGui::SliderFloat("Scale Z", &scalepad.z, 0.0f, 10.0f);
 
 			if (ImGui::Button("Reset Scale"))
 				resetScale = true;
 
 			if (resetScale == true) {
-				scalepyr.x = 1.0f;
-				scalepyr.y = 1.0f;
-				scalepyr.z = 1.0f;
+				scalepad.x = 0.015f;
+				scalepad.y = 0.2f;
+				scalepad.z = 1.0f;
 			}
 
 			ImGui::Dummy(ImVec2(0.0f, 5.0f));
 
-			ImGui::SliderFloat("Translation X", &pyramidPos.x, -10.0f, 10.0f);
-			ImGui::SliderFloat("Translation Y", &pyramidPos.y, -10.0f, 10.0f);
-			ImGui::SliderFloat("Translation Z", &pyramidPos.z, -10.0f, 10.0f);
+			ImGui::SliderFloat("Translation X", &padPos.x, -10.0f, 10.0f);
+			ImGui::SliderFloat("Translation Y", &padPos.y, -10.0f, 10.0f);
+			ImGui::SliderFloat("Translation Z", &padPos.z, -10.0f, 10.0f);
 			if (ImGui::Button("Reset Position"))
 				resetPos = true;
 
 			if (resetPos == true) {
-				pyramidPos = glm::vec3(0.0f, 0.0f, 0.0f);
+				padPos = glm::vec3(-0.75f, 0.0f, 0.0f);
 			}
 
 			ImGui::Dummy(ImVec2(0.0f, 5.0f));
 
-			ImGui::SliderFloat("Rotation X", &rotpyr.x, -90.0f, 90.0f);
-			ImGui::SliderFloat("Rotation Y", &rotpyr.y, -90.0f, 90.0f);
-			ImGui::SliderFloat("Rotation Z", &rotpyr.z, -90.0f, 90.0f);
+			ImGui::SliderFloat("Rotation X", &rotpad.x, -90.0f, 90.0f);
+			ImGui::SliderFloat("Rotation Y", &rotpad.y, -90.0f, 90.0f);
+			ImGui::SliderFloat("Rotation Z", &rotpad.z, -90.0f, 90.0f);
 			if (ImGui::Button("Reset Rotation"))
 				resetRot = true;
 
 			if (resetRot == true) {
-				rotpyr = glm::vec3(1.0f, 1.0f, 1.0f);
+				rotpad = glm::vec3(0.0f, 0.0f, 0.0f);
 			}
 
 
@@ -373,6 +422,159 @@ int main() {
 
 			ImGui::End();
 		}
+
+		{
+			ImGui::Begin("Debug Paddle 2");
+
+			bool resetScale = false;
+			bool resetPos = false;
+			bool resetRot = false;
+			ImGui::Text("Mesh Controls");
+			ImGui::Dummy(ImVec2(0.0f, 5.0f));
+			ImGui::SliderFloat("Scale X", &scalepad2.x, 0.0f, 10.0f);
+			ImGui::SliderFloat("Scale Y", &scalepad2.y, 0.0f, 10.0f);
+			ImGui::SliderFloat("Scale Z", &scalepad2.z, 0.0f, 10.0f);
+
+			if (ImGui::Button("Reset Scale"))
+				resetScale = true;
+
+			if (resetScale == true) {
+				scalepad2.x = 0.015f;
+				scalepad2.y = 0.2f;
+				scalepad2.z = 1.0f;
+			}
+
+			ImGui::Dummy(ImVec2(0.0f, 5.0f));
+
+			ImGui::SliderFloat("Translation X", &padPos2.x, -10.0f, 10.0f);
+			ImGui::SliderFloat("Translation Y", &padPos2.y, -10.0f, 10.0f);
+			ImGui::SliderFloat("Translation Z", &padPos2.z, -10.0f, 10.0f);
+			if (ImGui::Button("Reset Position"))
+				resetPos = true;
+
+			if (resetPos == true) {
+				padPos = glm::vec3(0.75f, 0.0f, 0.0f);
+			}
+
+			ImGui::Dummy(ImVec2(0.0f, 5.0f));
+
+			ImGui::SliderFloat("Rotation X", &rotpad2.x, -90.0f, 90.0f);
+			ImGui::SliderFloat("Rotation Y", &rotpad2.y, -90.0f, 90.0f);
+			ImGui::SliderFloat("Rotation Z", &rotpad2.z, -90.0f, 90.0f);
+			if (ImGui::Button("Reset Rotation"))
+				resetRot = true;
+
+			if (resetRot == true) {
+				rotpad2 = glm::vec3(0.0f, 0.0f, 0.0f);
+			}
+
+
+			ImGui::Dummy(ImVec2(0.0f, 5.0f));
+			ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+
+			ImGui::End();
+		}
+
+		{
+			ImGui::Begin("Debug Barrier Up");
+
+			bool resetScale = false;
+			bool resetPos = false;
+			ImGui::Text("Barrier");
+			ImGui::Dummy(ImVec2(0.0f, 5.0f));
+			ImGui::SliderFloat("Scale X", &scaleBU.x, 0.0f, 10.0f);
+			ImGui::SliderFloat("Scale Y", &scaleBU.y, 0.0f, 10.0f);
+			ImGui::SliderFloat("Scale Z", &scaleBU.z, 0.0f, 10.0f);
+
+			if (ImGui::Button("Reset Scale"))
+				resetScale = true;
+
+			if (resetScale == true) {
+				scaleBU = glm::vec3(1.7f, 0.05f, 1.0f);
+			}
+
+			ImGui::Dummy(ImVec2(0.0f, 5.0f));
+
+			ImGui::SliderFloat("Translation X", &posBU.x, -10.0f, 10.0f);
+			ImGui::SliderFloat("Translation Y", &posBU.y, -10.0f, 10.0f);
+			ImGui::SliderFloat("Translation Z", &posBU.z, -10.0f, 10.0f);
+			if (ImGui::Button("Reset Position"))
+				resetPos = true;
+
+			if (resetPos == true) {
+				posBU = glm::vec3(0.0f, 0.0f, 0.0f);
+			}
+
+			ImGui::Dummy(ImVec2(0.0f, 5.0f));
+
+			ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+
+			ImGui::End();
+		}
+		{
+			ImGui::Begin("Debug Ball");
+
+			bool resetScale = false;
+			bool resetPos = false;
+			bool intersect = circintersects(ballWorldPos, padWorldPos, rad);
+			ImGui::Text("Ball");
+			ImGui::Dummy(ImVec2(0.0f, 5.0f));
+			ImGui::SliderFloat("Scale X", &scaleC.x, 0.0f, 10.0f);
+			ImGui::SliderFloat("Scale Y", &scaleC.y, 0.0f, 10.0f);
+			ImGui::SliderFloat("Scale Z", &scaleC.z, 0.0f, 10.0f);
+
+			if (ImGui::Button("Reset Scale"))
+				resetScale = true;
+
+			if (resetScale == true) {
+				scaleC = glm::vec3(0.096f, 0.191f, 1.0f);
+			}
+
+			ImGui::Dummy(ImVec2(0.0f, 5.0f));
+
+			ImGui::SliderFloat("Translation X", &posC.x, -10.0f, 10.0f);
+			ImGui::SliderFloat("Translation Y", &posC.y, -10.0f, 10.0f);
+			ImGui::SliderFloat("Translation Z", &posC.z, -10.0f, 10.0f);
+			if (ImGui::Button("Reset Position"))
+				resetPos = true;
+
+			if (resetPos == true) {
+				posC = glm::vec3(0.0f, 0.0f, 0.0f);
+			}
+
+			ImGui::Dummy(ImVec2(0.0f, 5.0f));
+			if (intersect == true) {
+				ImGui::Text("Intersect: TRUE");
+			}
+			else if (intersect == false) {
+				ImGui::Text("Intersect: FALSE");
+			}
+
+			ImGui::Dummy(ImVec2(0.0f, 5.0f));
+
+			ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+			ImGui::End();
+		}
+		//-------------------------------------DEBUG----------------------------------------------
+		
+
+		//-----------------------------------PAD 1 CONTROLS--------------------------------------
+		if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
+			padPos.y += 0.01f;
+		}
+		if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
+			padPos.y -= 0.01f;
+		}
+		//-----------------------------------PAD 1 CONTROLS--------------------------------------
+
+		//-----------------------------------PAD 2 CONTROLS--------------------------------------
+		if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) {
+			padPos2.y += 0.01f;
+		}
+		if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) {
+			padPos2.y -= 0.01f;
+		}
+		//-----------------------------------PAD 2 CONTROLS--------------------------------------
 
 		ImGui::Render();
 		ImGui_ImplGlfwGL3_RenderDrawData(ImGui::GetDrawData());

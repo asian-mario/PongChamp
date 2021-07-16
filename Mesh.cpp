@@ -31,6 +31,8 @@ void Mesh::Draw(Shader& shader, Camera& camera) {
 	shader.Activate();
 	VAO.Bind();
 
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	//Counting how many textures we have
 	unsigned int numDiffuse = 0;
 	unsigned int numSpecular = 0;
