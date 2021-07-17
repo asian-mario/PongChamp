@@ -19,40 +19,76 @@
     <Filter Include="Resource Files\Textures">
       <UniqueIdentifier>{205ba264-ea1e-4924-8a96-a103602d1e9c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\openpong">
+      <UniqueIdentifier>{19229a47-1eec-4130-a618-0741ca0b9937}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\gl">
+      <UniqueIdentifier>{68051bae-6fc1-4d3c-b359-4c59bb0fd2b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\IMGUI">
+      <UniqueIdentifier>{440b4355-bfaa-4fca-a275-16efde02e0b5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Mesh.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="roml.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="shaderClass.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="stb.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="texture.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="VAO.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="VBO.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Camera.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="EBO.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Barrier.cpp">
+      <Filter>Source Files\openpong</Filter>
+    </ClCompile>
+    <ClCompile Include="Ball.cpp">
+      <Filter>Source Files\openpong</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Source Files\openpong</Filter>
+    </ClCompile>
+    <ClCompile Include="EBO.cpp">
+      <Filter>Source Files\openpong</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI.cpp">
+      <Filter>Source Files\openpong</Filter>
+    </ClCompile>
+    <ClCompile Include="light.cpp">
+      <Filter>Source Files\openpong</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh.cpp">
+      <Filter>Source Files\openpong</Filter>
+    </ClCompile>
+    <ClCompile Include="Paddle.cpp">
+      <Filter>Source Files\openpong</Filter>
+    </ClCompile>
+    <ClCompile Include="roml.cpp">
+      <Filter>Source Files\openpong</Filter>
+    </ClCompile>
+    <ClCompile Include="shaderClass.cpp">
+      <Filter>Source Files\openpong</Filter>
+    </ClCompile>
+    <ClCompile Include="texture.cpp">
+      <Filter>Source Files\openpong</Filter>
+    </ClCompile>
+    <ClCompile Include="VAO.cpp">
+      <Filter>Source Files\openpong</Filter>
+    </ClCompile>
+    <ClCompile Include="VBO.cpp">
+      <Filter>Source Files\openpong</Filter>
+    </ClCompile>
+    <ClCompile Include="stb.cpp">
+      <Filter>Source Files\gl</Filter>
+    </ClCompile>
     <ClCompile Include="glad.c">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\gl</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\include\imgui\imgui_impl_glfw_gl3.cpp">
+      <Filter>Source Files\IMGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\include\imgui\imgui.cpp">
+      <Filter>Source Files\IMGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\include\imgui\imgui_demo.cpp">
+      <Filter>Source Files\IMGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\include\imgui\imgui_draw.cpp">
+      <Filter>Source Files\IMGUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -78,6 +114,21 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Paddle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="light.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Ball.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Barrier.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

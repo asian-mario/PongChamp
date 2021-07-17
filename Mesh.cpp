@@ -58,3 +58,4 @@ void Mesh::Draw(Shader& shader, Camera& camera) {
 	//Draws the mesh
 	glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
 }
+

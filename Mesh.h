@@ -26,4 +26,5 @@ class Mesh {
 		//Draws mesh
 		void Draw(Shader& shader, Camera& camera);
 };
+
 #endif 
