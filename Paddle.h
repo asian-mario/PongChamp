@@ -16,11 +16,12 @@ class Paddle {
 		glm::vec3 scaleVec;
 		glm::vec3 posVec;
 		glm::vec3 rotVec;
+		double velocity;
 
 		enum CONTROLTYPE { WASD, ARROW };
 		CONTROLTYPE type;
 
-		Paddle(glm::vec3 posVec, glm::vec3 rotVec, glm::vec3 scaleVec, CONTROLTYPE type);
+		Paddle(glm::vec3 posVec, glm::vec3 rotVec, glm::vec3 scaleVec, CONTROLTYPE type, double velocity);
 
 		glm::mat4 getModelMatrix();
 		void Update(GLFWwindow* window);

@@ -12,10 +12,12 @@
 #include"Barrier.h"
 
 
-static class GUI {
+class GUI {
 public:
-	static void createDebugMenu(Paddle pad);
-	static void createDebugMenu(Ball ball);
-	static void createDebugMenu(Barrier bar);
+	static void createDebugMenu(Paddle pad, string name = "Debug Paddle");
+	static void createDebugMenu(Ball ball, string name = "Debug Ball");
+	static void createDebugMenu(Barrier bar, string name = "Debug Barrier");
+
+	GUI() = delete;
 };
 #endif 

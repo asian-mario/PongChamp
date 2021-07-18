@@ -53,7 +53,13 @@ decltype(seconds_t().count()) get_millis_since_epoch()
 
 bool circintersects(glm::vec3 circle, glm::vec3 rect, double circleRadius)
 {
-	return (pow(circleRadius, 2) - pow((rect.x - circle.x), 2)) >= 0 && (circle.y >= rect.y - 0.2) && (circle.y <= rect.y + 0.2);
+	double circleDistanceX = abs(circle.x - rect.x);
+	double circleDistanceY = abs(circle.y - rect.y);
+
+
+	double cornerDistance = pow((circleDistanceX - 0.0075 / 2), 2.0f) +
+		pow((circleDistanceY - 0.2 / 2), 2.0f);
+	return (pow(circleRadius, 2) - pow((rect.x - circle.x), 2)) >= 0 && (circle.y >= rect.y - 0.2) && (circle.y <= rect.y + 0.2) || cornerDistance <= pow(circleRadius, 2);
 }
 
 
@@ -195,11 +201,11 @@ int main() {
 	//--------------------------------------------MESH-----------------------------------------------------
 
 	//--------------Paddle1---------------------------------
-	Paddle paddle1(glm::vec3(-0.75f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.015f, 0.2f, 1.0f), Paddle::CONTROLTYPE::WASD);
+	Paddle paddle1(glm::vec3(-0.75f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.015f, 0.2f, 1.0f), Paddle::CONTROLTYPE::WASD, 0.0);
 	//--------------Paddle1---------------------------------
 
 	//--------------Paddle2---------------------------------
-	Paddle paddle2(glm::vec3(0.75f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.015f, 0.2f, 1.0f), Paddle::CONTROLTYPE::ARROW);
+	Paddle paddle2(glm::vec3(0.75f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.015f, 0.2f, 1.0f), Paddle::CONTROLTYPE::ARROW, 0.0);
 	//--------------Paddle2---------------------------------
 
 	//--------------BarrierUp-------------------------------
@@ -289,6 +295,14 @@ int main() {
 		light.Draw(lightShader, camera);
 		//---------------DRAW------------------
 
+		//-----------------------------------PAD 1 CONTROLS--------------------------------------
+		paddle1.Update(window);
+		//-----------------------------------PAD 1 CONTROLS--------------------------------------
+
+		//-----------------------------------PAD 2 CONTROLS--------------------------------------
+		paddle2.Update(window);
+		//-----------------------------------PAD 2 CONTROLS--------------------------------------
+
 		//-------------------------------------COLLISION-----------------------------------------
 
 		glm::vec3 padWorldPos = pad1Model * glm::vec4(paddle1.posVec, 1.0f);
@@ -302,20 +316,24 @@ int main() {
 
 		if (intersect) {
 			ball1.speedVec.x = -ball1.speedVec.x;
-			ball1.speedVec.y -= rand() / 10000000.0f;
+			ball1.speedVec.y -= rand() / 10000000.0f + paddle1.velocity;
 			
 		}
 		
 		if (intersect2) {
 			ball1.speedVec.x = -ball1.speedVec.x;
-			ball1.speedVec.y -= rand() / 10000000.0f;
+			ball1.speedVec.y -= rand() / 10000000.0f + paddle2.velocity;
 		}
 		if (ball1.posVec.y <= -0.8) {
 			ball1.speedVec.y = -ball1.speedVec.y;
+			paddle1.velocity = 0.0;
+			paddle2.velocity = 0.0;
 		}
 
 		if (ball1.posVec.y >= 0.8) {
 			ball1.speedVec.y = -ball1.speedVec.y;
+			paddle1.velocity = 0.0;
+			paddle2.velocity = 0.0;
 		}
 
 
@@ -327,17 +345,14 @@ int main() {
 
 	//---------------------------DEBUG----------------------------------
 		GUI::createDebugMenu(paddle1);
-		GUI::createDebugMenu(paddle2);
+		GUI::createDebugMenu(paddle2, "Debug Paddle 2");
+		GUI::createDebugMenu(ball1);
+		GUI::createDebugMenu(BarrierBU);
+		GUI::createDebugMenu(BarrierBD, "Debug Barrier Bottom");
 	//-------------------------------------DEBUG----------------------------------------------
 		
 
-		//-----------------------------------PAD 1 CONTROLS--------------------------------------
-		paddle1.Update(window);
-		//-----------------------------------PAD 1 CONTROLS--------------------------------------
 
-		//-----------------------------------PAD 2 CONTROLS--------------------------------------
-		paddle2.Update(window);
-		//-----------------------------------PAD 2 CONTROLS--------------------------------------
 
 		ImGui::Render();
 		ImGui_ImplGlfwGL3_RenderDrawData(ImGui::GetDrawData());

@@ -6,13 +6,14 @@
 #include<imgui/imgui_impl_glfw_gl3.h>
 #include<imgui/imgui_internal.h>
 
-static void createDebugMenu(Paddle pad) {
+void GUI::createDebugMenu(Paddle pad, string name) {
 	{
-		ImGui::Begin("Debug Paddle");
+		ImGui::Begin(name.c_str());
 
 		bool resetScale = false;
 		bool resetPos = false;
 		bool resetRot = false;
+
 		ImGui::Text("Mesh Controls");
 		ImGui::Dummy(ImVec2(0.0f, 5.0f));
 		ImGui::SliderFloat("Scale X", &pad.scaleVec.x, 0.0f, 10.0f);
@@ -60,9 +61,9 @@ static void createDebugMenu(Paddle pad) {
 	}
 }
 
-static void createDebugMenu(Ball ball) {
+void GUI::createDebugMenu(Ball ball, string name) {
 	{
-		ImGui::Begin("Debug Ball");
+		ImGui::Begin(name.c_str());
 
 		bool resetScale = false;
 		bool resetPos = false;
@@ -95,9 +96,9 @@ static void createDebugMenu(Ball ball) {
 	}
 }
 
-static void createDebugMenu(Barrier bar) {
+void GUI::createDebugMenu(Barrier bar, string name) {
 	{
-	ImGui::Begin("Debug Barrier");
+	ImGui::Begin(name.c_str());
 
 	bool resetScale = false;
 	bool resetPos = false;

@@ -1,10 +1,11 @@
 #include "Paddle.h"
 
-Paddle::Paddle(glm::vec3 posVec, glm::vec3 rotVec, glm::vec3 scaleVec, CONTROLTYPE type) {
+Paddle::Paddle(glm::vec3 posVec, glm::vec3 rotVec, glm::vec3 scaleVec, CONTROLTYPE type, double velocity) {
 	this->posVec = glm::vec3(posVec);
 	this->rotVec = glm::vec3(rotVec);
 	this->scaleVec = glm::vec3(scaleVec);
 	this->type = type;
+	this->velocity = velocity;
 } 
 
 glm::mat4 Paddle::getModelMatrix() {
@@ -30,7 +31,12 @@ void Paddle::Update(GLFWwindow* window) {
 			}
 			if (posVec.y < 0.73f) {
 				posVec.y += 0.01f;
+				velocity += 0.0001;
 			}
+		}
+		else if (glfwGetKey(window, GLFW_KEY_W) == GLFW_RELEASE) {
+			velocity = 0.0;
+
 		}
 		if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
 			if (posVec.y <= -0.73f) {
@@ -38,7 +44,11 @@ void Paddle::Update(GLFWwindow* window) {
 			}
 			if (posVec.y > -0.73f) {
 				posVec.y -= 0.01f;
+				velocity -= 0.0001;
 			}
+		}
+		else if (glfwGetKey(window, GLFW_KEY_W) == GLFW_RELEASE) {
+			velocity = 0.0;
 		}
 	}
 
@@ -49,7 +59,11 @@ void Paddle::Update(GLFWwindow* window) {
 			}
 			if (posVec.y < 0.73f) {
 				posVec.y += 0.01f;
+				velocity += 0.0001;
 			}
+		}
+		else if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_RELEASE) {
+			velocity = 0.0;
 		}
 		if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) {
 			if (posVec.y <= -0.73f) {
@@ -57,7 +71,11 @@ void Paddle::Update(GLFWwindow* window) {
 			}
 			if (posVec.y > -0.73f) {
 				posVec.y -= 0.01f;
+				velocity -= 0.0001;
 			}
+		}
+		else if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_RELEASE) {
+			velocity = 0.0;
 		}
 	}
 }
