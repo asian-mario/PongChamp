@@ -16,41 +16,41 @@ void GUI::createDebugMenu(Paddle pad, string name) {
 
 		ImGui::Text("Mesh Controls");
 		ImGui::Dummy(ImVec2(0.0f, 5.0f));
-		ImGui::SliderFloat("Scale X", &pad.scaleVec.x, 0.0f, 10.0f);
-		ImGui::SliderFloat("Scale Y", &pad.scaleVec.y, 0.0f, 10.0f);
-		ImGui::SliderFloat("Scale Z", &pad.scaleVec.z, 0.0f, 10.0f);
+		ImGui::SliderFloat("Scale X", &pad.scale.x, 0.0f, 10.0f);
+		ImGui::SliderFloat("Scale Y", &pad.scale.y, 0.0f, 10.0f);
+		ImGui::SliderFloat("Scale Z", &pad.scale.z, 0.0f, 10.0f);
 
 		if (ImGui::Button("Reset Scale"))
 			resetScale = true;
 
 		if (resetScale == true) {
-			pad.scaleVec.x = 0.015f;
-			pad.scaleVec.y = 0.2f;
-			pad.scaleVec.z = 1.0f;
+			pad.scale.x = 0.015f;
+			pad.scale.y = 0.2f;
+			pad.scale.z = 1.0f;
 		}
 
 		ImGui::Dummy(ImVec2(0.0f, 5.0f));
 
-		ImGui::SliderFloat("Translation X", &pad.posVec.x, -10.0f, 10.0f);
-		ImGui::SliderFloat("Translation Y", &pad.posVec.y, -10.0f, 10.0f);
-		ImGui::SliderFloat("Translation Z", &pad.posVec.z, -10.0f, 10.0f);
+		ImGui::SliderFloat("Translation X", &pad.position.x, -10.0f, 10.0f);
+		ImGui::SliderFloat("Translation Y", &pad.position.y, -10.0f, 10.0f);
+		ImGui::SliderFloat("Translation Z", &pad.position.z, -10.0f, 10.0f);
 		if (ImGui::Button("Reset Position"))
 			resetPos = true;
 
 		if (resetPos == true) {
-			pad.posVec = glm::vec3(-0.75f, 0.0f, 0.0f);
+			pad.position = glm::vec3(-0.75f, 0.0f, 0.0f);
 		}
 
 		ImGui::Dummy(ImVec2(0.0f, 5.0f));
 
-		ImGui::SliderFloat("Rotation X", &pad.rotVec.x, -90.0f, 90.0f);
-		ImGui::SliderFloat("Rotation Y", &pad.rotVec.y, -90.0f, 90.0f);
-		ImGui::SliderFloat("Rotation Z", &pad.rotVec.z, -90.0f, 90.0f);
+		ImGui::SliderFloat("Rotation X", &pad.rotation.x, -90.0f, 90.0f);
+		ImGui::SliderFloat("Rotation Y", &pad.rotation.y, -90.0f, 90.0f);
+		ImGui::SliderFloat("Rotation Z", &pad.rotation.z, -90.0f, 90.0f);
 		if (ImGui::Button("Reset Rotation"))
 			resetRot = true;
 
 		if (resetRot == true) {
-			pad.rotVec = glm::vec3(0.0f, 0.0f, 0.0f);
+			pad.rotation = glm::vec3(0.0f, 0.0f, 0.0f);
 		}
 
 
@@ -68,24 +68,27 @@ void GUI::createDebugMenu(Ball ball, string name) {
 		bool resetScale = false;
 		bool resetPos = false;
 
-
+		ImGui::Dummy(ImVec2(0.0f, 5.0f));
+		ImGui::SliderFloat("Scale X", &ball.scale.x, 0.0f, 10.0f);
+		ImGui::SliderFloat("Scale Y", &ball.scale.y, 0.0f, 10.0f);
+		ImGui::SliderFloat("Scale Z", &ball.scale.z, 0.0f, 10.0f);
 		if (ImGui::Button("Reset Scale"))
 			resetScale = true;
 
 		if (resetScale == true) {
-			ball.scaleVec = glm::vec3(0.096f, 0.191f, 1.0f);
+			ball.scale = glm::vec3(0.096f, 0.191f, 1.0f);
 		}
 
 		ImGui::Dummy(ImVec2(0.0f, 5.0f));
 
-		ImGui::SliderFloat("Translation X", &ball.posVec.x, -10.0f, 10.0f);
-		ImGui::SliderFloat("Translation Y", &ball.posVec.y, -10.0f, 10.0f);
-		ImGui::SliderFloat("Translation Z", &ball.posVec.z, -10.0f, 10.0f);
+		ImGui::SliderFloat("Translation X", &ball.position.x, -10.0f, 10.0f);
+		ImGui::SliderFloat("Translation Y", &ball.position.y, -10.0f, 10.0f);
+		ImGui::SliderFloat("Translation Z", &ball.position.z, -10.0f, 10.0f);
 		if (ImGui::Button("Reset Position"))
 			resetPos = true;
 
 		if (resetPos == true) {
-			ball.posVec = glm::vec3(0.0f, 0.0f, 0.0f);
+			ball.position = glm::vec3(0.0f, 0.0f, 0.0f);
 		}
 
 
@@ -104,27 +107,27 @@ void GUI::createDebugMenu(Barrier bar, string name) {
 	bool resetPos = false;
 	ImGui::Text("Barrier");
 	ImGui::Dummy(ImVec2(0.0f, 5.0f));
-	ImGui::SliderFloat("Scale X", &bar.scaleVec.x, 0.0f, 10.0f);
-	ImGui::SliderFloat("Scale Y", &bar.scaleVec.y, 0.0f, 10.0f);
-	ImGui::SliderFloat("Scale Z", &bar.scaleVec.z, 0.0f, 10.0f);
+	ImGui::SliderFloat("Scale X", &bar.scale.x, 0.0f, 10.0f);
+	ImGui::SliderFloat("Scale Y", &bar.scale.y, 0.0f, 10.0f);
+	ImGui::SliderFloat("Scale Z", &bar.scale.z, 0.0f, 10.0f);
 
 	if (ImGui::Button("Reset Scale"))
 		resetScale = true;
 
 	if (resetScale == true) {
-		bar.scaleVec = glm::vec3(1.7f, 0.05f, 1.0f);
+		bar.scale = glm::vec3(1.7f, 0.05f, 1.0f);
 	}
 
 	ImGui::Dummy(ImVec2(0.0f, 5.0f));
 
-	ImGui::SliderFloat("Translation X", &bar.posVec.x, -10.0f, 10.0f);
-	ImGui::SliderFloat("Translation Y", &bar.posVec.y, -10.0f, 10.0f);
-	ImGui::SliderFloat("Translation Z", &bar.posVec.z, -10.0f, 10.0f);
+	ImGui::SliderFloat("Translation X", &bar.position.x, -10.0f, 10.0f);
+	ImGui::SliderFloat("Translation Y", &bar.position.y, -10.0f, 10.0f);
+	ImGui::SliderFloat("Translation Z", &bar.position.z, -10.0f, 10.0f);
 	if (ImGui::Button("Reset Position"))
 		resetPos = true;
 
 	if (resetPos == true) {
-		bar.posVec = glm::vec3(0.0f, 0.0f, 0.0f);
+		bar.position = glm::vec3(0.0f, 0.0f, 0.0f);
 	}
 
 	ImGui::Dummy(ImVec2(0.0f, 5.0f));

@@ -1,25 +1,18 @@
 #ifndef BALL_CLASS_H
 #define BALL_CLASS_H
 
-#include<iostream>
-#include<stdlib.h>
-#include<glad/glad.h>
-#include<GLFW/glfw3.h>
-#include "ROML.h"
-#include <chrono>
-#include <cmath>
-#include<glm/glm.hpp>
+#include <glm/glm.hpp>
 #include<glm/gtc/type_ptr.hpp>
+#include "GameObject.h"
+#include <vector>
+#include "Paddle.h"
+#include "game.h"
 
-class Ball {
+class Ball : public GameObject {
 	public:
-		glm::vec3 scaleVec;
-		glm::vec3 posVec;
-		
 
-		glm::vec3 speedVec;
-
-		Ball(glm::vec3 posVec, glm::vec3 scalevec, glm::vec3 speedVec);
-		glm::mat4 getModelMatrix();
+		Ball(glm::vec3 pos, glm::vec3 scale, glm::vec3 velocity = glm::vec3(-0.005f, rand() / 10000000.0f, 0.0f));
+		void update(Game* g);
+		bool circintersects(glm::vec3 circle, glm::vec3 rect, double circleRadius);
 };
 #endif

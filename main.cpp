@@ -16,6 +16,9 @@
 #include"Ball.h"
 #include"Barrier.h"
 #include"GUI.h"
+#include"GameObject.h"
+#include"game.h"
+
 
 //IMGUI
 #include<imgui/imconfig.h>
@@ -51,16 +54,7 @@ decltype(seconds_t().count()) get_millis_since_epoch()
 	return seconds.count();
 }
 
-bool circintersects(glm::vec3 circle, glm::vec3 rect, double circleRadius)
-{
-	double circleDistanceX = abs(circle.x - rect.x);
-	double circleDistanceY = abs(circle.y - rect.y);
 
-
-	double cornerDistance = pow((circleDistanceX - 0.0075 / 2), 2.0f) +
-		pow((circleDistanceY - 0.2 / 2), 2.0f);
-	return (pow(circleRadius, 2) - pow((rect.x - circle.x), 2)) >= 0 && (circle.y >= rect.y - 0.2) && (circle.y <= rect.y + 0.2) || cornerDistance <= pow(circleRadius, 2);
-}
 
 
 
@@ -182,8 +176,6 @@ int main() {
 	std::vector <Vertex> ballsverts(ballvert, ballvert + sizeof(ballvert) / sizeof(Vertex));
 	std::vector <GLuint> ballinds(ballindices, ballindices + sizeof(ballindices) / sizeof(GLuint));
 	std::vector <Texture> ballTex(circle, circle + sizeof(circle) / sizeof(Texture));
-	Mesh pad1(sqrverts, sqrinds, defaultTex);
-	Mesh pad2(sqrverts, sqrinds, defaultTex);
 	Mesh barrierUp(sqrverts, sqrinds, defaultTex);
 	Mesh barrierDown(sqrverts, sqrinds, defaultTex);
 	Mesh ball(ballsverts, ballinds, ballTex);
@@ -201,23 +193,28 @@ int main() {
 	//--------------------------------------------MESH-----------------------------------------------------
 
 	//--------------Paddle1---------------------------------
-	Paddle paddle1(glm::vec3(-0.75f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.015f, 0.2f, 1.0f), Paddle::CONTROLTYPE::WASD, 0.0);
+	Paddle paddle1(glm::vec3(-0.75f, 0.0f, 0.0f), glm::vec3(0.015f, 0.2f, 1.0f), Paddle::CONTROLTYPE::WASD);
+	paddle1.mesh = Mesh(sqrverts, sqrinds, defaultTex);
 	//--------------Paddle1---------------------------------
 
 	//--------------Paddle2---------------------------------
-	Paddle paddle2(glm::vec3(0.75f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.015f, 0.2f, 1.0f), Paddle::CONTROLTYPE::ARROW, 0.0);
+	Paddle paddle2(glm::vec3(0.75f, 0.0f, 0.0f), glm::vec3(0.015f, 0.2f, 1.0f), Paddle::CONTROLTYPE::ARROW);
+	paddle2.mesh = Mesh(sqrverts, sqrinds, defaultTex);
 	//--------------Paddle2---------------------------------
 
 	//--------------BarrierUp-------------------------------
 	Barrier BarrierBU(glm::vec3(0.0f, 0.85f, 0.0f), glm::vec3(1.7f, 0.05f, 1.0f));
+	BarrierBU.mesh = Mesh(sqrverts, sqrinds, defaultTex);
 	//--------------BarrierUp-------------------------------
 
 	//--------------BarrierDown-------------------------------
 	Barrier BarrierBD(glm::vec3(0.0f, -0.85f, 0.0f), glm::vec3(1.7f, 0.05f, 1.0f));
+	BarrierBD.mesh = Mesh(sqrverts, sqrinds, defaultTex);
 	//--------------BarrierDown-------------------------------
 
 	//--------------BALL--------------------------------------
 	Ball ball1(glm::vec3(-0.02f, 0.0f, 0.0f), glm::vec3(0.096f, 0.191f, 1.0f), glm::vec3(-0.005f, 0.0f, 0.0f));
+	ball1.mesh = Mesh(ballsverts, ballinds, ballTex);
 	//--------------BALL--------------------------------------
 
 	//--------------------------------------------MESH-----------------------------------------------------
@@ -243,20 +240,18 @@ int main() {
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		//Just gonna store this in a variable so I dont need to call it frequently
-		glm::mat4 lightModel = directLight.getModelMatrix();
-		glm::mat4 pad1Model = paddle1.getModelMatrix();
-		glm::mat4 pad2Model = paddle2.getModelMatrix();
-		glm::mat4 BUModel = BarrierBU.getModelMatrix();
-		glm::mat4 BDModel = BarrierBD.getModelMatrix();
-		glm::mat4 ballModel = ball1.getModelMatrix();
 
+			Game g();
+			g.update();
+			g.draw();
 
+		
 
 		//Exporting data & Render
-		lightShader.Activate();
+		/*lightShader.Activate();
 		glUniformMatrix4fv(glGetUniformLocation(lightShader.ID, "model"), 1, GL_FALSE, glm::value_ptr(lightModel));
 		glUniform4f(glGetUniformLocation(lightShader.ID, "lightColor"), directLight.colorVec.x, directLight.colorVec.y, directLight.colorVec.z, directLight.colorVec.w);
+		light.Draw(lightShader, camera);
 
 		shaderProgram.Activate();
 		glUniformMatrix4fv(glGetUniformLocation(shaderProgram.ID, "model"), 1, GL_FALSE, glm::value_ptr(pad1Model));
@@ -282,7 +277,7 @@ int main() {
 		glUniformMatrix4fv(glGetUniformLocation(shaderProgram.ID, "model"), 1, GL_FALSE, glm::value_ptr(ballModel));
 		glUniform4f(glGetUniformLocation(shaderProgram.ID, "lightColor"), directLight.colorVec.x, directLight.colorVec.y, directLight.colorVec.z, directLight.colorVec.w);
 		glUniform3f(glGetUniformLocation(shaderProgram.ID, "lightPos"), directLight.posVec.x, directLight.posVec.y, directLight.posVec.z);
-		ball.Draw(shaderProgram, camera);
+		ball.Draw(shaderProgram, camera);*/
 
 		//---------------------------------------------------------------------------------------------------------------------------------
 		//Updates and exports camera matrix to the vert shader
@@ -291,17 +286,6 @@ int main() {
 		//IMGUI
 		ImGui_ImplGlfwGL3_NewFrame();
 
-		//---------------DRAW------------------
-		light.Draw(lightShader, camera);
-		//---------------DRAW------------------
-
-		//-----------------------------------PAD 1 CONTROLS--------------------------------------
-		paddle1.Update(window);
-		//-----------------------------------PAD 1 CONTROLS--------------------------------------
-
-		//-----------------------------------PAD 2 CONTROLS--------------------------------------
-		paddle2.Update(window);
-		//-----------------------------------PAD 2 CONTROLS--------------------------------------
 
 		//-------------------------------------COLLISION-----------------------------------------
 

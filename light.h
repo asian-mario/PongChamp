@@ -1,26 +1,18 @@
 #ifndef LIGHT_CLASS_H
 #define LIGHT_CLASS_H
 
-#include<iostream>
-#include<stdlib.h>
-#include<glad/glad.h>
-#include<GLFW/glfw3.h>
-#include "ROML.h"
-#include <chrono>
-#include <cmath>
-#include<glm/glm.hpp>
-#include<glm/gtc/type_ptr.hpp>
+#include <glm/glm.hpp>
+#include "GameObject.h"
+#include <vector>
+#include "Paddle.h"
+#include "game.h"
 
-class Light {
+class Light : public GameObject {
 	public:
 		glm::vec4 colorVec;
-		glm::vec3 posVec;
 
-		
+		Light(glm::vec4 colorVec, glm::vec3 pos);
 
-		Light(glm::vec4 colorVec, glm::vec3 posVec);
-
-		glm::mat4 getModelMatrix();
 };
 
 #endif 

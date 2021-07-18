@@ -1,30 +1,22 @@
 #ifndef PADDLE_CLASS_H
 #define PADDLE_CLASS_H
 
-#include<iostream>
-#include<stdlib.h>
-#include<glad/glad.h>
-#include<GLFW/glfw3.h>
-#include "ROML.h"
-#include <chrono>
-#include <cmath>
-#include<glm/glm.hpp>
-#include<glm/gtc/type_ptr.hpp>
+#include <glm/glm.hpp>
+#include "GameObject.h"
+#include <vector>
+#include "Paddle.h"
+#include "game.h"
 
-class Paddle {
+class Paddle : public GameObject {
 	public:
-		glm::vec3 scaleVec;
-		glm::vec3 posVec;
-		glm::vec3 rotVec;
-		double velocity;
+
 
 		enum CONTROLTYPE { WASD, ARROW };
 		CONTROLTYPE type;
 
-		Paddle(glm::vec3 posVec, glm::vec3 rotVec, glm::vec3 scaleVec, CONTROLTYPE type, double velocity);
+		Paddle(glm::vec3 position, glm::vec3 scale, CONTROLTYPE type);
 
-		glm::mat4 getModelMatrix();
-		void Update(GLFWwindow* window);
+		void update(Game* g, GLFWwindow* gameWindow);
 };
 
 #endif

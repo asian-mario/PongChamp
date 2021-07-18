@@ -21,6 +21,7 @@ class Mesh {
 		VAO VAO;
 
 		//Initializes Mesh
+		Mesh() = default;
 		Mesh(std::vector <Vertex>& vertices, std::vector <GLuint>& indices, std::vector <Texture>& textures);
 		
 		//Draws mesh
