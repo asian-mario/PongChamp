@@ -1,6 +1,7 @@
-#ifndef CAMERA_CLASS_H
-#define CAMERA_CLASS_H
+#pragma once
 
+class Game;
+class GameObject;
 
 #include<glad/glad.h>
 #include<GLFW/glfw3.h>
@@ -11,8 +12,7 @@
 #include<glm/gtx/rotate_vector.hpp>
 #include<glm/gtx/vector_angle.hpp>
 
-#include"game.h"
-#include"GameObject.h"
+
 
 #include<cmath>
 #include"ROML.h"
@@ -40,4 +40,3 @@ class Camera : public GameObject {
 		void Inputs(GLFWwindow* window);
 };
 
-#endif

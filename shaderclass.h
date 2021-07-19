@@ -1,9 +1,9 @@
 #pragma once
-#ifndef SHADER_CLASS_H
-#define SHADER_CLASS_H
 
 
 
+class Game;
+class GameObject;
 #include<glad/glad.h>
 #include<string>
 #include<fstream>
@@ -38,4 +38,3 @@ class Shader : public GameObject {
 
 };
 
-#endif

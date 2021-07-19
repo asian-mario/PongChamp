@@ -1,12 +1,11 @@
 #pragma once
-#ifndef BALL_CLASS_H
-#define BALL_CLASS_H
 
+class Game;
+#include "GameObject.h"
 #include "game.h"
 #include <glm/glm.hpp>
-#include<glm/gtc/type_ptr.hpp>
+#include <glm/gtc/type_ptr.hpp>
 #include <vector>
-#include "GameObject.h"
 #include "Paddle.h"
 
 
@@ -17,4 +16,4 @@ class Ball : public GameObject {
 		void update(Game* g);
 		bool circintersects(glm::vec3 circle, glm::vec3 rect, double circleRadius);
 };
-#endif
+

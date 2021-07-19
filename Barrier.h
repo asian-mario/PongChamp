@@ -1,7 +1,6 @@
 #pragma once
-#ifndef BARRIER_CLASS_H
-#define BARRIER_CLASS_H
 
+class Game;
 #include "game.h"
 #include <glm/glm.hpp>
 #include <vector>
@@ -16,4 +15,4 @@ class Barrier : public GameObject {
 
 
 };
-#endif 
+

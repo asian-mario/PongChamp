@@ -1,8 +1,13 @@
 #pragma once
-#ifndef GAMEOBJECT_CLASS_H
-#define GAMEOBJECT_CLASS_H
 
+class Game;
+class Ball;
+class Camera;
+class Barrier;
 #include "game.h"
+#include "shaderclass.h"
+
+#include"ROML.h"
 #include<glm/glm.hpp>
 #include "Mesh.h"
 
@@ -38,17 +43,16 @@ public:
 		return mat * glm::vec4(pos, 1.0f);
 	}
 
-	virtual void draw(Game* g) {
+	virtual void draw(Game* game) {
 		glm::mat4 model = getModelMatrix();
-		glm::vec4 color = g->lights[0]->color;
-		glm::vec3 position = g->lights[0]->position;
+		glm::vec4 color = game->lights[0]->color;
+		glm::vec3 position = game->lights[0]->position;
 
-		g->shaders[0]->Activate();
+		game->shaders[0]->Activate();
 
-		glUniformMatrix4fv(glGetUniformLocation(g->shaders[0]->ID, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		glUniform4f(glGetUniformLocation(g->shaders[0]->ID, "lightColor"), color.x, color.y, color.z, color.w);
-		glUniform3f(glGetUniformLocation(g->shaders[0]->ID, "lightPos"), position.x, position.y, position.z);
-		mesh.Draw(*g->shaders[0], *g->cameras[0]);
+		glUniformMatrix4fv(glGetUniformLocation(game->shaders[0]->ID, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		glUniform4f(glGetUniformLocation(game->shaders[0]->ID, "lightColor"), color.x, color.y, color.z, color.w);
+		glUniform3f(glGetUniformLocation(game->shaders[0]->ID, "lightPos"), position.x, position.y, position.z);
+		mesh.Draw(*game->shaders[0], *game->cameras[0]);
 	}
 };
-#endif 

@@ -1,15 +1,18 @@
 #pragma once
-#ifndef GAME_CLASS_H
-#define GAME_CLASS_H
 
-#include <vector>
+class Game;
+class Barrier;
+class Shader;
+class Ball;
+class Paddle;
+class Light;
+class Camera;
+class GameObject;
+struct GLFWwindow;
+
 #include "GameObject.h"
-#include "Paddle.h"
-#include "Barrier.h"
-#include "Ball.h"
-#include "shaderclass.h"
-#include "Camera.h"
-#include "light.h"
+#include <vector>
+
 
 class Game {
 	public:
@@ -36,4 +39,3 @@ class Game {
 		double deltaTime();
 };
 
-#endif // !GAME_CLASS_H

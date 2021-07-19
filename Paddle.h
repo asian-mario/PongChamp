@@ -1,14 +1,13 @@
 #pragma once
-#ifndef PADDLE_CLASS_H
-#define PADDLE_CLASS_H
+
+class Game;
 
 #include "game.h"
+#include "GameObject.h"
 #include <glm/glm.hpp>
 #include <vector>
-#include "GameObject.h"
 
-#include "shaderclass.h"
-#include "Camera.h"
+
 
 
 
@@ -26,4 +25,3 @@ class Paddle : public GameObject {
 	
 };
 
-#endif

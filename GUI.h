@@ -1,6 +1,5 @@
 #pragma once
-#ifndef GUI_CLASS_H
-#define GUI_CLASS_H
+
 
 
 #include <cmath>
@@ -20,4 +19,4 @@ public:
 
 	GUI() = delete;
 };
-#endif 
+

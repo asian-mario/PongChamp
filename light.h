@@ -1,5 +1,6 @@
-#ifndef LIGHT_CLASS_H
-#define LIGHT_CLASS_H
+#pragma once
+
+class Game;
 
 #include "game.h"
 #include <glm/glm.hpp>
@@ -16,4 +17,4 @@ class Light : public GameObject {
 
 };
 
-#endif 
+
