@@ -1,11 +1,17 @@
+#pragma once
 #ifndef PADDLE_CLASS_H
 #define PADDLE_CLASS_H
 
-#include <glm/glm.hpp>
-#include "GameObject.h"
-#include <vector>
-#include "Paddle.h"
 #include "game.h"
+#include <glm/glm.hpp>
+#include <vector>
+#include "GameObject.h"
+
+#include "shaderclass.h"
+#include "Camera.h"
+
+
+
 
 class Paddle : public GameObject {
 	public:
@@ -14,9 +20,10 @@ class Paddle : public GameObject {
 		enum CONTROLTYPE { WASD, ARROW };
 		CONTROLTYPE type;
 
-		Paddle(glm::vec3 position, glm::vec3 scale, CONTROLTYPE type);
+		Paddle(glm::vec3 position, glm::vec3 scale, CONTROLTYPE type, glm::vec3 velocity);
 
 		void update(Game* g, GLFWwindow* gameWindow);
+	
 };
 
 #endif

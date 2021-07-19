@@ -11,11 +11,14 @@
 #include<glm/gtx/rotate_vector.hpp>
 #include<glm/gtx/vector_angle.hpp>
 
+#include"game.h"
+#include"GameObject.h"
+
 #include<cmath>
 #include"ROML.h"
 #include"shaderclass.h"
 
-class Camera {
+class Camera : public GameObject {
 	public:	
 		glm::vec3 Position;
 		glm::vec3 Orientation = glm::vec3(0.0f, 0.0f, -1.0f); //Orientation == Direction

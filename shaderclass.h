@@ -1,5 +1,7 @@
+#pragma once
 #ifndef SHADER_CLASS_H
 #define SHADER_CLASS_H
+
 
 
 #include<glad/glad.h>
@@ -9,14 +11,20 @@
 #include<iostream>
 #include<cerrno>
 
+#include "game.h"
+#include "GameObject.h"
+
 using namespace std;
 
 string get_file_contents(const char* filename);
 
-class Shader {
+class Shader : public GameObject {
 	public:
+
 		//Ref ID of the shader program
 		GLuint ID;
+
+
 		//constructor that builds shader program from 2 different shaders
 		Shader(const char* vertexFile, const char* fragmentFile);
 

@@ -1,14 +1,19 @@
 #include "light.h"
 
-Light::Light(glm::vec4 colorVec, glm::vec3 posVec) {
+Light::Light(glm::vec4 color, glm::vec3 position) {
 
-	this->colorVec = colorVec;
-	this->posVec = posVec;
+	this->color = glm::vec4(color);
+	this->position = glm::vec3(position);
 
 }
 
-glm::mat4 Light::getModelMatrix() {
-	glm::mat4 Loc = roml::translate(glm::mat4(1.0f), posVec);
+void Light::draw(Game* g) {
+	glm::mat4 model = getModelMatrix();
+	glm::vec3 position = position;
+	glm::vec4 color = color;
+	g->shaders[1]->Activate();
 
-	return Loc;
+	glUniformMatrix4fv(glGetUniformLocation(g->shaders[1]->ID, "model"), 1, GL_FALSE, glm::value_ptr(model));
+	glUniform4f(glGetUniformLocation(g->shaders[1]->ID, "lightColor"), color.x, color.y, color.z, color.w);
+	mesh.Draw(*g->shaders[1], *g->cameras[0]);
 }

@@ -8,7 +8,7 @@ Ball::Ball(glm::vec3 pos, glm::vec3 scale, glm::vec3 velocity) {
 	this->velocity = glm::vec3(velocity);
 }
 
-bool circintersects(glm::vec3 circle, glm::vec3 rect, double circleRadius)
+bool Ball::circintersects(glm::vec3 circle, glm::vec3 rect, double circleRadius)
 {
 	double circleDistanceX = abs(circle.x - rect.x);
 	double circleDistanceY = abs(circle.y - rect.y);
@@ -26,9 +26,11 @@ void Ball::update(Game* g) {
 	glm::mat4 pad2Model = g->paddles[1]->getModelMatrix();
 	glm::mat4 ballModel = getModelMatrix();
 
+	double deltaTime = g->deltaTime();
+
 	//Calculating worldpos
-	glm::vec3 padWorldPos =  padModel * glm::vec4(g->paddles[0]->position, 1.0f);
-	glm::vec3 pad2WorldPos = pad2Model * glm::vec4(g->paddles[1]->position, 1.0f);
+	glm::vec3 padWorldPos =  g->paddles[0]->findWorldPos(padModel, g->paddles[0]->position);
+	glm::vec3 pad2WorldPos = g->paddles[1]->findWorldPos(pad2Model, g->paddles[1]->position);
 	glm::vec3 ballWorldPos = ballModel * glm::vec4(position, 1.0f);
 
 	double rad = 0.00047;
@@ -61,8 +63,9 @@ void Ball::update(Game* g) {
 
 	//-------------------------------------COLLISION-----------------------------------------
 
-	position.x += velocity.x;
-	position.y += velocity.y;
+	//------------------------NOT COLLISION (Very Descritive)--------------------------------
+	position.x += velocity.x * deltaTime;
+	position.y += velocity.y * deltaTime;
 
 
 }

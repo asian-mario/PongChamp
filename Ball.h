@@ -1,12 +1,14 @@
+#pragma once
 #ifndef BALL_CLASS_H
 #define BALL_CLASS_H
 
+#include "game.h"
 #include <glm/glm.hpp>
 #include<glm/gtc/type_ptr.hpp>
-#include "GameObject.h"
 #include <vector>
+#include "GameObject.h"
 #include "Paddle.h"
-#include "game.h"
+
 
 class Ball : public GameObject {
 	public:

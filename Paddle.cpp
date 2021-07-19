@@ -1,11 +1,11 @@
 #include "Paddle.h"
 
-Paddle::Paddle(glm::vec3 position, glm::vec3 scale, CONTROLTYPE type) {
+Paddle::Paddle(glm::vec3 position, glm::vec3 scale, CONTROLTYPE type, glm::vec3 velocity) {
 	this->position = glm::vec3(position);
 	this->rotation = glm::vec3(0.0f);
 	this->scale = glm::vec3(scale);
 	this->type = type;
-	this->velocity = velocity;
+	this->velocity = glm::vec3(velocity);
 } 
 
 
@@ -65,3 +65,4 @@ void Paddle::update(Game* g, GLFWwindow* window) {
 		}
 	}
 }
+
