@@ -1,14 +1,14 @@
-#ifndef MESH_CLASS_H
-#define MESH_CLASS_H
+#pragma once
+
 
 #include<string>
 
-#include"VAO.h"
-#include"EBO.h"
-#include"Camera.h"
-#include"Texture.h"
+#include "VAO.h"
+#include "EBO.h"
+#include "shaderclass.h"
+#include "Texture.h"
 
-
+class Camera;
 
 //CPP vectors because its best not to specify the length
 class Mesh {
@@ -21,9 +21,10 @@ class Mesh {
 		VAO VAO;
 
 		//Initializes Mesh
+		Mesh() = default;
 		Mesh(std::vector <Vertex>& vertices, std::vector <GLuint>& indices, std::vector <Texture>& textures);
 		
 		//Draws mesh
 		void Draw(Shader& shader, Camera& camera);
 };
-#endif 
+

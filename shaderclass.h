@@ -1,6 +1,4 @@
-#ifndef SHADER_CLASS_H
-#define SHADER_CLASS_H
-
+#pragma once
 
 #include<glad/glad.h>
 #include<string>
@@ -15,8 +13,11 @@ string get_file_contents(const char* filename);
 
 class Shader {
 	public:
+
 		//Ref ID of the shader program
 		GLuint ID;
+
+
 		//constructor that builds shader program from 2 different shaders
 		Shader(const char* vertexFile, const char* fragmentFile);
 
@@ -30,4 +31,3 @@ class Shader {
 
 };
 
-#endif
