@@ -10,9 +10,9 @@ Paddle::Paddle(glm::vec3 position, glm::vec3 scale, CONTROLTYPE type, glm::vec3 
 } 
 
 
-void Paddle::update(Game* g, GLFWwindow* window) {
+void Paddle::update(Game* g) {
 	if (type == WASD) {
-		if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
+		if (glfwGetKey(g->gameWindow, GLFW_KEY_W) == GLFW_PRESS) {
 			if (position.y >= 0.73f) {
 				position.y += 0.0f;
 			}
@@ -21,11 +21,11 @@ void Paddle::update(Game* g, GLFWwindow* window) {
 				velocity.y += 0.0001;
 			}
 		}
-		else if (glfwGetKey(window, GLFW_KEY_W) == GLFW_RELEASE) {
+		else if (glfwGetKey(g->gameWindow, GLFW_KEY_W) == GLFW_RELEASE) {
 			velocity.y = 0.0;
 
 		}
-		if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
+		if (glfwGetKey(g->gameWindow, GLFW_KEY_S) == GLFW_PRESS) {
 			if (position.y <= -0.73f) {
 				position.y -= 0.0f;
 			}
@@ -34,13 +34,13 @@ void Paddle::update(Game* g, GLFWwindow* window) {
 				velocity.y -= 0.0001;
 			}
 		}
-		else if (glfwGetKey(window, GLFW_KEY_W) == GLFW_RELEASE) {
+		else if (glfwGetKey(g->gameWindow, GLFW_KEY_W) == GLFW_RELEASE) {
 			velocity.y = 0.0;
 		}
 	}
 
 	if (type == ARROW) {
-		if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) {
+		if (glfwGetKey(g->gameWindow, GLFW_KEY_UP) == GLFW_PRESS) {
 			if (position.y >= 0.73f) {
 				position.y += 0.0f;
 			}
@@ -49,10 +49,10 @@ void Paddle::update(Game* g, GLFWwindow* window) {
 				velocity.y += 0.0001;
 			}
 		}
-		else if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_RELEASE) {
+		else if (glfwGetKey(g->gameWindow, GLFW_KEY_UP) == GLFW_RELEASE) {
 			velocity.y = 0.0;
 		}
-		if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) {
+		if (glfwGetKey(g->gameWindow, GLFW_KEY_DOWN) == GLFW_PRESS) {
 			if (position.y <= -0.73f) {
 				position.y -= 0.0f;
 			}
@@ -61,7 +61,7 @@ void Paddle::update(Game* g, GLFWwindow* window) {
 				velocity.y -= 0.0001;
 			}
 		}
-		else if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_RELEASE) {
+		else if (glfwGetKey(g->gameWindow, GLFW_KEY_DOWN) == GLFW_RELEASE) {
 			velocity.y = 0.0;
 		}
 	}

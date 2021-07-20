@@ -4,12 +4,10 @@
 #include <glm/gtc/type_ptr.hpp>
 #include "ROML.h"
 
-#include "game.h"
-#include "Camera.h"
-#include "shaderclass.h"
 #include "Mesh.h"
 
 class Mesh;
+class Game;
 
 //These are all common throughout most objects
 
@@ -28,12 +26,10 @@ public:
 
 	GameObject() = default;
 
-	virtual void update(Game* g);
+	
 	virtual glm::mat4 getModelMatrix();
-
-
 	virtual glm::vec3 findWorldPos(glm::mat4 mat, glm::vec3 pos);
-
 	virtual void draw(Game* game);
+	virtual void update(Game* game) {}
 };
 

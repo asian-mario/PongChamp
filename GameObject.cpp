@@ -1,4 +1,7 @@
 #include "GameObject.h"
+#include "game.h"
+#include "Camera.h"
+#include "shaderclass.h"
 
 glm::mat4 GameObject::getModelMatrix() {
 	glm::mat4 Loc = roml::translate(glm::mat4(1.0f), position);

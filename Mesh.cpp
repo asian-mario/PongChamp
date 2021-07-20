@@ -1,4 +1,5 @@
 #include "Mesh.h"
+#include "Camera.h"
 
 Mesh::Mesh(std::vector <Vertex>& vertices, std::vector <GLuint>& indices, std::vector <Texture>& textures) {
 	Mesh::vertices = vertices;
@@ -52,7 +53,7 @@ void Mesh::Draw(Shader& shader, Camera& camera) {
 		textures[i].Bind();
 	}
 	//Assembles the camera matrix
-	glUniform3f(glGetUniformLocation(shader.ID, "camPos"), camera.Position.x, camera.Position.y, camera.Position.z);
+	glUniform3f(glGetUniformLocation(shader.ID, "camPos"), camera.position.x, camera.position.y, camera.position.z);
 	camera.Matrix(shader, "camMatrix");
 
 	//Draws the mesh

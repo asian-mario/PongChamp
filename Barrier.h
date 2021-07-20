@@ -11,7 +11,5 @@ class Barrier : public GameObject {
 	public:
 
 		Barrier(glm::vec3 pos, glm::vec3 scale);
-
-
 };
 

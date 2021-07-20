@@ -1,16 +1,5 @@
 #pragma once
 
-class Game;
-class Barrier;
-class Shader;
-class Ball;
-class Paddle;
-class Light;
-class Camera;
-class GameObject;
-struct GLFWwindow;
-
-#include<GLFW/glfw3.h>
 #include "GameObject.h"
 #include "Barrier.h"
 #include "shaderclass.h"
@@ -20,6 +9,15 @@ struct GLFWwindow;
 #include "Camera.h"
 #include <vector>
 
+class Game;
+class Barrier;
+class Shader;
+class Ball;
+class Paddle;
+class Light;
+class Camera;
+class GameObject;
+struct GLFWwindow;
 
 class Game {
 	public:
@@ -36,7 +34,7 @@ class Game {
 
 		double lastTime;
 
-		Game() = default;
+		Game();
 
 		//--FRAME
 		void update();

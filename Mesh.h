@@ -3,12 +3,12 @@
 
 #include<string>
 
-#include"VAO.h"
-#include"EBO.h"
-#include"Camera.h"
-#include"Texture.h"
+#include "VAO.h"
+#include "EBO.h"
+#include "shaderclass.h"
+#include "Texture.h"
 
-
+class Camera;
 
 //CPP vectors because its best not to specify the length
 class Mesh {

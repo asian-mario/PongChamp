@@ -5,7 +5,7 @@
 #include <vector>
 
 class GameObject;
-
+class Game;
 
 class Light : public GameObject {
 	public:

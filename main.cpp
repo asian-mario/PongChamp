@@ -2,13 +2,12 @@
 
 #include<iostream>
 #include<stdlib.h>
-#include<GLFW/glfw3.h>
 #include<glad/glad.h>
 #include<stb/stb_image.h>
+#include "ROML.h"
 #include"GameObject.h"
 #include"game.h"
 #include"Mesh.h"
-#include "ROML.h"
 #include"Paddle.h"
 #include"light.h"
 #include"Ball.h"
@@ -158,6 +157,7 @@ int main() {
 
 	glViewport(0, 0, width, height); //where we want the opengl to show stuff
 
+	Game g;
 
 	Texture textures[]{
 		//----------TEXTURES-------------------------------
@@ -179,11 +179,13 @@ int main() {
 	std::vector <Vertex> ballsverts(ballvert, ballvert + sizeof(ballvert) / sizeof(Vertex));
 	std::vector <GLuint> ballinds(ballindices, ballindices + sizeof(ballindices) / sizeof(GLuint));
 	std::vector <Texture> ballTex(circle, circle + sizeof(circle) / sizeof(Texture));
+	g.shaders.push_back(&shaderProgram);
 	
 	
 	
 
 	Shader lightShader("light.vert", "light.frag");
+	g.shaders.push_back(&lightShader);
 	//GLuint uniID = glGetUniformLocation(shaderProgram.ID, "scale"); //get uniform reference value (stored in uniID)
 	GLuint timeID = glGetUniformLocation(shaderProgram.ID, "time");
 
@@ -246,12 +248,13 @@ int main() {
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 
-		Game g;
+		
+		
 		
 		//Updating values of objects
 		ball1.update(&g);
-		paddle1.update(&g, window);
-		paddle2.update(&g, window);
+		paddle1.update(&g);
+		paddle2.update(&g);
 
 		
 
