@@ -134,7 +134,7 @@ int main() {
 	};
 
 	//------------------------------------------------------------------------------------------------
-
+	Game g;
 	auto monitor = glfwGetPrimaryMonitor();
 	const GLFWvidmode* mode = glfwGetVideoMode(monitor);
 
@@ -145,6 +145,7 @@ int main() {
 	glfwWindowHint(GLFW_DECORATED, GLFW_FALSE);
 
 	GLFWwindow* window = glfwCreateWindow(mode->width, mode->height, "OpenPong", NULL, NULL);
+	g.gameWindow = window;
 	glfwSetWindowMonitor(window, NULL, 0, 0, mode->width, mode->height, mode->refreshRate);
 	if (window == NULL) {
 		cout << "Failed to create a window" << endl; //Just checking if the window failed to create
@@ -157,7 +158,7 @@ int main() {
 
 	glViewport(0, 0, width, height); //where we want the opengl to show stuff
 
-	Game g;
+
 
 	Texture textures[]{
 		//----------TEXTURES-------------------------------
@@ -185,43 +186,54 @@ int main() {
 	
 
 	Shader lightShader("light.vert", "light.frag");
-	g.shaders.push_back(&lightShader);
 	//GLuint uniID = glGetUniformLocation(shaderProgram.ID, "scale"); //get uniform reference value (stored in uniID)
-	GLuint timeID = glGetUniformLocation(shaderProgram.ID, "time");
+	
 
 	//-----------------------------Lights------------------------------------------------------------------
 	std::vector <Vertex> lightVerts(lightVertices, lightVertices + sizeof(lightVertices) / sizeof(Vertex));
 	std::vector <GLuint> lightInd(lightIndices, lightIndices + sizeof(lightIndices) / sizeof(GLuint));
-
+	g.shaders.push_back(&lightShader);
 
 	//-----------------------------Lights------------------------------------------------------------------
 	Light directLight(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), glm::vec3(0.0f, 0.5f, 1.5f));
 	directLight.mesh = Mesh(lightVerts, lightInd, defaultTex);
+	g.lights.push_back(&directLight);
+	g.gameObjects.push_back(&directLight);
 	//--------------------------------------------MESH-----------------------------------------------------
 
 	//--------------Paddle1---------------------------------
 	Paddle paddle1(glm::vec3(-0.75f, 0.0f, 0.0f), glm::vec3(0.015f, 0.2f, 1.0f), Paddle::CONTROLTYPE::WASD, glm::vec3(0.0f));
 	paddle1.mesh = Mesh(sqrverts, sqrinds, defaultTex);
+	g.paddles.push_back(&paddle1);
+	g.gameObjects.push_back(&paddle1);
 	//--------------Paddle1---------------------------------
 
 	//--------------Paddle2---------------------------------
 	Paddle paddle2(glm::vec3(0.75f, 0.0f, 0.0f), glm::vec3(0.015f, 0.2f, 1.0f), Paddle::CONTROLTYPE::ARROW, glm::vec3(0.0f));
 	paddle2.mesh = Mesh(sqrverts, sqrinds, defaultTex);
+	g.paddles.push_back(&paddle2);
+	g.gameObjects.push_back(&paddle2);
 	//--------------Paddle2---------------------------------
 
 	//--------------BarrierUp-------------------------------
 	Barrier BarrierBU(glm::vec3(0.0f, 0.85f, 0.0f), glm::vec3(1.7f, 0.05f, 1.0f));
 	BarrierBU.mesh = Mesh(sqrverts, sqrinds, defaultTex);
+	g.barriers.push_back(&BarrierBU);
+	g.gameObjects.push_back(&BarrierBU);
 	//--------------BarrierUp-------------------------------
 
 	//--------------BarrierDown-------------------------------
 	Barrier BarrierBD(glm::vec3(0.0f, -0.85f, 0.0f), glm::vec3(1.7f, 0.05f, 1.0f));
 	BarrierBD.mesh = Mesh(sqrverts, sqrinds, defaultTex);
+	g.barriers.push_back(&BarrierBD);
+	g.gameObjects.push_back(&BarrierBD);
 	//--------------BarrierDown-------------------------------
 
 	//--------------BALL--------------------------------------
-	Ball ball1(glm::vec3(-0.02f, 0.0f, 0.0f), glm::vec3(0.096f, 0.191f, 1.0f), glm::vec3(-0.005f, 0.0f, 0.0f));
+	Ball ball1(glm::vec3(-0.02f, 0.0f, 0.0f), glm::vec3(0.096f, 0.191f, 1.0f), glm::vec3(-0.6f, 0.0f, 0.0f));
 	ball1.mesh = Mesh(ballsverts, ballinds, ballTex);
+	g.balls.push_back(&ball1);
+	g.gameObjects.push_back(&ball1);
 	//--------------BALL--------------------------------------
 
 	//--------------------------------------------MESH-----------------------------------------------------
@@ -241,7 +253,8 @@ int main() {
 
 	
 	Camera camera(width, height, glm::vec3(0.0f, 0.0f, 2.0f));
-
+	g.cameras.push_back(&camera);
+	g.gameObjects.push_back(&camera);
 	while (!glfwWindowShouldClose(window)) {
 
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
@@ -252,9 +265,7 @@ int main() {
 		
 		
 		//Updating values of objects
-		ball1.update(&g);
-		paddle1.update(&g);
-		paddle2.update(&g);
+		g.update();
 
 		
 

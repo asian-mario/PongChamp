@@ -18,7 +18,7 @@ void Paddle::update(Game* g) {
 			}
 			if (position.y < 0.73f) {
 				position.y += 0.01f;
-				velocity.y += 0.0001;
+				velocity.y += 0.00001;
 			}
 		}
 		else if (glfwGetKey(g->gameWindow, GLFW_KEY_W) == GLFW_RELEASE) {
@@ -31,7 +31,7 @@ void Paddle::update(Game* g) {
 			}
 			if (position.y > -0.73f) {
 				position.y -= 0.01f;
-				velocity.y -= 0.0001;
+				velocity.y -= 0.00001;
 			}
 		}
 		else if (glfwGetKey(g->gameWindow, GLFW_KEY_W) == GLFW_RELEASE) {
@@ -46,7 +46,7 @@ void Paddle::update(Game* g) {
 			}
 			if (position.y < 0.73f) {
 				position.y += 0.01f;
-				velocity.y += 0.0001;
+				velocity.y += 0.00001;
 			}
 		}
 		else if (glfwGetKey(g->gameWindow, GLFW_KEY_UP) == GLFW_RELEASE) {
@@ -58,7 +58,7 @@ void Paddle::update(Game* g) {
 			}
 			if (position.y > -0.73f) {
 				position.y -= 0.01f;
-				velocity.y -= 0.0001;
+				velocity.y -= 0.00001;
 			}
 		}
 		else if (glfwGetKey(g->gameWindow, GLFW_KEY_DOWN) == GLFW_RELEASE) {

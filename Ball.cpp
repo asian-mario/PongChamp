@@ -1,5 +1,6 @@
 #include "Ball.h"
-
+#include<stdlib.h>
+#include <cmath>
 
 Ball::Ball(glm::vec3 pos, glm::vec3 scale, glm::vec3 velocity) {
 	this->position = glm::vec3(pos);
@@ -26,38 +27,39 @@ void Ball::update(Game* g) {
 	glm::mat4 pad2Model = g->paddles[1]->getModelMatrix();
 	glm::mat4 ballModel = getModelMatrix();
 
+	double control = 100000.0;
 	double deltaTime = g->deltaTime();
 
 	//Calculating worldpos
-	glm::vec3 padWorldPos =  g->paddles[0]->findWorldPos(padModel, g->paddles[0]->position);
+	glm::vec3 padWorldPos = g->paddles[0]->findWorldPos(padModel, g->paddles[0]->position);
 	glm::vec3 pad2WorldPos = g->paddles[1]->findWorldPos(pad2Model, g->paddles[1]->position);
 	glm::vec3 ballWorldPos = ballModel * glm::vec4(position, 1.0f);
 
-	double rad = 0.00047;
+	double rad = 0.003;
 
 	bool intersect = circintersects(ballWorldPos, padWorldPos, rad);
 	bool intersect2 = circintersects(ballWorldPos, pad2WorldPos, rad);
 
 	if (intersect) {
 		velocity.x = -velocity.x;
-		velocity.y -= rand() / 10000000.0f + g->paddles[0]->velocity.y;
+		velocity.y += -rand() / control + g->paddles[0]->velocity.y;
 
 	}
 
 	if (intersect2) {
 		velocity.x = -velocity.x;
-		velocity.y -= rand() / 10000000.0f + g->paddles[0]->velocity.y;
+		velocity.y += rand() / control + g->paddles[1]->velocity.y;
 	}
 	if (position.y <= -0.8) {
-		velocity.y = -velocity.y;
-		g->paddles[0]->velocity.y = 0.0;
-		g->paddles[1]->velocity.y = 0.0;
+		velocity.y = -velocity.y - 0.001f;
+		g->paddles[0]->velocity.y = 0.0f;
+		g->paddles[1]->velocity.y = 0.0f;
 	}
 
 	if (position.y >= 0.8) {
-		velocity.y = -velocity.y;
-		g->paddles[0]->velocity.y = 0.0;
-		g->paddles[1]->velocity.y = 0.0;
+		velocity.y = -velocity.y - 0.001f;
+		g->paddles[0]->velocity.y = 0.0f;
+		g->paddles[1]->velocity.y = 0.0f;
 	}
 
 
