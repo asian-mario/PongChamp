@@ -33,6 +33,8 @@ class Game {
 		std::vector <GameObject*> gameObjects;
 
 		double lastTime;
+		bool pause = false;
+		int framestep = 0;
 
 		Game();
 

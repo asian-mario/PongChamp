@@ -28,9 +28,7 @@
 #include<imgui/imgui_impl_glfw_gl3.h>
 #include<imgui/imgui_internal.h>
 
-
-
-
+#define VEC3_ZERO glm::vec3(0.0f)
 
 using namespace std;
 
@@ -250,29 +248,19 @@ int main() {
 
 	ImGui::StyleColorsDark();
 
-
-	
 	Camera camera(width, height, glm::vec3(0.0f, 0.0f, 2.0f));
 	g.cameras.push_back(&camera);
 	g.gameObjects.push_back(&camera);
 	while (!glfwWindowShouldClose(window)) {
-
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-
-		
-		
-		
-		//Updating values of objects
-		g.update();
-
-		
+		if (!g.pause || g.framestep > 0) {
+			g.update();
+			g.framestep--;
+		}
 
 		//Exporting data & Render
-		
 		g.draw();
-
 		//---------------------------------------------------------------------------------------------------------------------------------
 		//Updates and exports camera matrix to the vert shader
 		camera.updateMatrix(45.0f, 0.1f, 100.0f);
@@ -281,14 +269,15 @@ int main() {
 		ImGui_ImplGlfwGL3_NewFrame();
 
 
-	//---------------------------DEBUG----------------------------------
-		GUI::createDebugMenu(paddle1);
-		GUI::createDebugMenu(paddle2, "Debug Paddle 2");
-		GUI::createDebugMenu(ball1);
-		GUI::createDebugMenu(BarrierBU);
-		GUI::createDebugMenu(BarrierBD, "Debug Barrier Bottom");
-	//-------------------------------------DEBUG----------------------------------------------
-		
+		//---------------------------DEBUG----------------------------------
+		GUI::createDebugMenu(paddle1, "Debug Paddle 1", glm::vec3(-0.75f, 0.0f, 0.0f), VEC3_ZERO, glm::vec3(0.015f, 0.2f, 1.0f));
+		GUI::createDebugMenu(paddle2, "Debug Paddle 2", glm::vec3(0.75f, 0.0f, 0.0f), VEC3_ZERO, glm::vec3(0.015f, 0.2f, 1.0f));
+		GUI::createDebugMenu(ball1, "Debug Ball", glm::vec3(-0.02f, 0.0f, 0.0f), VEC3_ZERO, glm::vec3(0.096f, 0.191f, 1.0f));
+		GUI::createDebugMenu(BarrierBU, "Debug Barrier Up", glm::vec3(0.0f, 0.85f, 0.0f), VEC3_ZERO, glm::vec3(1.7f, 0.05f, 1.0f));
+		GUI::createDebugMenu(BarrierBD, "Debug Barrier Bottom", glm::vec3(0.0f, -0.85f, 0.0f), VEC3_ZERO, glm::vec3(1.7f, 0.05f, 1.0f));
+		GUI::createDebugMenu(&g);
+		//-------------------------------------DEBUG----------------------------------------------
+
 
 
 
@@ -297,7 +286,10 @@ int main() {
 
 		glfwSwapBuffers(window);
 		glfwPollEvents(); //this is to make the window actually, respond.
+
+
 	}
+	
 
 	//------Delete-----------------
 	shaderProgram.Delete();

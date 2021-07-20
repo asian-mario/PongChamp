@@ -1,3 +1,4 @@
+#include "game.h"
 #include "GUI.h"
 
 //IMGUI
@@ -6,7 +7,7 @@
 #include<imgui/imgui_impl_glfw_gl3.h>
 #include<imgui/imgui_internal.h>
 
-void GUI::createDebugMenu(Paddle pad, string name) {
+void GUI::createDebugMenu(GameObject& obj, string name, glm::vec3 orgPos, glm::vec3 orgRot, glm::vec3 orgScale) {
 	{
 		ImGui::Begin(name.c_str());
 
@@ -16,41 +17,39 @@ void GUI::createDebugMenu(Paddle pad, string name) {
 
 		ImGui::Text("Mesh Controls");
 		ImGui::Dummy(ImVec2(0.0f, 5.0f));
-		ImGui::SliderFloat("Scale X", &pad.scale.x, 0.0f, 10.0f);
-		ImGui::SliderFloat("Scale Y", &pad.scale.y, 0.0f, 10.0f);
-		ImGui::SliderFloat("Scale Z", &pad.scale.z, 0.0f, 10.0f);
+		ImGui::SliderFloat("Scale X", &obj.scale.x, 0.0f, 10.0f);
+		ImGui::SliderFloat("Scale Y", &obj.scale.y, 0.0f, 10.0f);
+		ImGui::SliderFloat("Scale Z", &obj.scale.z, 0.0f, 10.0f);
 
 		if (ImGui::Button("Reset Scale"))
 			resetScale = true;
 
 		if (resetScale == true) {
-			pad.scale.x = 0.015f;
-			pad.scale.y = 0.2f;
-			pad.scale.z = 1.0f;
+			obj.scale = orgScale;
 		}
 
 		ImGui::Dummy(ImVec2(0.0f, 5.0f));
 
-		ImGui::SliderFloat("Translation X", &pad.position.x, -10.0f, 10.0f);
-		ImGui::SliderFloat("Translation Y", &pad.position.y, -10.0f, 10.0f);
-		ImGui::SliderFloat("Translation Z", &pad.position.z, -10.0f, 10.0f);
+		ImGui::SliderFloat("Translation X", &obj.position.x, -10.0f, 10.0f);
+		ImGui::SliderFloat("Translation Y", &obj.position.y, -10.0f, 10.0f);
+		ImGui::SliderFloat("Translation Z", &obj.position.z, -10.0f, 10.0f);
 		if (ImGui::Button("Reset Position"))
 			resetPos = true;
 
 		if (resetPos == true) {
-			pad.position = glm::vec3(-0.75f, 0.0f, 0.0f);
+			obj.position = orgPos;
 		}
 
 		ImGui::Dummy(ImVec2(0.0f, 5.0f));
 
-		ImGui::SliderFloat("Rotation X", &pad.rotation.x, -90.0f, 90.0f);
-		ImGui::SliderFloat("Rotation Y", &pad.rotation.y, -90.0f, 90.0f);
-		ImGui::SliderFloat("Rotation Z", &pad.rotation.z, -90.0f, 90.0f);
+		ImGui::SliderFloat("Rotation X", &obj.rotation.x, -90.0f, 90.0f);
+		ImGui::SliderFloat("Rotation Y", &obj.rotation.y, -90.0f, 90.0f);
+		ImGui::SliderFloat("Rotation Z", &obj.rotation.z, -90.0f, 90.0f);
 		if (ImGui::Button("Reset Rotation"))
 			resetRot = true;
 
 		if (resetRot == true) {
-			pad.rotation = glm::vec3(0.0f, 0.0f, 0.0f);
+			obj.rotation = orgRot;
 		}
 
 
@@ -61,79 +60,26 @@ void GUI::createDebugMenu(Paddle pad, string name) {
 	}
 }
 
-void GUI::createDebugMenu(Ball ball, string name) {
-	{
-		ImGui::Begin(name.c_str());
 
-		bool resetScale = false;
-		bool resetPos = false;
+void GUI::createDebugMenu(Game* g) {
+	static int control = 1;
+	ImGui::Begin("Settings");
+	if (ImGui::Button(g->pause ? "Play" : "Pause")) {
+		g->pause = !g->pause;
+		if (!g->pause) // if unpausing
+			g->lastTime = glfwGetTime();
+	}
 
+	if (g->pause) {
 		ImGui::Dummy(ImVec2(0.0f, 5.0f));
-		ImGui::SliderFloat("Scale X", &ball.scale.x, 0.0f, 10.0f);
-		ImGui::SliderFloat("Scale Y", &ball.scale.y, 0.0f, 10.0f);
-		ImGui::SliderFloat("Scale Z", &ball.scale.z, 0.0f, 10.0f);
-		if (ImGui::Button("Reset Scale"))
-			resetScale = true;
 
-		if (resetScale == true) {
-			ball.scale = glm::vec3(0.096f, 0.191f, 1.0f);
+		ImGui::SliderInt("Frames", &control, 1, 120);
+		ImGui::Dummy(ImVec2(0.0f, 5.0f));
+		if (ImGui::Button("Framestep")) {
+			g->lastTime = glfwGetTime();
+			g->framestep = control;
 		}
-
-		ImGui::Dummy(ImVec2(0.0f, 5.0f));
-
-		ImGui::SliderFloat("Translation X", &ball.position.x, -10.0f, 10.0f);
-		ImGui::SliderFloat("Translation Y", &ball.position.y, -10.0f, 10.0f);
-		ImGui::SliderFloat("Translation Z", &ball.position.z, -10.0f, 10.0f);
-		if (ImGui::Button("Reset Position"))
-			resetPos = true;
-
-		if (resetPos == true) {
-			ball.position = glm::vec3(0.0f, 0.0f, 0.0f);
-		}
-
-
-		ImGui::Dummy(ImVec2(0.0f, 5.0f));
-
-		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-		ImGui::End();
 	}
-}
-
-void GUI::createDebugMenu(Barrier bar, string name) {
-	{
-	ImGui::Begin(name.c_str());
-
-	bool resetScale = false;
-	bool resetPos = false;
-	ImGui::Text("Barrier");
-	ImGui::Dummy(ImVec2(0.0f, 5.0f));
-	ImGui::SliderFloat("Scale X", &bar.scale.x, 0.0f, 10.0f);
-	ImGui::SliderFloat("Scale Y", &bar.scale.y, 0.0f, 10.0f);
-	ImGui::SliderFloat("Scale Z", &bar.scale.z, 0.0f, 10.0f);
-
-	if (ImGui::Button("Reset Scale"))
-		resetScale = true;
-
-	if (resetScale == true) {
-		bar.scale = glm::vec3(1.7f, 0.05f, 1.0f);
-	}
-
-	ImGui::Dummy(ImVec2(0.0f, 5.0f));
-
-	ImGui::SliderFloat("Translation X", &bar.position.x, -10.0f, 10.0f);
-	ImGui::SliderFloat("Translation Y", &bar.position.y, -10.0f, 10.0f);
-	ImGui::SliderFloat("Translation Z", &bar.position.z, -10.0f, 10.0f);
-	if (ImGui::Button("Reset Position"))
-		resetPos = true;
-
-	if (resetPos == true) {
-		bar.position = glm::vec3(0.0f, 0.0f, 0.0f);
-	}
-
-	ImGui::Dummy(ImVec2(0.0f, 5.0f));
-
-	ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 
 	ImGui::End();
-	}
 }

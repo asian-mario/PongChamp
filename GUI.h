@@ -9,12 +9,12 @@
 #include"Ball.h"
 #include"Barrier.h"
 
+class Game;
 
 class GUI {
 public:
-	static void createDebugMenu(Paddle pad, string name = "Debug Paddle");
-	static void createDebugMenu(Ball ball, string name = "Debug Ball");
-	static void createDebugMenu(Barrier bar, string name = "Debug Barrier");
+	static void createDebugMenu(GameObject& obj, string name, glm::vec3 orgScale, glm::vec3 orgRot, glm::vec3 orgPos);
+	static void createDebugMenu(Game* g);
 
 	GUI() = delete;
 };
