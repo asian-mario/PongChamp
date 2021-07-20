@@ -10,7 +10,14 @@ class Camera;
 class GameObject;
 struct GLFWwindow;
 
+#include<GLFW/glfw3.h>
 #include "GameObject.h"
+#include "Barrier.h"
+#include "shaderclass.h"
+#include "Ball.h"
+#include "Paddle.h"
+#include "light.h"
+#include "Camera.h"
 #include <vector>
 
 

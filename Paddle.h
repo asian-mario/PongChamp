@@ -1,9 +1,11 @@
 #pragma once
 
+class GameObject;
 class Game;
 
-#include "game.h"
 #include "GameObject.h"
+#include "game.h"
+
 #include <glm/glm.hpp>
 #include <vector>
 

@@ -1,10 +1,11 @@
 #pragma once
 
 class Game;
-class Ball;
 class Camera;
-class Barrier;
+class Shader;
+
 #include "game.h"
+#include "Camera.h"
 #include "shaderclass.h"
 
 #include"ROML.h"
@@ -56,3 +57,4 @@ public:
 		mesh.Draw(*game->shaders[0], *game->cameras[0]);
 	}
 };
+

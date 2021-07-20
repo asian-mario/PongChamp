@@ -2,8 +2,8 @@
 
 #include<iostream>
 #include<stdlib.h>
-#include<glad/glad.h>
 #include<GLFW/glfw3.h>
+#include<glad/glad.h>
 #include<stb/stb_image.h>
 #include"GameObject.h"
 #include"game.h"
