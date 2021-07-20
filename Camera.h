@@ -1,7 +1,6 @@
 #pragma once
 
-class Game;
-class GameObject;
+
 
 #include<glad/glad.h>
 #include<GLFW/glfw3.h>
@@ -17,6 +16,9 @@ class GameObject;
 #include<cmath>
 #include"ROML.h"
 #include"shaderclass.h"
+#include "GameObject.h"
+
+class GameObject;
 
 class Camera : public GameObject {
 	public:	

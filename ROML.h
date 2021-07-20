@@ -228,7 +228,7 @@ namespace roml {
 
 	// Translates degrees to radians
 	float radians(float deg) {
-		return deg * (M_PI / 180.0);
+		return deg * (M_PI / 180.0f);
 	}
 
 

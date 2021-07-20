@@ -1,12 +1,11 @@
 #pragma once
 
-class Game;
-#include "game.h"
+
+#include "GameObject.h"
 #include <glm/glm.hpp>
 #include <vector>
-#include "GameObject.h"
-#include "Paddle.h"
 
+class GameObject;
 
 class Barrier : public GameObject {
 	public:

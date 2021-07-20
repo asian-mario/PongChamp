@@ -1,9 +1,5 @@
 #pragma once
 
-
-
-class Game;
-class GameObject;
 #include<glad/glad.h>
 #include<string>
 #include<fstream>
@@ -11,14 +7,11 @@ class GameObject;
 #include<iostream>
 #include<cerrno>
 
-#include "game.h"
-#include "GameObject.h"
-
 using namespace std;
 
 string get_file_contents(const char* filename);
 
-class Shader : public GameObject {
+class Shader {
 	public:
 
 		//Ref ID of the shader program

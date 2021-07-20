@@ -11,7 +11,6 @@ Texture::Texture(const char* image, const char* texType, GLuint slot, GLenum for
 	stbi_set_flip_vertically_on_load(true);
 	unsigned char* bytes = stbi_load(image, &widthImg, &heightImg, &numColCh, 0); //loc, width, height, num of colour channels and desired channels
 
-	GLuint texture;
 	glGenTextures(1, &ID); //num. of textures & reference variable
 	glActiveTexture(GL_TEXTURE0 + slot); //choosing the slot you want to use for the texture
 	unit = slot;

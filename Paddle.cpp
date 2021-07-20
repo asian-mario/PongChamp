@@ -1,3 +1,4 @@
+
 #include "Paddle.h"
 
 Paddle::Paddle(glm::vec3 position, glm::vec3 scale, CONTROLTYPE type, glm::vec3 velocity) {
