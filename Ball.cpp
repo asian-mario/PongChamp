@@ -2,8 +2,8 @@
 #include<stdlib.h>
 #include <cmath>
 
-Ball::Ball(glm::vec3 pos, glm::vec3 scale, glm::vec3 velocity) {
-	this->position = glm::vec3(pos);
+Ball::Ball(glm::vec3 position, glm::vec3 scale, glm::vec3 velocity) {
+	this->position = glm::vec3(position);
 	this->rotation = glm::vec3(0.0f);
 	this->scale = glm::vec3(scale);
 	this->velocity = glm::vec3(velocity);
@@ -20,8 +20,38 @@ bool Ball::circintersects(glm::vec3 circle, glm::vec3 rect, double circleRadius)
 	return (pow(circleRadius, 2) - pow((rect.x - circle.x), 2)) >= 0 && (circle.y >= rect.y - 0.2) && (circle.y <= rect.y + 0.2) || cornerDistance <= pow(circleRadius, 2);
 }
 
+bool Ball::boundsCheck(glm::vec3 position, glm::vec3 velocity, float bounds) {
+	if (position.x >= bounds) {
+		return true;
+	}
+
+}
+bool Ball::boundsCheckL(glm::vec3 position, glm::vec3 velocity, float bounds) {
+	if (position.x <= bounds) {
+		return true;
+	}
+
+}
+
+
 
 void Ball::update(Game* g) {
+
+	//--------------BOUNDS CHECK----------------------
+	bool checkRight = boundsCheck(g->balls[0]->position, g->balls[0]->velocity, 1.0f);
+	bool checkLeft = boundsCheckL(g->balls[0]->position, g->balls[0]->velocity, -1.0f);
+
+	if (checkRight == true) {
+		position = glm::vec3(0.0f);
+		velocity = glm::vec3(-0.6, 0.0f, 0.0f);
+	}
+
+	if (checkLeft == true) {
+		position = glm::vec3(0.0f);
+		velocity = glm::vec3(0.6, 0.0f, 0.0f);
+	}
+
+	//--------------INTERSECTION-----------------------
 	//All the model matrices
 	glm::mat4 padModel = g->paddles[0]->getModelMatrix();
 	glm::mat4 pad2Model = g->paddles[1]->getModelMatrix();
@@ -65,9 +95,10 @@ void Ball::update(Game* g) {
 
 	//-------------------------------------COLLISION-----------------------------------------
 
-	//------------------------NOT COLLISION (Very Descritive)--------------------------------
+	//------------------------NOT COLLISION (Very Descriptive)--------------------------------
 	position.x += velocity.x * deltaTime;
 	position.y += velocity.y * deltaTime;
+	//--------------INTERSECTION-----------------------
 
 
 }
