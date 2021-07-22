@@ -193,42 +193,42 @@ int main() {
 	g.shaders.push_back(&lightShader);
 
 	//-----------------------------Lights------------------------------------------------------------------
-	Light directLight(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), glm::vec3(0.0f, 0.5f, 1.5f));
+	Light directLight(glm::vec4(10.0f, 10.0f, 10.0f, 10.0f) * 100.0f, glm::vec3(0.0f, 0.5f, 1.5f));
 	directLight.mesh = Mesh(lightVerts, lightInd, defaultTex);
 	g.lights.push_back(&directLight);
 	g.gameObjects.push_back(&directLight);
 	//--------------------------------------------MESH-----------------------------------------------------
 
 	//--------------Paddle1---------------------------------
-	Paddle paddle1(glm::vec3(-0.75f, 0.0f, 0.0f), glm::vec3(0.015f, 0.2f, 1.0f), Paddle::CONTROLTYPE::WASD, glm::vec3(0.0f));
+	Paddle paddle1(glm::vec3(-0.85f, 0.0f, 0.0f) * 100.0f, glm::vec3(0.015f, 0.2f, 0.0f) * 100.0f, Paddle::CONTROLTYPE::WASD, glm::vec3(0.0f));
 	paddle1.mesh = Mesh(sqrverts, sqrinds, defaultTex);
 	g.paddles.push_back(&paddle1);
 	g.gameObjects.push_back(&paddle1);
 	//--------------Paddle1---------------------------------
 
 	//--------------Paddle2---------------------------------
-	Paddle paddle2(glm::vec3(0.75f, 0.0f, 0.0f), glm::vec3(0.015f, 0.2f, 1.0f), Paddle::CONTROLTYPE::ARROW, glm::vec3(0.0f));
+	Paddle paddle2(glm::vec3(0.85f, 0.0f, 0.0f) * 100.0f, glm::vec3(0.015f, 0.2f, 0.0f) * 100.0f, Paddle::CONTROLTYPE::ARROW, glm::vec3(0.0f));
 	paddle2.mesh = Mesh(sqrverts, sqrinds, defaultTex);
 	g.paddles.push_back(&paddle2);
 	g.gameObjects.push_back(&paddle2);
 	//--------------Paddle2---------------------------------
 
 	//--------------BarrierUp-------------------------------
-	Barrier BarrierBU(glm::vec3(0.0f, 0.85f, 0.0f), glm::vec3(1.7f, 0.05f, 1.0f));
+	Barrier BarrierBU(glm::vec3(0.0f, 1.02f, 0.0f) * 100.0f, glm::vec3(2.0f, 0.05f, 1.0f) * 100.0f);
 	BarrierBU.mesh = Mesh(sqrverts, sqrinds, defaultTex);
 	g.barriers.push_back(&BarrierBU);
 	g.gameObjects.push_back(&BarrierBU);
 	//--------------BarrierUp-------------------------------
 
 	//--------------BarrierDown-------------------------------
-	Barrier BarrierBD(glm::vec3(0.0f, -0.85f, 0.0f), glm::vec3(1.7f, 0.05f, 1.0f));
+	Barrier BarrierBD(glm::vec3(0.0f, -1.02f, 0.0f) * 100.0f, glm::vec3(2.0f, 0.05f, 1.0f) * 100.0f);
 	BarrierBD.mesh = Mesh(sqrverts, sqrinds, defaultTex);
 	g.barriers.push_back(&BarrierBD);
 	g.gameObjects.push_back(&BarrierBD);
 	//--------------BarrierDown-------------------------------
 
 	//--------------BALL--------------------------------------
-	Ball ball1(glm::vec3(-0.02f, 0.0f, 0.0f), glm::vec3(0.096f, 0.191f, 1.0f), glm::vec3(-0.6f, 0.0f, 0.0f));
+	Ball ball1(glm::vec3(-0.02f, 0.0f, 0.0f) * 100.0f, glm::vec3(0.096f, 0.191f, 1.0f) * 100.0f, glm::vec3(-60.0f, 0.0f, 0.0f));
 	ball1.mesh = Mesh(ballsverts, ballinds, ballTex);
 	g.balls.push_back(&ball1);
 	g.gameObjects.push_back(&ball1);
@@ -248,7 +248,7 @@ int main() {
 
 	ImGui::StyleColorsDark();
 
-	Camera camera(width, height, glm::vec3(0.0f, 0.0f, 2.0f));
+	Camera camera(width, height, glm::vec3(0.0f, 0.0f, 10.0f));
 	g.cameras.push_back(&camera);
 	g.gameObjects.push_back(&camera);
 	while (!glfwWindowShouldClose(window)) {
@@ -263,7 +263,7 @@ int main() {
 		g.draw();
 		//---------------------------------------------------------------------------------------------------------------------------------
 		//Updates and exports camera matrix to the vert shader
-		camera.updateMatrix(45.0f, 0.1f, 100.0f);
+		camera.updateMatrix(45.0f, 0.0f, 500.0f);
 
 		//IMGUI
 		ImGui_ImplGlfwGL3_NewFrame();
@@ -275,6 +275,7 @@ int main() {
 		GUI::createDebugMenu(ball1, "Debug Ball", glm::vec3(-0.02f, 0.0f, 0.0f), VEC3_ZERO, glm::vec3(0.096f, 0.191f, 1.0f));
 		GUI::createDebugMenu(BarrierBU, "Debug Barrier Up", glm::vec3(0.0f, 0.85f, 0.0f), VEC3_ZERO, glm::vec3(1.7f, 0.05f, 1.0f));
 		GUI::createDebugMenu(BarrierBD, "Debug Barrier Bottom", glm::vec3(0.0f, -0.85f, 0.0f), VEC3_ZERO, glm::vec3(1.7f, 0.05f, 1.0f));
+		GUI::createDebugMenu(camera, "Camera", glm::vec3(0.0f, -0.85f, 0.0f), VEC3_ZERO, glm::vec3(1.7f, 0.05f, 1.0f));
 		GUI::createDebugMenu(&g);
 		//-------------------------------------DEBUG----------------------------------------------
 

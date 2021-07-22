@@ -11,8 +11,8 @@ glm::mat4 GameObject::getModelMatrix() {
 	return Loc * Rot * Soc;
 }
 
-glm::vec3 GameObject::findWorldPos(glm::mat4 mat, glm::vec3 pos) {
-	return mat * glm::vec4(pos, 1.0f);
+glm::vec3 GameObject::findWorldPos() {
+	return getModelMatrix() * glm::vec4(1.0f);
 }
 
 void GameObject::draw(Game* game) {

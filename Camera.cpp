@@ -7,11 +7,12 @@ Camera::Camera(int width, int height, glm::vec3 position) {
 }
 
 void Camera::updateMatrix(float FOVdeg, float nearPlane, float farPlane) {
-	glm::mat4 view = glm::mat4(1.0f);
+	view = glm::mat4(1.0f);
 	glm::mat4 projection = glm::mat4(1.0f);
 
 	view = roml::lookAt(position, position + Orientation, Up);
-	projection = roml::createPerspective(roml::radians(FOVdeg), (float)(width / height), nearPlane, farPlane);
+	//roml::createOrto(roml::radians(FOVdeg), (float)(width / height), nearPlane, farPlane);
+	projection = roml::createOrto(-(float)(width / height) * 100, (float)(width / height) * 100, -100.0f, 100.0f, nearPlane, farPlane);
 
 	cameraMatrix = projection * view;
 }

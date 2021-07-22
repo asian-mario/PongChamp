@@ -12,6 +12,7 @@ namespace roml {
 	glm::mat4 translate(glm::mat4 matrix, glm::vec3 camera);
 	glm::mat4 scale(glm::mat4 mat, glm::vec3 scalar);
 	glm::mat4 createPerspective(float FOV, float screenAspect, float nearClip, float farClip);
+	glm::mat4 createOrto(float left, float right, float bottom, float top, float nearClip, float farClip);
 	glm::mat4 rotate(glm::mat4 oldMat, float rotation, glm::vec3 normal);
 	glm::mat4 rotate(glm::mat4 oldMat, float rotation, char axis);
 	glm::vec3 rotate(glm::vec3 vector, float angle, glm::vec3 normal);
@@ -66,6 +67,21 @@ namespace roml {
 		//Took me 3 hours to find out that GLM swaps the Z axis because OpenGL renders right hand side
 
 		return perspectiveM;
+	}
+
+	glm::mat4 createOrto(float left, float right, float bottom, float top, float nearClip, float farClip) {
+		//Making it a zero matrix
+		glm::mat4 ortoM = glm::mat4(1.0f);
+
+
+		ortoM[0][0] = 2 / (right - left);
+		ortoM[1][1] = 2 / (top - bottom);
+		ortoM[2][2] = -2 / (farClip - nearClip);
+		ortoM[3][0] = -(right + left) / (right - left);
+		ortoM[3][1] = -(top + bottom) / (top - bottom);
+		ortoM[3][2] = -(farClip + nearClip) / (farClip - nearClip);
+
+		return ortoM;
 	}
 
 

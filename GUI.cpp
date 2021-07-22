@@ -17,9 +17,9 @@ void GUI::createDebugMenu(GameObject& obj, string name, glm::vec3 orgPos, glm::v
 
 		ImGui::Text("Mesh Controls");
 		ImGui::Dummy(ImVec2(0.0f, 5.0f));
-		ImGui::SliderFloat("Scale X", &obj.scale.x, 0.0f, 10.0f);
-		ImGui::SliderFloat("Scale Y", &obj.scale.y, 0.0f, 10.0f);
-		ImGui::SliderFloat("Scale Z", &obj.scale.z, 0.0f, 10.0f);
+		ImGui::SliderFloat("Scale X", &obj.scale.x, 0.0f, 200.0f);
+		ImGui::SliderFloat("Scale Y", &obj.scale.y, 0.0f, 200.0f);
+		ImGui::SliderFloat("Scale Z", &obj.scale.z, 0.0f, 200.0f);
 
 		if (ImGui::Button("Reset Scale"))
 			resetScale = true;
@@ -30,9 +30,9 @@ void GUI::createDebugMenu(GameObject& obj, string name, glm::vec3 orgPos, glm::v
 
 		ImGui::Dummy(ImVec2(0.0f, 5.0f));
 
-		ImGui::SliderFloat("Translation X", &obj.position.x, -10.0f, 10.0f);
-		ImGui::SliderFloat("Translation Y", &obj.position.y, -10.0f, 10.0f);
-		ImGui::SliderFloat("Translation Z", &obj.position.z, -10.0f, 10.0f);
+		ImGui::SliderFloat("Translation X", &obj.position.x, -200.0f, 200.0f);
+		ImGui::SliderFloat("Translation Y", &obj.position.y, -200.0f, 200.0f);
+		ImGui::SliderFloat("Translation Z", &obj.position.z, -200.0f, 200.0f);
 		if (ImGui::Button("Reset Position"))
 			resetPos = true;
 
@@ -42,9 +42,9 @@ void GUI::createDebugMenu(GameObject& obj, string name, glm::vec3 orgPos, glm::v
 
 		ImGui::Dummy(ImVec2(0.0f, 5.0f));
 
-		ImGui::SliderFloat("Rotation X", &obj.rotation.x, -90.0f, 90.0f);
-		ImGui::SliderFloat("Rotation Y", &obj.rotation.y, -90.0f, 90.0f);
-		ImGui::SliderFloat("Rotation Z", &obj.rotation.z, -90.0f, 90.0f);
+		ImGui::SliderFloat("Rotation X", &obj.rotation.x, -360.0f, 360.0f);
+		ImGui::SliderFloat("Rotation Y", &obj.rotation.y, -360.0f, 360.0f);
+		ImGui::SliderFloat("Rotation Z", &obj.rotation.z, -360.0f, 360.0f);
 		if (ImGui::Button("Reset Rotation"))
 			resetRot = true;
 

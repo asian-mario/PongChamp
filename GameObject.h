@@ -27,7 +27,7 @@ public:
 
 	
 	virtual glm::mat4 getModelMatrix();
-	virtual glm::vec3 findWorldPos(glm::mat4 mat, glm::vec3 pos);
+	virtual glm::vec3 findWorldPos();
 	virtual void draw(Game* game);
 	virtual void update(Game* game) {}
 };

@@ -15,9 +15,8 @@ bool Ball::circintersects(glm::vec3 circle, glm::vec3 rect, double circleRadius)
 	double circleDistanceY = abs(circle.y - rect.y);
 
 
-	double cornerDistance = pow((circleDistanceX - 0.0075 / 2), 2.0f) +
-		pow((circleDistanceY - 0.2 / 2), 2.0f);
-	return (pow(circleRadius, 2) - pow((rect.x - circle.x), 2)) >= 0 && (circle.y >= rect.y - 0.2) && (circle.y <= rect.y + 0.2) || cornerDistance <= pow(circleRadius, 2);
+	//double cornerDistance = pow((circleDistanceX - 0.0075 / 2), 2.0f) + pow((circleDistanceY - 0.2 / 2), 2.0f);
+	return (pow(circleRadius, 2) - pow((rect.x - circle.x), 2)) >= 0 && (circle.y >= rect.y - 18.0) && (circle.y <= rect.y + 18.0) /*|| cornerDistance <= pow(circleRadius, 2)*/;
 }
 
 bool Ball::boundsCheck(glm::vec3 position, glm::vec3 velocity, float bounds) {
@@ -36,39 +35,29 @@ bool Ball::boundsCheckL(glm::vec3 position, glm::vec3 velocity, float bounds) {
 
 
 void Ball::update(Game* g) {
-
 	//--------------BOUNDS CHECK----------------------
-	bool checkRight = boundsCheck(g->balls[0]->position, g->balls[0]->velocity, 1.0f);
-	bool checkLeft = boundsCheckL(g->balls[0]->position, g->balls[0]->velocity, -1.0f);
+	bool checkRight = boundsCheck(g->balls[0]->position, g->balls[0]->velocity, 1.0f * 100.0f);
+	bool checkLeft = boundsCheckL(g->balls[0]->position, g->balls[0]->velocity, -1.0f * 100.0f);
 
 	if (checkRight == true) {
 		position = glm::vec3(0.0f);
-		velocity = glm::vec3(-0.6, 0.0f, 0.0f);
+		velocity = glm::vec3(-60.0f, -rand() / control, 0.0f);
 	}
 
 	if (checkLeft == true) {
 		position = glm::vec3(0.0f);
-		velocity = glm::vec3(0.6, 0.0f, 0.0f);
+		velocity = glm::vec3(60.0f, rand() / control, 0.0f);
 	}
 
 	//--------------INTERSECTION-----------------------
-	//All the model matrices
-	glm::mat4 padModel = g->paddles[0]->getModelMatrix();
-	glm::mat4 pad2Model = g->paddles[1]->getModelMatrix();
-	glm::mat4 ballModel = getModelMatrix();
 
-	double control = 100000.0;
+
 	double deltaTime = g->deltaTime();
 
-	//Calculating worldpos
-	glm::vec3 padWorldPos = g->paddles[0]->findWorldPos(padModel, g->paddles[0]->position);
-	glm::vec3 pad2WorldPos = g->paddles[1]->findWorldPos(pad2Model, g->paddles[1]->position);
-	glm::vec3 ballWorldPos = ballModel * glm::vec4(position, 1.0f);
+	double rad = 3.0;
 
-	double rad = 0.003;
-
-	bool intersect = circintersects(ballWorldPos, padWorldPos, rad);
-	bool intersect2 = circintersects(ballWorldPos, pad2WorldPos, rad);
+	bool intersect = circintersects(g->balls[0]->position, g->paddles[0]->position, rad);
+	bool intersect2 = circintersects(g->balls[0]->position, g->paddles[1]->position, rad);
 
 	if (intersect) {
 		velocity.x = -velocity.x;
@@ -80,13 +69,13 @@ void Ball::update(Game* g) {
 		velocity.x = -velocity.x;
 		velocity.y += rand() / control + g->paddles[1]->velocity.y;
 	}
-	if (position.y <= -0.8) {
+	if (position.y <= -0.95 * 100.0) {
 		velocity.y = -velocity.y - 0.001f;
 		g->paddles[0]->velocity.y = 0.0f;
 		g->paddles[1]->velocity.y = 0.0f;
 	}
 
-	if (position.y >= 0.8) {
+	if (position.y >= 0.95 * 100.0) {
 		velocity.y = -velocity.y - 0.001f;
 		g->paddles[0]->velocity.y = 0.0f;
 		g->paddles[1]->velocity.y = 0.0f;
