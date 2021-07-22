@@ -15,8 +15,8 @@ bool Ball::circintersects(glm::vec3 circle, glm::vec3 rect, double circleRadius)
 	double circleDistanceY = abs(circle.y - rect.y);
 
 
-	//double cornerDistance = pow((circleDistanceX - 0.0075 / 2), 2.0f) + pow((circleDistanceY - 0.2 / 2), 2.0f);
-	return (pow(circleRadius, 2) - pow((rect.x - circle.x), 2)) >= 0 && (circle.y >= rect.y - 18.0) && (circle.y <= rect.y + 18.0) /*|| cornerDistance <= pow(circleRadius, 2)*/;
+	double cornerDistance = pow((circleDistanceX - 0.75 / 2), 2.0f) + pow((circleDistanceY - 20.0 / 2), 2.0f);
+	return (pow(circleRadius, 2) - pow((rect.x - circle.x), 2)) >= 0 && (circle.y >= rect.y - 18.0) && (circle.y <= rect.y + 18.0) || cornerDistance <= pow(circleRadius, 2);
 }
 
 bool Ball::boundsCheck(glm::vec3 position, glm::vec3 velocity, float bounds) {
@@ -61,32 +61,26 @@ void Ball::update(Game* g) {
 
 	if (intersect) {
 		velocity.x = -velocity.x;
-		velocity.y += -rand() / control + g->paddles[0]->velocity.y;
-
+		velocity.y += g->paddles[0]->velocity.y * 50;
 	}
 
 	if (intersect2) {
 		velocity.x = -velocity.x;
-		velocity.y += rand() / control + g->paddles[1]->velocity.y;
-	}
-	if (position.y <= -0.95 * 100.0) {
-		velocity.y = -velocity.y - 0.001f;
-		g->paddles[0]->velocity.y = 0.0f;
-		g->paddles[1]->velocity.y = 0.0f;
+		velocity.y += g->paddles[1]->velocity.y * 50;
 	}
 
-	if (position.y >= 0.95 * 100.0) {
-		velocity.y = -velocity.y - 0.001f;
-		g->paddles[0]->velocity.y = 0.0f;
-		g->paddles[1]->velocity.y = 0.0f;
+	if (position.y > 95.0f) {
+		velocity.y = -velocity.y - 5.0f;
 	}
 
+	if (position.y < -95.0f) {
+		velocity.y = -velocity.y + 5.0f;
+	}
 
 	//-------------------------------------COLLISION-----------------------------------------
 
 	//------------------------NOT COLLISION (Very Descriptive)--------------------------------
-	position.x += velocity.x * deltaTime;
-	position.y += velocity.y * deltaTime;
+	position += velocity * (float) deltaTime;
 	//--------------INTERSECTION-----------------------
 
 

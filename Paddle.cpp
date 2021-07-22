@@ -13,57 +13,36 @@ Paddle::Paddle(glm::vec3 position, glm::vec3 scale, CONTROLTYPE type, glm::vec3 
 void Paddle::update(Game* g) {
 	if (type == WASD) {
 		if (glfwGetKey(g->gameWindow, GLFW_KEY_W) == GLFW_PRESS) {
-			if (position.y >= 0.9f * 100.0) {
-				position.y += 0.0f;
-			}
-			if (position.y < 0.9f * 100.0) {
-				position.y += 0.01f * 100.0;
-				velocity.y += 0.00001;
-			}
+			velocity.y = 1.0f;
 		}
-		else if (glfwGetKey(g->gameWindow, GLFW_KEY_W) == GLFW_RELEASE) {
-			velocity.y = 0.0;
-
-		}
-		if (glfwGetKey(g->gameWindow, GLFW_KEY_S) == GLFW_PRESS) {
-			if (position.y <= -0.9f * 100.0) {
-				position.y -= 0.0f;
-			}
-			if (position.y > -0.9f * 100.0) {
-				position.y -= 0.01f * 100.0;
-				velocity.y -= 0.00001;
-			}
-		}
-		else if (glfwGetKey(g->gameWindow, GLFW_KEY_W) == GLFW_RELEASE) {
-			velocity.y = 0.0;
+		else if (glfwGetKey(g->gameWindow, GLFW_KEY_S) == GLFW_PRESS) {
+			velocity.y = -1.0f;
 		}
 	}
 
 	if (type == ARROW) {
 		if (glfwGetKey(g->gameWindow, GLFW_KEY_UP) == GLFW_PRESS) {
-			if (position.y >= 0.9f * 100.0) {
-				position.y += 0.0f;
-			}
-			if (position.y < 0.9f * 100.0) {
-				position.y += 0.01f * 100.0;
-				velocity.y += 0.00001;
-			}
+			velocity.y = 1.0f;
 		}
-		else if (glfwGetKey(g->gameWindow, GLFW_KEY_UP) == GLFW_RELEASE) {
-			velocity.y = 0.0;
+		else if (glfwGetKey(g->gameWindow, GLFW_KEY_DOWN) == GLFW_PRESS) {
+			velocity.y = -1.0f;
 		}
-		if (glfwGetKey(g->gameWindow, GLFW_KEY_DOWN) == GLFW_PRESS) {
-			if (position.y <= -0.9f * 100.0) {
-				position.y -= 0.0f;
-			}
-			if (position.y > -0.9f * 100.0) {
-				position.y -= 0.01f * 100.0;
-				velocity.y -= 0.00001;
-			}
-		}
-		else if (glfwGetKey(g->gameWindow, GLFW_KEY_DOWN) == GLFW_RELEASE) {
-			velocity.y = 0.0;
-		}
+	}
+
+	if (velocity.y != 0)
+		velocity.y += (velocity.y < 0 ? 1.0f : -1.0f) * 1.0f * g->deltaTime();
+
+	if (abs(velocity.y) <= 0.05f) velocity.y = 0;
+
+	position += velocity;
+	if (position.y > 90.0f) {
+		position.y = 90.0f;
+		if (velocity.y > 0) velocity.y = -velocity.y;
+	}
+
+	if (position.y < -90.0f) {
+		position.y = -90.0f;
+		if (velocity.y < 0) velocity.y = -velocity.y;
 	}
 }
 
