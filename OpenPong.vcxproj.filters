@@ -28,6 +28,9 @@
     <Filter Include="Source Files\IMGUI">
       <UniqueIdentifier>{440b4355-bfaa-4fca-a275-16efde02e0b5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\Fonts">
+      <UniqueIdentifier>{1bdd1acf-5565-4282-8693-72ee3e82ae58}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -162,5 +165,10 @@
     <Image Include="white.png">
       <Filter>Resource Files\Textures</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="6809 chargen.ttf">
+      <Filter>Resource Files\Fonts</Filter>
+    </Font>
   </ItemGroup>
 </Project>

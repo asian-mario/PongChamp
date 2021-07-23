@@ -13,7 +13,7 @@
 #include"Ball.h"
 #include"Barrier.h"
 #include"GUI.h"
-
+#include"font.h"
 
 #include <chrono>
 #include <cmath>
@@ -28,12 +28,14 @@
 #include<imgui/imgui_impl_glfw_gl3.h>
 #include<imgui/imgui_internal.h>
 
+
 #define VEC3_ZERO glm::vec3(0.0f)
 
 using namespace std;
 
 const unsigned int width = 1920;
 const unsigned int height = 1080;
+
 
 using seconds_t = std::chrono::seconds;
 
@@ -57,13 +59,13 @@ decltype(seconds_t().count()) get_millis_since_epoch()
 
 
 
-
 int main() {
 	glfwInit();
 
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3); //Specifying OpenGL version
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); //Using core porfile (just modern libraries)
+
 
 	//Face normals are perpendicular to a surface of one triangle while vertex normals are projected from each vertex
 	//Face normals = flat shading, vertex normals = smooth shading. we're gonna use face normals
@@ -228,7 +230,7 @@ int main() {
 	//--------------BarrierDown-------------------------------
 
 	//--------------BALL--------------------------------------
-	Ball ball1(glm::vec3(-0.02f, 0.0f, 0.0f) * 100.0f, glm::vec3(0.096f, 0.191f, 1.0f) * 100.0f, glm::vec3(-60.0f, 0.0f, 0.0f));
+	Ball ball1(glm::vec3(-0.02f, 0.0f, 0.0f) * 100.0f, glm::vec3(0.096f, 0.191f, 1.0f) * 100.0f, glm::vec3(-65.0f, rand() / 10000.0f, 0.0f));
 	ball1.mesh = Mesh(ballsverts, ballinds, ballTex);
 	g.balls.push_back(&ball1);
 	g.gameObjects.push_back(&ball1);
