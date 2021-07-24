@@ -175,6 +175,7 @@
     <ClInclude Include="Barrier.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="EBO.h" />
+    <ClInclude Include="font.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GUI.h" />
@@ -190,6 +191,8 @@
   <ItemGroup>
     <None Include="default.frag" />
     <None Include="Default.vert" />
+    <None Include="font.frag" />
+    <None Include="font.vert" />
     <None Include="light.frag" />
     <None Include="light.vert" />
   </ItemGroup>
@@ -197,7 +200,7 @@
     <Image Include="white.png" />
   </ItemGroup>
   <ItemGroup>
-    <Font Include="6809 chargen.ttf" />
+    <Font Include="chargen.ttf" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

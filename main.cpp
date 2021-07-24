@@ -199,6 +199,12 @@ int main() {
 	directLight.mesh = Mesh(lightVerts, lightInd, defaultTex);
 	g.lights.push_back(&directLight);
 	g.gameObjects.push_back(&directLight);
+
+	//------------------------------TEXT-------------------------------------------------------------------
+	Shader fShader("font.vert", "font.frag");
+	g.shaders.push_back(&fShader);
+
+
 	//--------------------------------------------MESH-----------------------------------------------------
 
 	//--------------Paddle1---------------------------------
@@ -253,7 +259,11 @@ int main() {
 	Camera camera(width, height, glm::vec3(0.0f, 0.0f, 10.0f));
 	g.cameras.push_back(&camera);
 	g.gameObjects.push_back(&camera);
+
+	Font font;
+	font.initFont("chargen.ttf");
 	while (!glfwWindowShouldClose(window)) {
+
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		if (!g.pause || g.framestep > 0) {
@@ -261,11 +271,33 @@ int main() {
 			g.framestep--;
 		}
 
+		
+		
 		//Exporting data & Render
 		g.draw();
 		//---------------------------------------------------------------------------------------------------------------------------------
 		//Updates and exports camera matrix to the vert shader
 		camera.updateMatrix(45.0f, 0.0f, 500.0f);
+
+		//------------------------TEXT (NOTE: IMPLEMENT IN G.DRAW())----------------------------------------
+		fShader.Activate();
+
+		int w, h;
+		glfwGetWindowSize(window, &w, &h);
+		glm::mat4 orthoP = roml::createOrto(0.0f, (float)w, (float)h, 0.0f);
+		glUniformMatrix4fv(glGetUniformLocation(fShader.ID, "ModViewProj"), 1, GL_FALSE, &orthoP[0][0]);
+		glDisable(GL_CULL_FACE);
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glDisable(GL_DEPTH_TEST);
+
+		font.drawString(0.0f, 0.0f, "Testing", &fShader);
+
+		fShader.Delete();
+		glEnable(GL_CULL_FACE);
+		glEnable(GL_DEPTH_TEST);
+
+		//------------------------TEXT (NOTE: IMPLEMENT IN G.DRAW())----------------------------------------
 
 		//IMGUI
 		ImGui_ImplGlfwGL3_NewFrame();

@@ -146,6 +146,9 @@
     <ClInclude Include="GameObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="font.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="light.vert">
@@ -160,6 +163,12 @@
     <None Include="Default.vert">
       <Filter>Resource Files\Shaders</Filter>
     </None>
+    <None Include="font.vert">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="font.frag">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="white.png">
@@ -167,7 +176,7 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <Font Include="6809 chargen.ttf">
+    <Font Include="chargen.ttf">
       <Filter>Resource Files\Fonts</Filter>
     </Font>
   </ItemGroup>
