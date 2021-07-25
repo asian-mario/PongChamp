@@ -263,6 +263,10 @@ int main() {
 	Font font;
 	font.initFont("chargen.ttf");
 
+	int w, h;
+
+	glm::mat4 orthoP = roml::createOrto(0.0f, 0, 0, 0.0f);
+	gameFont gameFont(orthoP, glm::vec3(500.0f, 800.0f, 0.0f));
 
 	while (!glfwWindowShouldClose(window)) {
 
@@ -282,7 +286,7 @@ int main() {
 		camera.updateMatrix(45.0f, 0.0f, 500.0f);
 
 		//------------------------TEXT (NOTE: IMPLEMENT IN G.DRAW())----------------------------------------
-		fShader.Activate();
+		/*fShader.Activate();
 
 		float posX = 500.0f;
 		float posY = 800.0f;
@@ -295,11 +299,12 @@ int main() {
 		glDisable(GL_CULL_FACE);
 		glDisable(GL_DEPTH_TEST);
 
-		font.drawString(posX, posY, test, &fShader);
+		font.drawString(posX, posY, test, &fShader);*/
 
+		glfwGetWindowSize(window, &w, &h);
+		gameFont.draw(&g, window, &font, (const char*)"hello");
 		
-		/*glEnable(GL_CULL_FACE);
-		glEnable(GL_DEPTH_TEST);*/
+		
 
 		//------------------------TEXT (NOTE: IMPLEMENT IN G.DRAW())----------------------------------------
 

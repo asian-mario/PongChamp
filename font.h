@@ -8,6 +8,9 @@
 #define STB_TRUETYPE_IMPLEMENTATION
 #include <stb/stb_truetype.h>
 
+class Game;
+class GLFWwindow;
+
 struct fontVertex {
 	glm::vec2 position;
 	glm::vec2 texCoords;
@@ -29,12 +32,9 @@ public:
 		fread(ttfBuffer, 1, 1 << 20, fopen(filename, "rb")); //rb makes and writes into a binary file
 		stbtt_BakeFontBitmap(ttfBuffer, 0, 32.0f, tmpBitmap, 512, 512, 32, 96, cdata); //there are 96 printable ascii characters, cool stuff
 
-		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
 		glGenTextures(1, &fontTexture);
 		glBindTexture(GL_TEXTURE_2D, fontTexture);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 512, 512, 0, GL_RGBA, GL_UNSIGNED_BYTE, tmpBitmap);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, 512, 512, 0, GL_RED, GL_UNSIGNED_BYTE, tmpBitmap);
 		glBindTexture(GL_TEXTURE_2D, fontTexture);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glBindTexture(GL_TEXTURE_2D, 0); //unbind texture
@@ -67,6 +67,7 @@ public:
 			fvBufferData = new fontVertex[fvBufferCapacity * 6];
 		}
 
+		
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, fontTexture);
 		glUniform1i(glGetUniformLocation(fontShader->ID, "u_texture"), 0);
@@ -91,6 +92,8 @@ public:
 			++text;
 		}
 
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(fontVertex) * numVertices, fvBufferData);
 		glDrawArrays(GL_TRIANGLES, 0, numVertices);
 	}
@@ -100,4 +103,13 @@ private:
 	GLuint fontTexture;
 	fontVertex* fvBufferData;
 	uint32_t fvBufferCapacity;
+};
+
+
+class gameFont {
+public:
+	glm::mat4 ortho;
+	glm::vec3 pos;
+	gameFont(glm::mat4 ortho, glm::vec3 pos);
+	void draw(Game* g, GLFWwindow* window, Font* font, const char* string);
 };

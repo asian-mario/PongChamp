@@ -99,6 +99,9 @@
     <ClCompile Include="GameObject.cpp">
       <Filter>Source Files\openpong</Filter>
     </ClCompile>
+    <ClCompile Include="font.cpp">
+      <Filter>Source Files\openpong</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EBO.h">
