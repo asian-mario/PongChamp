@@ -2,6 +2,8 @@
 
 #include<iostream>
 #include<stdlib.h>
+#include <Windows.h>
+
 #include<glad/glad.h>
 #include<stb/stb_image.h>
 #include "ROML.h"
@@ -14,6 +16,7 @@
 #include"Barrier.h"
 #include"GUI.h"
 #include"font.h"
+#include"gameFont.h"
 
 #include <chrono>
 #include <cmath>
@@ -260,19 +263,26 @@ int main() {
 	g.cameras.push_back(&camera);
 	g.gameObjects.push_back(&camera);
 
+	//---------------------------TEXT----------------------------
 	Font font;
 	font.initFont("chargen.ttf");
+	g.fonts.push_back(&font);
 
-	int w, h;
+	gameFont score1(glm::vec3(200.0f, 150.0f, 0.0f));
+	g.texts.push_back(&score1);
 
-	glm::mat4 orthoP = roml::createOrto(0.0f, 0, 0, 0.0f);
-	gameFont gameFont(orthoP, glm::vec3(500.0f, 800.0f, 0.0f));
+	gameFont score2(glm::vec3(1650.0f, 150.0f, 0.0f));
+	g.texts.push_back(&score2);
+
+	bool endGame = false;
+
+	//---------------------------TEXT----------------------------
 
 	while (!glfwWindowShouldClose(window)) {
 
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		if (!g.pause || g.framestep > 0) {
+		if (!g.pause && !g.texts[0]->endGame && !g.texts[1]->endGame || g.framestep > 0) {
 			g.update();
 			g.framestep--;
 		}
@@ -286,11 +296,8 @@ int main() {
 		camera.updateMatrix(45.0f, 0.0f, 500.0f);
 
 		//------------------------TEXT (NOTE: IMPLEMENT IN G.DRAW())----------------------------------------
-		/*fShader.Activate();
+		fShader.Activate();
 
-		float posX = 500.0f;
-		float posY = 800.0f;
-		const char* test = "hello";
 
 		int w, h;
 		glfwGetWindowSize(window, &w, &h);
@@ -299,11 +306,13 @@ int main() {
 		glDisable(GL_CULL_FACE);
 		glDisable(GL_DEPTH_TEST);
 
-		font.drawString(posX, posY, test, &fShader);*/
+		score1.update(&g, window);
+		score2.update(&g, window);
 
-		glfwGetWindowSize(window, &w, &h);
-		gameFont.draw(&g, window, &font, (const char*)"hello");
-		
+		font.drawString(g.texts[0]->pos.x, g.texts[0]->pos.y, g.texts[0]->text, &fShader);
+		font.drawString(g.texts[1]->pos.x, g.texts[1]->pos.y, g.texts[1]->text, &fShader);
+
+
 		
 
 		//------------------------TEXT (NOTE: IMPLEMENT IN G.DRAW())----------------------------------------

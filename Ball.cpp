@@ -1,3 +1,4 @@
+#include"gameFont.h"
 #include "Ball.h"
 #include<stdlib.h>
 #include <cmath>
@@ -42,11 +43,13 @@ void Ball::update(Game* g) {
 	if (checkRight == true) {
 		position = glm::vec3(0.0f);
 		velocity = glm::vec3(-60.0f, -rand() / control, 0.0f);
+		g->texts[0]->score++;
 	}
 
 	if (checkLeft == true) {
 		position = glm::vec3(0.0f);
 		velocity = glm::vec3(60.0f, rand() / control, 0.0f);
+		g->texts[1]->score++;
 	}
 
 	//--------------INTERSECTION-----------------------
@@ -61,20 +64,20 @@ void Ball::update(Game* g) {
 
 	if (intersect) {
 		velocity.x = -velocity.x;
-		velocity.y += g->paddles[0]->velocity.y * 50;
+		velocity.y += g->paddles[0]->velocity.y;
 	}
 
 	if (intersect2) {
 		velocity.x = -velocity.x;
-		velocity.y += g->paddles[1]->velocity.y * 50;
+		velocity.y += g->paddles[1]->velocity.y;
 	}
 
 	if (position.y > 95.0f) {
-		velocity.y = -velocity.y - 5.0f;
+		velocity.y = -velocity.y - 25.0f;
 	}
 
 	if (position.y < -95.0f) {
-		velocity.y = -velocity.y + 5.0f;
+		velocity.y = -velocity.y + 25.0f;
 	}
 
 	//-------------------------------------COLLISION-----------------------------------------

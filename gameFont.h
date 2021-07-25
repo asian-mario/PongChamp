@@ -1,9 +1,24 @@
 #pragma once
 
-class gameFont {
+#include<iostream>
+#include<stdlib.h>
+#include<string>
+#include <glad/glad.h>
+#include<glm/glm.hpp>
+
+
+class Game;
+class GLFWwindow;
+
+using namespace std;
+class gameFont{
 public:
-	glm::mat4 ortho;
+	int score = 0;
 	glm::vec3 pos;
-	gameFont(glm::mat4 ortho, glm::vec3 pos);
-	void draw(Game* g, GLFWwindow* window, Font* font, const char* string);
+	string scorestr;
+	const char* text;
+	bool endGame = false;
+
+	gameFont(glm::vec3 pos);
+	void update(Game* g, GLFWwindow* window);
 };

@@ -99,7 +99,7 @@
     <ClCompile Include="GameObject.cpp">
       <Filter>Source Files\openpong</Filter>
     </ClCompile>
-    <ClCompile Include="font.cpp">
+    <ClCompile Include="gameFont.cpp">
       <Filter>Source Files\openpong</Filter>
     </ClCompile>
   </ItemGroup>
@@ -150,6 +150,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="font.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gameFont.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

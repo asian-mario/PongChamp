@@ -4,8 +4,6 @@
 #include <cstdio>
 #include <glad/glad.h>
 #include "VAO.h"
-
-#define STB_TRUETYPE_IMPLEMENTATION
 #include <stb/stb_truetype.h>
 
 class Game;
@@ -30,7 +28,7 @@ public:
 		uint8_t *tmpBitmap = new uint8_t[512 * 512]; //res of the bitmap
 
 		fread(ttfBuffer, 1, 1 << 20, fopen(filename, "rb")); //rb makes and writes into a binary file
-		stbtt_BakeFontBitmap(ttfBuffer, 0, 32.0f, tmpBitmap, 512, 512, 32, 96, cdata); //there are 96 printable ascii characters, cool stuff
+		stbtt_BakeFontBitmap(ttfBuffer, 0, 128.0f, tmpBitmap, 512, 512, 32, 96, cdata); //there are 96 printable ascii characters, cool stuff
 
 		glGenTextures(1, &fontTexture);
 		glBindTexture(GL_TEXTURE_2D, fontTexture);
@@ -106,10 +104,3 @@ private:
 };
 
 
-class gameFont {
-public:
-	glm::mat4 ortho;
-	glm::vec3 pos;
-	gameFont(glm::mat4 ortho, glm::vec3 pos);
-	void draw(Game* g, GLFWwindow* window, Font* font, const char* string);
-};

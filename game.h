@@ -7,6 +7,8 @@
 #include "Paddle.h"
 #include "light.h"
 #include "Camera.h"
+#include"gameFont.h"
+#include "font.h"
 #include <vector>
 
 class Game;
@@ -16,6 +18,8 @@ class Ball;
 class Paddle;
 class Light;
 class Camera;
+class gameFont;
+struct Font;
 class GameObject;
 struct GLFWwindow;
 
@@ -28,6 +32,8 @@ class Game {
 		std::vector <Barrier*> barriers;
 		std::vector <Shader*> shaders;
 		std::vector <Light*> lights;
+		std::vector <gameFont*> texts;
+		std::vector <Font*> fonts;
 
 		std::vector <Camera*> cameras;
 		std::vector <GameObject*> gameObjects;
