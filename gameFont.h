@@ -11,6 +11,7 @@ class Game;
 class GLFWwindow;
 
 using namespace std;
+
 class gameFont{
 public:
 	int score = 0;

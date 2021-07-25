@@ -21,6 +21,7 @@ void gameFont::update(Game* g, GLFWwindow* window) {
 		g->fonts[0]->drawString(550.0f, 800.0f, "RESTART? (Y/N)", g->shaders[2]);
 		if (glfwGetKey(g->gameWindow, GLFW_KEY_Y)) {
 			endGame = false;
+			//Position & Velocity Reset
 			g->texts[0]->score = 0;
 			g->texts[1]->score = 0;
 			g->balls[0]->position = glm::vec3(-0.02f, 0.0f, 0.0f);
@@ -42,6 +43,7 @@ void gameFont::update(Game* g, GLFWwindow* window) {
 		g->fonts[0]->drawString(550.0f, 800.0f, "RESTART? (Y/N)", g->shaders[2]);
 		if (glfwGetKey(g->gameWindow, GLFW_KEY_Y)) {
 			endGame = false;
+			//Position & Velocity Reset
 			g->texts[0]->score = 0;
 			g->texts[1]->score = 0;
 			g->balls[0]->position = glm::vec3(-0.02f, 0.0f, 0.0f);
