@@ -262,6 +262,8 @@ int main() {
 
 	Font font;
 	font.initFont("chargen.ttf");
+
+
 	while (!glfwWindowShouldClose(window)) {
 
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
@@ -282,20 +284,22 @@ int main() {
 		//------------------------TEXT (NOTE: IMPLEMENT IN G.DRAW())----------------------------------------
 		fShader.Activate();
 
+		float posX = 500.0f;
+		float posY = 800.0f;
+		const char* test = "hello";
+
 		int w, h;
 		glfwGetWindowSize(window, &w, &h);
 		glm::mat4 orthoP = roml::createOrto(0.0f, (float)w, (float)h, 0.0f);
 		glUniformMatrix4fv(glGetUniformLocation(fShader.ID, "ModViewProj"), 1, GL_FALSE, &orthoP[0][0]);
 		glDisable(GL_CULL_FACE);
-		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glDisable(GL_DEPTH_TEST);
 
-		font.drawString(0.0f, 0.0f, "Testing", &fShader);
+		font.drawString(posX, posY, test, &fShader);
 
-		fShader.Delete();
-		glEnable(GL_CULL_FACE);
-		glEnable(GL_DEPTH_TEST);
+		
+		/*glEnable(GL_CULL_FACE);
+		glEnable(GL_DEPTH_TEST);*/
 
 		//------------------------TEXT (NOTE: IMPLEMENT IN G.DRAW())----------------------------------------
 
@@ -329,6 +333,7 @@ int main() {
 	//------Delete-----------------
 	shaderProgram.Delete();
 	lightShader.Delete();
+	fShader.Delete();
 	//-----------------------------
 
 

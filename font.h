@@ -29,10 +29,13 @@ public:
 		fread(ttfBuffer, 1, 1 << 20, fopen(filename, "rb")); //rb makes and writes into a binary file
 		stbtt_BakeFontBitmap(ttfBuffer, 0, 32.0f, tmpBitmap, 512, 512, 32, 96, cdata); //there are 96 printable ascii characters, cool stuff
 
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 		glGenTextures(1, &fontTexture);
 		glBindTexture(GL_TEXTURE_2D, fontTexture);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, 512, 512, 0, GL_ALPHA, GL_UNSIGNED_BYTE, tmpBitmap);
-
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 512, 512, 0, GL_RGBA, GL_UNSIGNED_BYTE, tmpBitmap);
+		glBindTexture(GL_TEXTURE_2D, fontTexture);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glBindTexture(GL_TEXTURE_2D, 0); //unbind texture
 

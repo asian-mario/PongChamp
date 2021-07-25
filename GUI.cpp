@@ -60,7 +60,6 @@ void GUI::createDebugMenu(GameObject& obj, string name, glm::vec3 orgPos, glm::v
 	}
 }
 
-
 void GUI::createDebugMenu(Game* g) {
 	static int control = 1;
 	ImGui::Begin("Settings");
