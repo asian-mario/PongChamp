@@ -274,7 +274,6 @@ int main() {
 	gameFont score2(glm::vec3(1650.0f, 150.0f, 0.0f));
 	g.texts.push_back(&score2);
 
-	bool endGame = false;
 
 	//---------------------------TEXT----------------------------
 
@@ -282,7 +281,7 @@ int main() {
 
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		if (!g.pause && !g.texts[0]->endGame && !g.texts[1]->endGame || g.framestep > 0) {
+		if (!g.pause || g.framestep > 0) {
 			g.update();
 			g.framestep--;
 		}

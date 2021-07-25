@@ -16,11 +16,11 @@ void gameFont::update(Game* g, GLFWwindow* window) {
 	//-------------------------Win Check-------------------------------------
 	if (g->texts[0]->score >= 5) {
 		g->fonts[0]->drawString(600.0f, 450.0f, "PONG CHAMP", g->shaders[2]);
-		endGame = true;
+		g->pause = true;
 		g->fonts[0]->drawString(550.0f, 600.0f, "PLAYER 1 WINS!", g->shaders[2]);
 		g->fonts[0]->drawString(550.0f, 800.0f, "RESTART? (Y/N)", g->shaders[2]);
 		if (glfwGetKey(g->gameWindow, GLFW_KEY_Y)) {
-			endGame = false;
+			g->pause = false;
 			//Position & Velocity Reset
 			g->texts[0]->score = 0;
 			g->texts[1]->score = 0;
@@ -38,11 +38,11 @@ void gameFont::update(Game* g, GLFWwindow* window) {
 
 	if (g->texts[1]->score >= 5) {
 		g->fonts[0]->drawString(600.0f, 450.0f, "PONG CHAMP", g->shaders[2]);
-		endGame = true;
+		g->pause = true;
 		g->fonts[0]->drawString(550.0f, 600.0f, "PLAYER 2 WINS!", g->shaders[2]);
 		g->fonts[0]->drawString(550.0f, 800.0f, "RESTART? (Y/N)", g->shaders[2]);
 		if (glfwGetKey(g->gameWindow, GLFW_KEY_Y)) {
-			endGame = false;
+			g->pause = false;
 			//Position & Velocity Reset
 			g->texts[0]->score = 0;
 			g->texts[1]->score = 0;
