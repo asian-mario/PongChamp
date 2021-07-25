@@ -18,7 +18,7 @@ public:
 	glm::vec3 pos;
 	string scorestr;
 	const char* text;
-	bool endGame = false;
+	
 
 	gameFont(glm::vec3 pos);
 	void update(Game* g, GLFWwindow* window);

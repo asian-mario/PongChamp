@@ -22,14 +22,15 @@ void gameFont::update(Game* g, GLFWwindow* window) {
 		if (glfwGetKey(g->gameWindow, GLFW_KEY_Y)) {
 			g->pause = false;
 			//Position & Velocity Reset
-			g->texts[0]->score = 0;
-			g->texts[1]->score = 0;
 			g->balls[0]->position = glm::vec3(-0.02f, 0.0f, 0.0f);
 			g->paddles[0]->position = glm::vec3(-85.0f, 0.0f, 0.0f);
 			g->paddles[1]->position = glm::vec3(85.0f, 0.0f, 0.0f);
 			g->paddles[0]->velocity = glm::vec3(0.0f);
 			g->paddles[1]->velocity = glm::vec3(0.0f);
 			g->balls[0]->velocity = glm::vec3(-65.0f, 0.0f, 0.0f);
+
+			g->texts[0]->score = 0;
+			g->texts[1]->score = 0;
 		}
 		if (glfwGetKey(g->gameWindow, GLFW_KEY_N)) {
 			glfwWindowShouldClose(window) == 0;
@@ -44,14 +45,15 @@ void gameFont::update(Game* g, GLFWwindow* window) {
 		if (glfwGetKey(g->gameWindow, GLFW_KEY_Y)) {
 			g->pause = false;
 			//Position & Velocity Reset
-			g->texts[0]->score = 0;
-			g->texts[1]->score = 0;
 			g->balls[0]->position = glm::vec3(-0.02f, 0.0f, 0.0f);
 			g->paddles[0]->position = glm::vec3(-85.0f, 0.0f, 0.0f);
 			g->paddles[1]->position = glm::vec3(85.0f, 0.0f, 0.0f);
 			g->paddles[0]->velocity = glm::vec3(0.0f);
 			g->paddles[1]->velocity = glm::vec3(0.0f);
 			g->balls[0]->velocity = glm::vec3(65.0f, 0.0f, 0.0f);
+
+			g->texts[0]->score = 0;
+			g->texts[1]->score = 0;
 		}
 		if (glfwGetKey(g->gameWindow, GLFW_KEY_N)) {
 			glfwWindowShouldClose(window) == 0;
