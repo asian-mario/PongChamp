@@ -58,7 +58,7 @@ void Ball::update(Game* g) {
 	double deltaTime = g->deltaTime();
 
 	double rad = 3.0;
-	
+
 	bool intersect = circintersects(g->balls[0]->position, g->paddles[0]->position, rad);
 	bool intersect2 = circintersects(g->balls[0]->position, g->paddles[1]->position, rad);
 
@@ -73,11 +73,17 @@ void Ball::update(Game* g) {
 	}
 
 	if (position.y > 95.0f) {
-		velocity.y = -velocity.y - 25.0f;
+		velocity.y = -velocity.y;
+		velocity.y = velocity.y;
 	}
 
 	if (position.y < -95.0f) {
-		velocity.y = -velocity.y + 25.0f;
+		velocity.y = -velocity.y;
+	}
+
+	if (velocity.x >= 200.0f || velocity.y >= 200.0f) {
+		float mag = roml::magnitude(velocity);
+		velocity = velocity * (mag / 150.0f);
 	}
 
 	//-------------------------------------COLLISION-----------------------------------------

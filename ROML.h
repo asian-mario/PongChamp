@@ -14,6 +14,7 @@ namespace roml {
 	glm::mat4 createPerspective(float FOV, float screenAspect, float nearClip, float farClip);
 	glm::mat4 createOrto(float left, float right, float bottom, float top, float nearClip, float farClip);
 	glm::mat4 createOrto(float left, float right, float bottom, float top);
+	double magnitude(glm::vec3 vec);
 	glm::mat4 rotate(glm::mat4 oldMat, float rotation, glm::vec3 normal);
 	glm::mat4 rotate(glm::mat4 oldMat, float rotation, char axis);
 	glm::vec3 rotate(glm::vec3 vector, float angle, glm::vec3 normal);
@@ -83,6 +84,10 @@ namespace roml {
 		ortoM[3][2] = -(farClip + nearClip) / (farClip - nearClip);
 
 		return ortoM;
+	}
+
+	double magnitude(glm::vec3 vec) {
+		return sqrt(pow(vec.x, 2) + pow(vec.y, 2) + pow(vec.z, 2));
 	}
 
 	glm::mat4 createOrto(float left, float right, float bottom, float top) {

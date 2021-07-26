@@ -23,3 +23,4 @@ public:
 	gameFont(glm::vec3 pos);
 	void update(Game* g, GLFWwindow* window);
 };
+
