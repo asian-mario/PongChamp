@@ -192,6 +192,7 @@ int main() {
 	std::vector <Vertex> ballsverts(ballvert, ballvert + sizeof(ballvert) / sizeof(Vertex));
 	std::vector <GLuint> ballinds(ballindices, ballindices + sizeof(ballindices) / sizeof(GLuint));
 	std::vector <Texture> ballTex(circle, circle + sizeof(circle) / sizeof(Texture));
+	std::vector <Texture> particleTex(particle, particle + sizeof(particle) / sizeof(Texture));
 	g.shaders.push_back(&shaderProgram);
 	
 	
@@ -271,7 +272,7 @@ int main() {
 
 	ImGui::StyleColorsDark();
 
-	Camera camera(width, height, glm::vec3(0.0f, 0.0f, 10.0f));
+	Camera camera(width, height, glm::vec3(0.0f, 0.0f, 100.0f));
 	g.cameras.push_back(&camera);
 	g.gameObjects.push_back(&camera);
 
@@ -325,9 +326,8 @@ int main() {
 		font.drawString(g.texts[0]->pos.x, g.texts[0]->pos.y, g.texts[0]->text, &fShader);
 		font.drawString(g.texts[1]->pos.x, g.texts[1]->pos.y, g.texts[1]->text, &fShader);
 
-
 		
-		PS.spawn(&g, g.balls[0]->position, g.balls[0]->velocity, g.balls[0]->scale, glm::vec4(1.0f), 0.5f);
+		PS.spawn(&g, g.balls[0]->position, g.balls[0]->velocity, g.balls[0]->scale, glm::vec4(1.0f), 0.3f);
 		PS.update(&g);
 		//------------------------TEXT (NOTE: IMPLEMENT IN G.DRAW())----------------------------------------
 

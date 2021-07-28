@@ -85,6 +85,7 @@ void Ball::update(Game* g) {
 		velocity.y = -velocity.y;
 	}
 
+
 	//Speed control
 	if (roml::magnitude(velocity) >= 500.0f) {
 		float mag = roml::magnitude(velocity);
