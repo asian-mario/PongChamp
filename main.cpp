@@ -177,6 +177,11 @@ int main() {
 	};
 	g.textures.push_back(circle);
 
+	Texture particle[]{
+		Texture("particle.png", "diffuse", 0, GL_RGBA, GL_UNSIGNED_BYTE)
+	};
+	g.textures.push_back(particle);
+
 
 
 	//Creates shadeprogram from default.vert and default.frag
@@ -284,7 +289,7 @@ int main() {
 
 	//---------------------------TEXT----------------------------
 
-	ParticleSystem PS(g.textures[0]);
+	ParticleSystem PS(g.textures[2]);
 	g.particleSystems.push_back(&PS);
 
 	while (!glfwWindowShouldClose(window)) {
@@ -306,9 +311,6 @@ int main() {
 		//------------------------TEXT (NOTE: IMPLEMENT IN G.DRAW())----------------------------------------
 		fShader.Activate();
 
-		PS.spawn(&g, g.balls[0]->position, g.balls[0]->velocity, g.balls[0]->scale, glm::vec4(1.0f), 0.5f);
-		PS.update(&g);
-
 
 		int w, h;
 		glfwGetWindowSize(window, &w, &h);
@@ -325,7 +327,8 @@ int main() {
 
 
 		
-
+		PS.spawn(&g, g.balls[0]->position, g.balls[0]->velocity, g.balls[0]->scale, glm::vec4(1.0f), 0.5f);
+		PS.update(&g);
 		//------------------------TEXT (NOTE: IMPLEMENT IN G.DRAW())----------------------------------------
 
 		//IMGUI

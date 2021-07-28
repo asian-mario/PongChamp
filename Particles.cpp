@@ -5,10 +5,10 @@
 #include "Particles.h"
 
 Particle::Particle(glm::vec3 position, glm::vec3 velocity, glm::vec3 scale, glm::vec4 color, float life) {
-    float random = ((rand() % 100) - 50) / 100.0f;
+    float random = ((rand() % 100) - 50) / 50.0f;
     float randColor = 0.5f + ((rand() % 100) / 100.0f);
 
-    this->position = glm::vec3(position);
+    this->position = glm::vec3(position + random);
     this->velocity = glm::vec3(velocity);
     this->scale = glm::vec3(scale);
 
@@ -52,6 +52,14 @@ void ParticleSystem::update(Game* g) {
         //if the particle is still alive:
         p->position -= p->velocity * dt;
         p->color.a -= dt * 2.5f;
+        
+        bool collide = g->balls[0]->circintersects(p->position, g->paddles[0]->position, 3.0f);
+        bool collide2 = g->balls[0]->circintersects(p->position, g->paddles[1]->position, 3.0f);
+
+        if (collide || collide2) {
+            p->velocity = -p->velocity + rand() / 250.0f;
+        }
+
     }
     draw(g);
 }
