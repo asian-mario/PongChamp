@@ -102,6 +102,9 @@
     <ClCompile Include="gameFont.cpp">
       <Filter>Source Files\openpong</Filter>
     </ClCompile>
+    <ClCompile Include="Particles.cpp">
+      <Filter>Source Files\openpong</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EBO.h">
@@ -155,6 +158,9 @@
     <ClInclude Include="gameFont.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Particles.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="light.vert">
@@ -173,6 +179,12 @@
       <Filter>Resource Files\Shaders</Filter>
     </None>
     <None Include="font.frag">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="particles.vert">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="particles.frag">
       <Filter>Resource Files\Shaders</Filter>
     </None>
   </ItemGroup>

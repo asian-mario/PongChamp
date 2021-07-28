@@ -17,6 +17,7 @@
 #include"GUI.h"
 #include"font.h"
 #include"gameFont.h"
+#include "Particles.h"
 
 #include <chrono>
 #include <cmath>
@@ -169,10 +170,13 @@ int main() {
 		Texture("white.png", "specular", 1, GL_RED, GL_UNSIGNED_BYTE)
 		//-------------------------------------------------
 	};
+	g.textures.push_back(textures);
 
 	Texture circle[]{
 		Texture("circle.png", "diffuse", 0, GL_RGBA, GL_UNSIGNED_BYTE)
 	};
+	g.textures.push_back(circle);
+
 
 
 	//Creates shadeprogram from default.vert and default.frag
@@ -206,6 +210,9 @@ int main() {
 	//------------------------------TEXT-------------------------------------------------------------------
 	Shader fShader("font.vert", "font.frag");
 	g.shaders.push_back(&fShader);
+
+	Shader particleShader("particles.vert", "particles.frag");
+	g.shaders.push_back(&particleShader);
 
 
 	//--------------------------------------------MESH-----------------------------------------------------
@@ -277,6 +284,9 @@ int main() {
 
 	//---------------------------TEXT----------------------------
 
+	ParticleSystem PS(g.textures[0]);
+	g.particleSystems.push_back(&PS);
+
 	while (!glfwWindowShouldClose(window)) {
 
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
@@ -287,7 +297,6 @@ int main() {
 		}
 
 		
-		
 		//Exporting data & Render
 		g.draw();
 		//---------------------------------------------------------------------------------------------------------------------------------
@@ -296,6 +305,9 @@ int main() {
 
 		//------------------------TEXT (NOTE: IMPLEMENT IN G.DRAW())----------------------------------------
 		fShader.Activate();
+
+		PS.spawn(&g, g.balls[0]->position, g.balls[0]->velocity, g.balls[0]->scale, glm::vec4(1.0f), 0.5f);
+		PS.update(&g);
 
 
 		int w, h;

@@ -17,13 +17,12 @@ public:
 	glm::vec3 scale;
 
 	glm::vec3 velocity;
-	glm::vec3 worldPos;
 	glm::vec4 color;
 
 
 	Mesh mesh;
 
-	GameObject() = default;
+	GameObject() :position(0.0f), rotation(0.0f), scale(1.0f), velocity(0.0f), color(0.0f) {};
 
 	
 	virtual glm::mat4 getModelMatrix();

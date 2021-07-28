@@ -9,6 +9,8 @@
 #include "Camera.h"
 #include"gameFont.h"
 #include "font.h"
+#include "Texture.h"
+#include "Particles.h"
 #include <vector>
 
 class Game;
@@ -20,7 +22,9 @@ class Light;
 class Camera;
 class gameFont;
 struct Font;
+class Texture;
 class GameObject;
+class ParticleSystem;
 struct GLFWwindow;
 
 class Game {
@@ -34,6 +38,9 @@ class Game {
 		std::vector <Light*> lights;
 		std::vector <gameFont*> texts;
 		std::vector <Font*> fonts;
+		std::vector <Texture*> textures;
+
+		std::vector <ParticleSystem*> particleSystems;
 
 		std::vector <Camera*> cameras;
 		std::vector <GameObject*> gameObjects;

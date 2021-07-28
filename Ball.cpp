@@ -43,13 +43,17 @@ void Ball::update(Game* g) {
 	if (checkRight == true) {
 		position = glm::vec3(0.0f);
 		velocity = glm::vec3(-60.0f, -rand() / control, 0.0f);
-		g->texts[0]->score++;
+		if (g->texts[0]->score < 6) {
+			g->texts[0]->score++;
+		}
 	}
 
 	if (checkLeft == true) {
 		position = glm::vec3(0.0f);
 		velocity = glm::vec3(60.0f, rand() / control, 0.0f);
-		g->texts[1]->score++;
+		if (g->texts[1]->score < 5) {
+			g->texts[1]->score++;
+		}
 	}
 
 	//--------------INTERSECTION-----------------------
@@ -81,10 +85,12 @@ void Ball::update(Game* g) {
 		velocity.y = -velocity.y;
 	}
 
-	if (velocity.x >= 200.0f || velocity.y >= 200.0f) {
+	//Speed control
+	if (roml::magnitude(velocity) >= 500.0f) {
 		float mag = roml::magnitude(velocity);
-		velocity = velocity * (mag / 150.0f);
+		velocity = velocity * (500.0f / mag);
 	}
+
 
 	//-------------------------------------COLLISION-----------------------------------------
 
