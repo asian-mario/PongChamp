@@ -9,9 +9,11 @@ uniform mat4 proj;
 uniform vec2 offset;
 uniform vec4 color;
 
+uniform vec3 scale;
+
 void main(){
-	float scale = 1.0f;
+
 	TexCoords = vertex.zw;
 	particleColor = color;
-	gl_Position = proj * vec4((vertex.xy * scale) + offset, 0.0, 1.0);
+	gl_Position = proj * vec4((vertex.xy * scale.x) + offset, 0.0, 1.0);
 }

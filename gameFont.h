@@ -7,12 +7,14 @@
 #include<glm/glm.hpp>
 
 
+#include "GameObject.h"
 class Game;
+class GameObject;
 class GLFWwindow;
 
 using namespace std;
 
-class gameFont{
+class gameFont : public GameObject{
 public:
 	int score = 0;
 	glm::vec3 pos;

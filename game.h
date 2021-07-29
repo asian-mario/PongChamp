@@ -45,7 +45,7 @@ class Game {
 		std::vector <Camera*> cameras;
 		std::vector <GameObject*> gameObjects;
 
-		double lastTime;
+		float lastTime;
 		bool pause = false;
 		int framestep = 0;
 
@@ -56,6 +56,6 @@ class Game {
 		void draw();
 
 		//--UTILITY
-		double deltaTime();
+		float deltaTime();
 };
 

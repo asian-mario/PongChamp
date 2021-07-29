@@ -9,7 +9,10 @@ Game::Game() {
 void Game::update() {
 	for (GameObject* o : gameObjects)
 		o->update(this);
-	lastTime = glfwGetTime();
+	for (GameObject* p : particleSystems)
+		p->update(this);
+
+	lastTime = (float) glfwGetTime();
 }
 
 void Game::draw() {
@@ -17,7 +20,7 @@ void Game::draw() {
 		o->draw(this);
 }
 
-double Game::deltaTime() {
+float Game::deltaTime() {
 	// get time difference from last frame
-	return glfwGetTime() - lastTime;
+	return (float) glfwGetTime() - lastTime;
 }

@@ -5,6 +5,8 @@
 #include <glad/glad.h>
 #include "VAO.h"
 #include <stb/stb_truetype.h>
+#include<glm/glm.hpp>
+#include <GLFW/glfw3.h>
 
 class Game;
 class GLFWwindow;
@@ -95,6 +97,7 @@ public:
 		glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(fontVertex) * numVertices, fvBufferData);
 		glDrawArrays(GL_TRIANGLES, 0, numVertices);
 	}
+
 
 private:
 	stbtt_bakedchar cdata[96];

@@ -4,7 +4,7 @@
 #include "game.h"
 #include "Particles.h"
 
-Particle::Particle(glm::vec3 position, glm::vec3 velocity, glm::vec3 scale, glm::vec4 color, float life) {
+Particle::Particle(glm::vec3 position, glm::vec3 velocity, glm::vec3 scale, glm::vec4 color, float life, PARTICLETYPE particletype) {
     float random = ((rand() % 100) - 50) / 50.0f;
     float randColor = 0.5f + ((rand() % 100) / 100.0f);
 
@@ -14,6 +14,7 @@ Particle::Particle(glm::vec3 position, glm::vec3 velocity, glm::vec3 scale, glm:
 
     this->color = glm::vec4(color);
     this->life = life;
+    this->particletype = particletype;
 }
 
 void Particle::draw(Game* g, VAO* vao, Texture* texture, Camera* camera) {
@@ -21,6 +22,7 @@ void Particle::draw(Game* g, VAO* vao, Texture* texture, Camera* camera) {
     glBlendFunc(GL_SRC_ALPHA, GL_ONE);
     glUniform2f(glGetUniformLocation(g->shaders[3]->ID, "offset"), position.x, position.y);
     glUniform4f(glGetUniformLocation(g->shaders[3]->ID, "color"), color.x, color.y, color.z, color.w);
+    glUniform3f(glGetUniformLocation(g->shaders[3]->ID, "scale"), scale.x, scale.y, scale.z);
     glUniformMatrix4fv(glGetUniformLocation(g->shaders[3]->ID, "proj"), 1, GL_FALSE, glm::value_ptr(g->cameras[0]->cameraMatrix));
     texture->Bind();
     vao->Bind();
@@ -59,6 +61,23 @@ void ParticleSystem::update(Game* g) {
         if (collide || collide2) {
             p->velocity = -p->velocity + rand() / 250.0f;
         }
+
+        if (p->particletype == TRAIL) {
+            if (p->position.y >= 96.0f || p->position.y <= -96.0f) {
+                p->velocity.y = -p->velocity.y + rand() / 250.0f;
+            }
+        }
+
+        if (p->particletype == REACT) {
+            if (p->position.y >= 100.0f && g->balls[0]->position.y >= 95.0f) {
+                p->velocity.y = 25.0f;
+            }
+
+            if (p->position.y <= -100.0f && g->balls[0]->position.y <= -95.0f) {
+                p->velocity.y = -25.0f;
+            }
+           
+        }
     }
     draw(g);
 }
@@ -89,8 +108,8 @@ void ParticleSystem::init() {
     this->particleVAO.Bind();
 }
 
-void ParticleSystem::spawn(Game* g, glm::vec3 position, glm::vec3 velocity, glm::vec3 scale, glm::vec4 color, float life) {
-    Particle* newP = new Particle(position, velocity, scale, color, life);
+void ParticleSystem::spawn(Game* g, glm::vec3 position, glm::vec3 velocity, glm::vec3 scale, glm::vec4 color, float life, PARTICLETYPE particletype) {
+    Particle* newP = new Particle(position, velocity, scale, color, life, particletype);
     for (Particle*& p : this->particles) {
         if (p == nullptr) {
             p = newP;

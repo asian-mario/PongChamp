@@ -182,7 +182,15 @@ int main() {
 	};
 	g.textures.push_back(particle);
 
+	Texture particleBU[]{
+		Texture("ParticleBU.png", "diffuse", 0, GL_RGBA, GL_UNSIGNED_BYTE)
+	};
+	g.textures.push_back(particleBU);
 
+	Texture particleBD[]{
+		Texture("particleBD.png", "diffuse", 0, GL_RGBA, GL_UNSIGNED_BYTE)
+	};
+	g.textures.push_back(particleBD);
 
 	//Creates shadeprogram from default.vert and default.frag
 	Shader shaderProgram("Default.vert", "default.frag");
@@ -193,6 +201,7 @@ int main() {
 	std::vector <GLuint> ballinds(ballindices, ballindices + sizeof(ballindices) / sizeof(GLuint));
 	std::vector <Texture> ballTex(circle, circle + sizeof(circle) / sizeof(Texture));
 	std::vector <Texture> particleTex(particle, particle + sizeof(particle) / sizeof(Texture));
+
 	g.shaders.push_back(&shaderProgram);
 	
 	
@@ -293,20 +302,25 @@ int main() {
 	ParticleSystem PS(g.textures[2]);
 	g.particleSystems.push_back(&PS);
 
+	ParticleSystem BPS(g.textures[3]);
+	g.particleSystems.push_back(&BPS);
+
+	ParticleSystem BDPS(g.textures[4]);
+	g.particleSystems.push_back(&BDPS);
+
 	while (!glfwWindowShouldClose(window)) {
 
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		if (!g.pause || g.framestep > 0) {
 			g.update();
-			g.framestep--;
+			if (g.framestep > 0)
+				g.framestep--;
 		}
 
-		
 		//Exporting data & Render
 		g.draw();
 		//---------------------------------------------------------------------------------------------------------------------------------
-		//Updates and exports camera matrix to the vert shader
 		camera.updateMatrix(45.0f, 0.0f, 500.0f);
 
 		//------------------------TEXT (NOTE: IMPLEMENT IN G.DRAW())----------------------------------------
@@ -327,8 +341,10 @@ int main() {
 		font.drawString(g.texts[1]->pos.x, g.texts[1]->pos.y, g.texts[1]->text, &fShader);
 
 		
-		PS.spawn(&g, g.balls[0]->position, g.balls[0]->velocity, g.balls[0]->scale, glm::vec4(1.0f), 0.3f);
-		PS.update(&g);
+		PS.spawn(&g, g.balls[0]->position, g.balls[0]->velocity, glm::vec3(1.0f), glm::vec4(1.0f), 1.0f, PARTICLETYPE::TRAIL);
+		BPS.spawn(&g, glm::vec3(g.balls[0]->position.x, g.barriers[0]->position.y, g.barriers[0]->position.z), glm::vec3(0.0f) , glm::vec3(22.0f), glm::vec4(1.0f), 8.0f, PARTICLETYPE::REACT);
+		BDPS.spawn(&g, glm::vec3(g.balls[0]->position.x, g.barriers[1]->position.y - 4.5f, g.barriers[1]->position.z), glm::vec3(0.0f), glm::vec3(10.0f), glm::vec4(1.0f), 8.0f, PARTICLETYPE::REACT);
+
 		//------------------------TEXT (NOTE: IMPLEMENT IN G.DRAW())----------------------------------------
 
 		//IMGUI
