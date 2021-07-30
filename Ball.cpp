@@ -38,11 +38,20 @@ bool Ball::boundsCheckL(glm::vec3 position, glm::vec3 velocity, float bounds) {
 void Ball::update(Game* g) {
 
 	g->particleSystems[0]->spawn(g, g->balls[0]->position, g->balls[0]->velocity, glm::vec3(1.0f), glm::vec4(1.0f), 0.5f);
+
 	//--------------BOUNDS CHECK----------------------
 	bool checkRight = boundsCheck(g->balls[0]->position, g->balls[0]->velocity, 1.0f * 100.0f);
 	bool checkLeft = boundsCheckL(g->balls[0]->position, g->balls[0]->velocity, -1.0f * 100.0f);
 
 	if (checkRight == true) {
+		for (int i = 0; i < 25; i++) {
+			g->particleSystems[3]->spawn(g, glm::vec3(g->barriers[2]->position.x, g->balls[0]->position.y, g->barriers[0]->position.z), glm::vec3(50.0f, rand() / 300.0f, 0.0f), glm::vec3(3.0f), glm::vec4(1.0f), 2.0f);
+
+			if (g->particleSystems[3]->position.y <= -96.0f || g->particleSystems[3]->position.y >= 96.0f) {
+				g->particleSystems[3]->velocity.y = -g->particleSystems[3]->velocity.y;
+			}
+		}
+		
 		position = glm::vec3(0.0f);
 		velocity = glm::vec3(-60.0f, -rand() / control, 0.0f);
 		if (g->texts[0]->score < 6) {
@@ -51,6 +60,9 @@ void Ball::update(Game* g) {
 	}
 
 	if (checkLeft == true) {
+		for (int i = 0; i < 25; i++) {
+			g->particleSystems[3]->spawn(g, glm::vec3(-g->barriers[2]->position.x, g->balls[0]->position.y, -g->barriers[0]->position.z), glm::vec3(-50.0f, rand() / 300.0f, 0.0f), glm::vec3(3.0f), glm::vec4(1.0f), 2.0f);
+		}
 		position = glm::vec3(0.0f);
 		velocity = glm::vec3(60.0f, rand() / control, 0.0f);
 		if (g->texts[1]->score < 5) {

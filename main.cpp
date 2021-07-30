@@ -192,6 +192,11 @@ int main() {
 	};
 	g.textures.push_back(particleBD);
 
+	Texture particleGoal[]{
+		Texture("goal.png", "diffuse", 0, GL_RGBA, GL_UNSIGNED_BYTE)
+	};
+	g.textures.push_back(particleGoal);
+
 	//Creates shadeprogram from default.vert and default.frag
 	Shader shaderProgram("Default.vert", "default.frag");
 	std::vector <Vertex> sqrverts(vertices, vertices + sizeof(vertices) / sizeof(Vertex));
@@ -260,7 +265,11 @@ int main() {
 	g.gameObjects.push_back(&BarrierBD);
 	//--------------BarrierDown-------------------------------
 
-	Barrier BarriedER(glm::vec3(1.0f, 0.0f, 0.0f) * 100.0f, glm::vec3(0.1f, 2.0f, 0.0f) * 100.0f)
+	Barrier BarrierER(glm::vec3(1.0f, 0.0f, 0.0f) * 100.0f, glm::vec3(0.0f, 2.0f, 0.0f) * 100.0f);
+	BarrierER.mesh = Mesh(sqrverts, sqrinds, defaultTex);
+	g.barriers.push_back(&BarrierER);
+	g.gameObjects.push_back(&BarrierER);
+
 	//--------------BALL--------------------------------------
 	Ball ball1(glm::vec3(-0.02f, 0.0f, 0.0f) * 100.0f, glm::vec3(0.096f, 0.191f, 1.0f) * 100.0f, glm::vec3(-65.0f, rand() / 10000.0f, 0.0f));
 	ball1.mesh = Mesh(ballsverts, ballinds, ballTex);
@@ -308,6 +317,10 @@ int main() {
 
 	ParticleSystem BDPS(g.textures[4]);
 	g.particleSystems.push_back(&BDPS);
+
+	
+	ParticleSystem EPS(g.textures[2]);
+	g.particleSystems.push_back(&EPS);
 
 	while (!glfwWindowShouldClose(window)) {
 
