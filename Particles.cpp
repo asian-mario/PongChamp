@@ -39,6 +39,28 @@ ParticleSystem::ParticleSystem(Texture* texture)
     this->amount = amount;
 }
 
+
+/*void ParticleSystem::checkCol(Game* g) {
+    for (Particle*& p : this->particles) {
+        if (p == nullptr) continue;
+
+
+        double rad = 3.0;
+        bool intersect = g->balls[0]->circintersects(g->balls[0]->position, g->paddles[0]->position, rad);
+        bool intersect2 = g->balls[0]->circintersects(g->balls[0]->position, g->paddles[1]->position, rad);
+
+        if (p->position.y >= 96.0f || p->position.y <= -96.0f) {
+            p->velocity.y = -p->velocity.y - rand() / 250.0f;
+        }
+
+        if (intersect || intersect2) {
+            p->velocity = -p->velocity + rand() / 250.0f;
+        }
+     
+        
+    }
+}*/
+
 void ParticleSystem::update(Game* g) {
     for (Particle*& p : this->particles) {
         if (p == nullptr) continue;
@@ -57,6 +79,15 @@ void ParticleSystem::update(Game* g) {
         
         bool collide = g->balls[0]->circintersects(p->position, g->paddles[0]->position, 3.0f);
         bool collide2 = g->balls[0]->circintersects(p->position, g->paddles[1]->position, 3.0f);
+
+
+        if (p->position.y >= 96.0f || p->position.y <= -96.0f) {
+            p->velocity.y = -p->velocity.y - rand() / 250.0f;
+        }
+
+        if (collide || collide2) {
+            p->velocity = -p->velocity + rand() / 250.0f;
+        }
 
     }
     draw(g);
