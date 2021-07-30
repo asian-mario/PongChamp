@@ -56,6 +56,6 @@ class Game {
 		void draw();
 
 		//--UTILITY
-		float deltaTime();
+		float deltaTime;
 };
 

@@ -36,6 +36,8 @@ bool Ball::boundsCheckL(glm::vec3 position, glm::vec3 velocity, float bounds) {
 
 
 void Ball::update(Game* g) {
+
+	g->particleSystems[0]->spawn(g, g->balls[0]->position, g->balls[0]->velocity, glm::vec3(1.0f), glm::vec4(1.0f), 0.5f);
 	//--------------BOUNDS CHECK----------------------
 	bool checkRight = boundsCheck(g->balls[0]->position, g->balls[0]->velocity, 1.0f * 100.0f);
 	bool checkLeft = boundsCheckL(g->balls[0]->position, g->balls[0]->velocity, -1.0f * 100.0f);
@@ -59,7 +61,7 @@ void Ball::update(Game* g) {
 	//--------------INTERSECTION-----------------------
 
 
-	double deltaTime = g->deltaTime();
+	double deltaTime = g->deltaTime;
 
 	double rad = 3.0;
 
@@ -69,20 +71,33 @@ void Ball::update(Game* g) {
 	if (intersect) {
 		velocity.x = -velocity.x;
 		velocity.y += g->paddles[0]->velocity.y;
+
+		g->particleSystems[0]->velocity = -g->particleSystems[0]->velocity + rand() / 250.0f;
 	}
 
 	if (intersect2) {
 		velocity.x = -velocity.x;
 		velocity.y += g->paddles[1]->velocity.y;
+
+		g->particleSystems[0]->velocity = -g->particleSystems[0]->velocity + rand() / 250.0f;
 	}
 
 	if (position.y > 95.0f) {
 		velocity.y = -velocity.y;
-		velocity.y = velocity.y;
+
+		g->particleSystems[1]->spawn(g, glm::vec3(g->balls[0]->position.x, g->barriers[0]->position.y - 10.5f, g->barriers[0]->position.z), glm::vec3(0.0f, 25.0f, 0.0f), glm::vec3(20.0f), glm::vec4(1.0f), 1.5f);
+
+		g->particleSystems[0]->velocity.y = -g->particleSystems[0]->velocity.y + rand() / 250.0f;
+
 	}
 
 	if (position.y < -95.0f) {
 		velocity.y = -velocity.y;
+
+		g->particleSystems[2]->spawn(g, glm::vec3(g->balls[0]->position.x, g->barriers[1]->position.y, g->barriers[1]->position.z), glm::vec3(0.0f, -25.0f, 0.0f), glm::vec3(20.0f), glm::vec4(1.0f), 1.5f);
+
+		g->particleSystems[0]->velocity.y = -g->particleSystems[0]->velocity.y + rand() / 250.0f;
+	
 	}
 
 
@@ -99,5 +114,7 @@ void Ball::update(Game* g) {
 	position += velocity * (float) deltaTime;
 	//--------------INTERSECTION-----------------------
 
-
+	if (velocity.y >= 250.0f) {
+		velocity.y = velocity.y - 60.0f;
+	}
 }

@@ -260,6 +260,7 @@ int main() {
 	g.gameObjects.push_back(&BarrierBD);
 	//--------------BarrierDown-------------------------------
 
+	Barrier BarriedER(glm::vec3(1.0f, 0.0f, 0.0f) * 100.0f, glm::vec3(0.1f, 2.0f, 0.0f) * 100.0f)
 	//--------------BALL--------------------------------------
 	Ball ball1(glm::vec3(-0.02f, 0.0f, 0.0f) * 100.0f, glm::vec3(0.096f, 0.191f, 1.0f) * 100.0f, glm::vec3(-65.0f, rand() / 10000.0f, 0.0f));
 	ball1.mesh = Mesh(ballsverts, ballinds, ballTex);
@@ -340,10 +341,6 @@ int main() {
 		font.drawString(g.texts[0]->pos.x, g.texts[0]->pos.y, g.texts[0]->text, &fShader);
 		font.drawString(g.texts[1]->pos.x, g.texts[1]->pos.y, g.texts[1]->text, &fShader);
 
-		
-		PS.spawn(&g, g.balls[0]->position, g.balls[0]->velocity, glm::vec3(1.0f), glm::vec4(1.0f), 1.0f, PARTICLETYPE::TRAIL);
-		BPS.spawn(&g, glm::vec3(g.balls[0]->position.x, g.barriers[0]->position.y, g.barriers[0]->position.z), glm::vec3(0.0f) , glm::vec3(22.0f), glm::vec4(1.0f), 8.0f, PARTICLETYPE::REACT);
-		BDPS.spawn(&g, glm::vec3(g.balls[0]->position.x, g.barriers[1]->position.y - 4.5f, g.barriers[1]->position.z), glm::vec3(0.0f), glm::vec3(10.0f), glm::vec4(1.0f), 8.0f, PARTICLETYPE::REACT);
 
 		//------------------------TEXT (NOTE: IMPLEMENT IN G.DRAW())----------------------------------------
 
@@ -378,6 +375,7 @@ int main() {
 	shaderProgram.Delete();
 	lightShader.Delete();
 	fShader.Delete();
+	particleShader.Delete();
 	//-----------------------------
 
 
