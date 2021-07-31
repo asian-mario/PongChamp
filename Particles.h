@@ -31,7 +31,7 @@ public:
 
 	ParticleSystem(Texture* texture);
 	void spawn(Game* g, glm::vec3 position, glm::vec3 velocity, glm::vec3 scale, glm::vec4 color, float life);
-	//void checkCol(Game* g);
+
 	void update(Game* g) override;
 
 	

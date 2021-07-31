@@ -173,7 +173,7 @@ int main() {
 	g.textures.push_back(textures);
 
 	Texture circle[]{
-		Texture("circle.png", "diffuse", 0, GL_RGBA, GL_UNSIGNED_BYTE)
+		Texture("ballAlt.png", "diffuse", 0, GL_RGBA, GL_UNSIGNED_BYTE)
 	};
 	g.textures.push_back(circle);
 
@@ -222,7 +222,7 @@ int main() {
 	g.shaders.push_back(&lightShader);
 
 	//-----------------------------Lights------------------------------------------------------------------
-	Light directLight(glm::vec4(10.0f, 10.0f, 10.0f, 10.0f) * 100.0f, glm::vec3(0.0f, 0.5f, 1.5f));
+	Light directLight(glm::vec4(10.0f, 10.0f, 10.0f, 10.0f), glm::vec3(0.0f, 0.5f, 1.5f));
 	directLight.mesh = Mesh(lightVerts, lightInd, defaultTex);
 	g.lights.push_back(&directLight);
 	g.gameObjects.push_back(&directLight);
