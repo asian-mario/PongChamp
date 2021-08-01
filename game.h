@@ -11,6 +11,8 @@
 #include "font.h"
 #include "Texture.h"
 #include "Particles.h"
+#include "VBO.h"
+#include "Powerup.h"
 #include <vector>
 
 class Game;
@@ -23,8 +25,10 @@ class Camera;
 class gameFont;
 struct Font;
 class Texture;
+class Powerup;
 class GameObject;
 class ParticleSystem;
+struct Vertex;
 struct GLFWwindow;
 
 class Game {
@@ -39,6 +43,11 @@ class Game {
 		std::vector <gameFont*> texts;
 		std::vector <Font*> fonts;
 		std::vector <Texture*> textures;
+		std::vector <Powerup*> powerups;
+
+		std::vector <std::vector<GLuint>> indexVec;
+		std::vector <std::vector<Texture>> texturesVec;
+		std::vector <std::vector<Vertex>> vertVec;
 
 		std::vector <ParticleSystem*> particleSystems;
 

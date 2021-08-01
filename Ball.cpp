@@ -3,11 +3,12 @@
 #include<stdlib.h>
 #include <cmath>
 
-Ball::Ball(glm::vec3 position, glm::vec3 scale, glm::vec3 velocity) {
+Ball::Ball(glm::vec3 position, glm::vec3 scale, double rad, glm::vec3 velocity) {
 	this->position = glm::vec3(position);
 	this->rotation = glm::vec3(0.0f);
 	this->scale = glm::vec3(scale);
 	this->velocity = glm::vec3(velocity);
+	this->rad = rad;
 }
 
 bool Ball::circintersects(glm::vec3 circle, glm::vec3 rect, double circleRadius)
@@ -46,15 +47,16 @@ void Ball::update(Game* g) {
 	if (checkRight == true) {
 		for (int i = 0; i < 25; i++) {
 			g->particleSystems[3]->spawn(g, glm::vec3(g->barriers[2]->position.x, g->balls[0]->position.y, g->barriers[0]->position.z), glm::vec3(50.0f, rand() / 200.0f, 0.0f), glm::vec3(3.0f), glm::vec4(1.0f), 2.0f);
-
-
 		}
 		
 		position = glm::vec3(0.0f);
 		velocity = glm::vec3(-60.0f, -rand() / control, 0.0f);
 		if (g->texts[0]->score < 6) {
 			g->texts[0]->score++;
+			
 		}
+
+		
 	}
 
 	if (checkLeft == true) {
@@ -75,7 +77,6 @@ void Ball::update(Game* g) {
 
 	double deltaTime = g->deltaTime;
 
-	double rad = 3.0;
 
 	bool intersect = circintersects(g->balls[0]->position, g->paddles[0]->position, rad);
 	bool intersect2 = circintersects(g->balls[0]->position, g->paddles[1]->position, rad);
@@ -83,12 +84,17 @@ void Ball::update(Game* g) {
 	if (intersect) {
 		velocity.x = -velocity.x;
 		velocity.y += g->paddles[0]->velocity.y;
+
+		g->paddles[1]->lastHit = false;
+		g->paddles[0]->lastHit = true;
 	}
 
 	if (intersect2) {
 		velocity.x = -velocity.x;
 		velocity.y += g->paddles[1]->velocity.y;
 
+		g->paddles[0]->lastHit = false;
+		g->paddles[1]->lastHit = true;
 	}
 
 	if (position.y > 96.5f) {

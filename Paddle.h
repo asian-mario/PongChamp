@@ -17,7 +17,7 @@ class Game;
 
 class Paddle : public GameObject {
 	public:
-
+		bool lastHit = false;
 
 		enum CONTROLTYPE { WASD, ARROW };
 		CONTROLTYPE type;

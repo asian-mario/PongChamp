@@ -18,6 +18,7 @@
 #include"font.h"
 #include"gameFont.h"
 #include "Particles.h"
+#include "Powerup.h"
 
 #include <chrono>
 #include <cmath>
@@ -199,13 +200,27 @@ int main() {
 
 	//Creates shadeprogram from default.vert and default.frag
 	Shader shaderProgram("Default.vert", "default.frag");
+
 	std::vector <Vertex> sqrverts(vertices, vertices + sizeof(vertices) / sizeof(Vertex));
+	g.vertVec.push_back(sqrverts);
+
 	std::vector <GLuint> sqrinds(indices, indices + sizeof(indices) / sizeof(GLuint));
+	g.indexVec.push_back(sqrinds);
+
 	std::vector <Texture> defaultTex(textures, textures + sizeof(textures) / sizeof(Texture));
+	g.texturesVec.push_back(defaultTex);
+
 	std::vector <Vertex> ballsverts(ballvert, ballvert + sizeof(ballvert) / sizeof(Vertex));
+	g.vertVec.push_back(ballsverts);
+
 	std::vector <GLuint> ballinds(ballindices, ballindices + sizeof(ballindices) / sizeof(GLuint));
+	g.indexVec.push_back(ballinds);
+
 	std::vector <Texture> ballTex(circle, circle + sizeof(circle) / sizeof(Texture));
+	g.texturesVec.push_back(ballTex);
+
 	std::vector <Texture> particleTex(particle, particle + sizeof(particle) / sizeof(Texture));
+	g.texturesVec.push_back(particleTex);
 
 	g.shaders.push_back(&shaderProgram);
 	
@@ -271,7 +286,7 @@ int main() {
 	g.gameObjects.push_back(&BarrierER);
 
 	//--------------BALL--------------------------------------
-	Ball ball1(glm::vec3(-0.02f, 0.0f, 0.0f) * 100.0f, glm::vec3(0.096f, 0.191f, 1.0f) * 100.0f, glm::vec3(-65.0f, rand() / 10000.0f, 0.0f));
+	Ball ball1(glm::vec3(-0.02f, 0.0f, 0.0f) * 100.0f, glm::vec3(0.096f, 0.191f, 1.0f) * 100.0f, 3.0, glm::vec3(-65.0f, rand() / 10000.0f, 0.0f));
 	ball1.mesh = Mesh(ballsverts, ballinds, ballTex);
 	g.balls.push_back(&ball1);
 	g.gameObjects.push_back(&ball1);
@@ -309,6 +324,7 @@ int main() {
 
 	//---------------------------TEXT----------------------------
 
+	//----------------------PARTICLE SYSTEM---------------------
 	ParticleSystem PS(g.textures[2]);
 	g.particleSystems.push_back(&PS);
 
@@ -321,6 +337,9 @@ int main() {
 	
 	ParticleSystem EPS(g.textures[2]);
 	g.particleSystems.push_back(&EPS);
+	//----------------------PARTICLE SYSTEM---------------------
+	Powerup powerup(glm::vec3(0.0f), glm::vec3(1.0f, 2.0f, 0.0f), glm::vec3(0.0f));
+	g.powerups.push_back(&powerup);
 
 	while (!glfwWindowShouldClose(window)) {
 
@@ -339,6 +358,7 @@ int main() {
 
 		//------------------------TEXT (NOTE: IMPLEMENT IN G.DRAW())----------------------------------------
 		fShader.Activate();
+
 
 
 		int w, h;

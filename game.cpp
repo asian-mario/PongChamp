@@ -13,6 +13,8 @@ void Game::update() {
 		o->update(this);
 	for (GameObject* p : particleSystems)
 		p->update(this);
+	for (GameObject* q : powerups)
+		q->update(this);
 
 	
 }
