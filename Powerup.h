@@ -7,17 +7,24 @@
 class GameObject;
 class Game;
 
-class Powerup : public GameObject {
+class PowerupSpawn : public GameObject {
 public:
 
 
-	Powerup(glm::vec3 position, glm::vec3 scale, glm::vec3 velocity);
+	PowerupSpawn();
 	void update(Game* g) override;
 
 	bool maxSpawn = false;
 
 	//Powerup Functions
-	void BallPlus(Game* g);
+	
 
 };
 
+class Powerup : public GameObject {
+	Powerup(glm::vec3 position, glm::vec3 scale, glm::vec3 velocity);
+};
+
+class BallPlus : public Powerup {
+	BallPlus(Game* g);
+};

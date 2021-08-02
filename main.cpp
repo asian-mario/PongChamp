@@ -168,7 +168,6 @@ int main() {
 	Texture textures[]{
 		//----------TEXTURES-------------------------------
 		Texture("white.png", "diffuse", 0, GL_RGBA, GL_UNSIGNED_BYTE),
-		Texture("white.png", "specular", 1, GL_RED, GL_UNSIGNED_BYTE)
 		//-------------------------------------------------
 	};
 	g.textures.push_back(textures);
@@ -338,7 +337,7 @@ int main() {
 	ParticleSystem EPS(g.textures[2]);
 	g.particleSystems.push_back(&EPS);
 	//----------------------PARTICLE SYSTEM---------------------
-	Powerup powerup(glm::vec3(95.0f, 0.0f, 0.0f), glm::vec3(10.0f, 10.0f, 0.0f), glm::vec3(0.0f));
+	Powerup powerup(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(10.0f, 10.0f, 0.0f), glm::vec3(0.0f));
 	g.powerups.push_back(&powerup);
 
 	while (!glfwWindowShouldClose(window)) {
@@ -387,6 +386,7 @@ int main() {
 		GUI::createDebugMenu(ball1, "Debug Ball", glm::vec3(-0.02f, 0.0f, 0.0f), VEC3_ZERO, glm::vec3(0.096f, 0.191f, 1.0f));
 		GUI::createDebugMenu(BarrierBU, "Debug Barrier Up", glm::vec3(0.0f, 0.85f, 0.0f), VEC3_ZERO, glm::vec3(1.7f, 0.05f, 1.0f));
 		GUI::createDebugMenu(BarrierBD, "Debug Barrier Bottom", glm::vec3(0.0f, -0.85f, 0.0f), VEC3_ZERO, glm::vec3(1.7f, 0.05f, 1.0f));
+		GUI::createDebugMenu(powerup, "Powerup Debug", VEC3_ZERO, VEC3_ZERO, VEC3_ZERO);
 		GUI::createDebugMenu(camera, "Camera", glm::vec3(0.0f, -0.85f, 0.0f), VEC3_ZERO, glm::vec3(1.7f, 0.05f, 1.0f));
 		GUI::createDebugMenu(&g);
 		//-------------------------------------DEBUG----------------------------------------------
