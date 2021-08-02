@@ -66,6 +66,7 @@ decltype(seconds_t().count()) get_millis_since_epoch()
 
 int main() {
 	glfwInit();
+	srand(0);
 
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3); //Specifying OpenGL version
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -79,9 +80,9 @@ int main() {
 	Vertex vertices[] =
 	{//     CO-ORDINATES                     /        COLOURS               /         TEXTURE CO-ORDS  /                NORMALS   //
 		Vertex{glm::vec3(-0.5f, -0.5f, 0.0f),  glm::vec3(1.0f, 1.0f, 1.0f),  glm::vec3(0.0f, -1.0f, 0.0f),          glm::vec2(0.0f, 0.0f)},
-		Vertex{glm::vec3(-0.5f, 0.5f, 0.0f),  glm::vec3(1.0f, 1.0f, 1.0f),   glm::vec3(0.0f, -1.0f, 0.0f),        glm::vec2(0.0f, 5.0f)},
-		Vertex{glm::vec3(0.5f, 0.5f, 0.0f),   glm::vec3(1.0f, 1.0f, 1.0f),   glm::vec3(0.0f, -1.0f, 0.0f),        glm::vec2(5.0f, 5.0f)},
-		Vertex{glm::vec3(0.5f, -0.5f, 0.0f),    glm::vec3(1.0f, 1.0f, 1.0f),    glm::vec3(0.0f, -1.0f, 0.0f),       glm::vec2(5.0f, 0.0f)}
+		Vertex{glm::vec3(-0.5f, 0.5f, 0.0f),  glm::vec3(1.0f, 1.0f, 1.0f),   glm::vec3(0.0f, -1.0f, 0.0f),        glm::vec2(0.0f, 1.0f)},
+		Vertex{glm::vec3(0.5f, 0.5f, 0.0f),   glm::vec3(1.0f, 1.0f, 1.0f),   glm::vec3(0.0f, -1.0f, 0.0f),        glm::vec2(1.0f, 1.0f)},
+		Vertex{glm::vec3(0.5f, -0.5f, 0.0f),    glm::vec3(1.0f, 1.0f, 1.0f),    glm::vec3(0.0f, -1.0f, 0.0f),       glm::vec2(1.0f, 0.0f)}
 
 	};
 
@@ -197,6 +198,9 @@ int main() {
 	};
 	g.textures.push_back(particleGoal);
 
+	Texture powerup[]{
+		Texture("powerup.png", "diffuse", 0, GL_RGBA, GL_UNSIGNED_BYTE)
+	};
 	//Creates shadeprogram from default.vert and default.frag
 	Shader shaderProgram("Default.vert", "default.frag");
 
@@ -220,6 +224,9 @@ int main() {
 
 	std::vector <Texture> particleTex(particle, particle + sizeof(particle) / sizeof(Texture));
 	g.texturesVec.push_back(particleTex);
+
+	std::vector <Texture> powerupTex(powerup, powerup + sizeof(powerup) / sizeof(Texture));
+	g.texturesVec.push_back(powerupTex);
 
 	g.shaders.push_back(&shaderProgram);
 	
@@ -337,8 +344,9 @@ int main() {
 	ParticleSystem EPS(g.textures[2]);
 	g.particleSystems.push_back(&EPS);
 	//----------------------PARTICLE SYSTEM---------------------
-	Powerup powerup(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(10.0f, 10.0f, 0.0f), glm::vec3(0.0f));
-	g.powerups.push_back(&powerup);
+
+	PowerupSpawn PowerS;
+	g.gameObjects.push_back(&PowerS);
 
 	while (!glfwWindowShouldClose(window)) {
 
@@ -386,7 +394,7 @@ int main() {
 		GUI::createDebugMenu(ball1, "Debug Ball", glm::vec3(-0.02f, 0.0f, 0.0f), VEC3_ZERO, glm::vec3(0.096f, 0.191f, 1.0f));
 		GUI::createDebugMenu(BarrierBU, "Debug Barrier Up", glm::vec3(0.0f, 0.85f, 0.0f), VEC3_ZERO, glm::vec3(1.7f, 0.05f, 1.0f));
 		GUI::createDebugMenu(BarrierBD, "Debug Barrier Bottom", glm::vec3(0.0f, -0.85f, 0.0f), VEC3_ZERO, glm::vec3(1.7f, 0.05f, 1.0f));
-		GUI::createDebugMenu(powerup, "Powerup Debug", VEC3_ZERO, VEC3_ZERO, VEC3_ZERO);
+
 		GUI::createDebugMenu(camera, "Camera", glm::vec3(0.0f, -0.85f, 0.0f), VEC3_ZERO, glm::vec3(1.7f, 0.05f, 1.0f));
 		GUI::createDebugMenu(&g);
 		//-------------------------------------DEBUG----------------------------------------------

@@ -7,24 +7,25 @@
 class GameObject;
 class Game;
 
-class PowerupSpawn : public GameObject {
+class PowerupSpawn : public GameObject{
 public:
+	string powerups[3] = { "BallPlus", "PaddlePlus", "PaddleMinus" };
+	string currentPowerup = powerups[rand() % 3];
 
-
-	PowerupSpawn();
 	void update(Game* g) override;
+	void spawn(Game* g, int tex);
 
 	bool maxSpawn = false;
 
-	//Powerup Functions
-	
 
 };
 
-class Powerup : public GameObject {
-	Powerup(glm::vec3 position, glm::vec3 scale, glm::vec3 velocity);
+class BallPlusPowerup : public GameObject {
+public:
+	bool hit = false;
+
+	BallPlusPowerup(Game* g, glm::vec3 position, glm::vec3 scale, glm::vec3 velocity);
+	void update(Game* g) override;
+	void draw(Game* g) override;
 };
 
-class BallPlus : public Powerup {
-	BallPlus(Game* g);
-};

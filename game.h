@@ -25,7 +25,7 @@ class Camera;
 class gameFont;
 struct Font;
 class Texture;
-class Powerup;
+class PowerupSpawn;
 class GameObject;
 class ParticleSystem;
 struct Vertex;
@@ -43,7 +43,7 @@ class Game {
 		std::vector <gameFont*> texts;
 		std::vector <Font*> fonts;
 		std::vector <Texture*> textures;
-		std::vector <Powerup*> powerups;
+		std::vector <PowerupSpawn*> powerups;
 
 		std::vector <std::vector<GLuint>> indexVec;
 		std::vector <std::vector<Texture>> texturesVec;

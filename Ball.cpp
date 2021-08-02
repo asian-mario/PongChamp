@@ -78,8 +78,8 @@ void Ball::update(Game* g) {
 	double deltaTime = g->deltaTime;
 
 
-	bool intersect = circintersects(g->balls[0]->position, g->paddles[0]->position, rad, 1.5, 20.0);
-	bool intersect2 = circintersects(g->balls[0]->position, g->paddles[1]->position, rad, 1.5, 20.0);
+	bool intersect = circintersects(g->balls[0]->position, g->paddles[0]->position, rad, 1.5, 18.0);
+	bool intersect2 = circintersects(g->balls[0]->position, g->paddles[1]->position, rad, 1.5, 18.0);
 
 	if (intersect) {
 		velocity.x = -velocity.x;
