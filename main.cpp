@@ -338,7 +338,7 @@ int main() {
 	ParticleSystem EPS(g.textures[2]);
 	g.particleSystems.push_back(&EPS);
 	//----------------------PARTICLE SYSTEM---------------------
-	Powerup powerup(glm::vec3(0.0f), glm::vec3(1.0f, 2.0f, 0.0f), glm::vec3(0.0f));
+	Powerup powerup(glm::vec3(95.0f, 0.0f, 0.0f), glm::vec3(10.0f, 10.0f, 0.0f), glm::vec3(0.0f));
 	g.powerups.push_back(&powerup);
 
 	while (!glfwWindowShouldClose(window)) {
