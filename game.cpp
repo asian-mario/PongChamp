@@ -6,6 +6,13 @@ Game::Game() {
 	this->gameWindow = gameWindow;
 }
 
+void Game::deleteObj(GameObject* GO) {	
+	for (GameObject* &g : gameObjects)
+		if (GO == g)
+		{
+			delete GO; g = nullptr;  return;
+		}
+}
 void Game::update() {
 	deltaTime = (float)glfwGetTime() - lastTime;
 	lastTime = (float)glfwGetTime();

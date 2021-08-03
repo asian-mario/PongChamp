@@ -66,7 +66,7 @@ decltype(seconds_t().count()) get_millis_since_epoch()
 
 int main() {
 	glfwInit();
-	srand(0);
+	srand(time(NULL));
 
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3); //Specifying OpenGL version
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -89,7 +89,7 @@ int main() {
 	//index buffer
 	GLuint indices[] = {
 		0, 2 ,1,
-		0, 3, 2 
+		0, 3, 2
 
 	};
 	Vertex ballvert[] =
@@ -168,7 +168,7 @@ int main() {
 
 	Texture textures[]{
 		//----------TEXTURES-------------------------------
-		Texture("white.png", "diffuse", 0, GL_RGBA, GL_UNSIGNED_BYTE),
+		Texture("white.png", "diffuse", 0, GL_RGBA, GL_UNSIGNED_BYTE)
 		//-------------------------------------------------
 	};
 	g.textures.push_back(textures);
@@ -201,6 +201,26 @@ int main() {
 	Texture powerup[]{
 		Texture("powerup.png", "diffuse", 0, GL_RGBA, GL_UNSIGNED_BYTE)
 	};
+
+	Texture barrierU[]{
+	Texture("barrierU.png", "diffuse", 0, GL_RGBA, GL_UNSIGNED_BYTE)
+	};
+
+
+	Texture barrierD[]{
+		Texture("barrierD.png", "diffuse", 0, GL_RGBA, GL_UNSIGNED_BYTE)
+	};
+
+
+	Texture pad1Tex[]{
+		Texture("paddle.png", "diffuse", 0, GL_RGBA, GL_UNSIGNED_BYTE)
+	};
+
+	Texture pad2Tex[]{
+		Texture("paddle2.png", "diffuse", 0, GL_RGBA, GL_UNSIGNED_BYTE)
+	};
+
+
 	//Creates shadeprogram from default.vert and default.frag
 	Shader shaderProgram("Default.vert", "default.frag");
 
@@ -227,6 +247,18 @@ int main() {
 
 	std::vector <Texture> powerupTex(powerup, powerup + sizeof(powerup) / sizeof(Texture));
 	g.texturesVec.push_back(powerupTex);
+
+	std::vector <Texture> paddle1Tex(pad1Tex, pad1Tex + sizeof(pad1Tex) / sizeof(Texture));
+	g.texturesVec.push_back(paddle1Tex);
+
+	std::vector <Texture> paddle2Tex(pad2Tex, pad2Tex + sizeof(pad2Tex) / sizeof(Texture));
+	g.texturesVec.push_back(paddle2Tex);
+
+	std::vector <Texture> barrierUTex(barrierU, barrierU + sizeof(barrierU) / sizeof(barrierU));
+	g.texturesVec.push_back(barrierUTex);
+
+	std::vector <Texture> barrierDTex(barrierD, barrierD + sizeof(barrierD) / sizeof(barrierD));
+	g.texturesVec.push_back(barrierDTex);
 
 	g.shaders.push_back(&shaderProgram);
 	
@@ -260,28 +292,27 @@ int main() {
 
 	//--------------Paddle1---------------------------------
 	Paddle paddle1(glm::vec3(-0.85f, 0.0f, 0.0f) * 100.0f, glm::vec3(0.015f, 0.2f, 0.0f) * 100.0f, Paddle::CONTROLTYPE::WASD, glm::vec3(0.0f));
-	paddle1.mesh = Mesh(sqrverts, sqrinds, defaultTex);
+	paddle1.mesh = Mesh(sqrverts, sqrinds, paddle1Tex);
 	g.paddles.push_back(&paddle1);
 	g.gameObjects.push_back(&paddle1);
 	//--------------Paddle1---------------------------------
 
 	//--------------Paddle2---------------------------------
 	Paddle paddle2(glm::vec3(0.85f, 0.0f, 0.0f) * 100.0f, glm::vec3(0.015f, 0.2f, 0.0f) * 100.0f, Paddle::CONTROLTYPE::ARROW, glm::vec3(0.0f));
-	paddle2.mesh = Mesh(sqrverts, sqrinds, defaultTex);
+	paddle2.mesh = Mesh(sqrverts, sqrinds, paddle2Tex);
 	g.paddles.push_back(&paddle2);
 	g.gameObjects.push_back(&paddle2);
 	//--------------Paddle2---------------------------------
 
 	//--------------BarrierUp-------------------------------
 	Barrier BarrierBU(glm::vec3(0.0f, 1.02f, 0.0f) * 100.0f, glm::vec3(2.0f, 0.05f, 1.0f) * 100.0f);
-	BarrierBU.mesh = Mesh(sqrverts, sqrinds, defaultTex);
-	g.barriers.push_back(&BarrierBU);
+	BarrierBU.mesh = Mesh(sqrverts, sqrinds, barrierUTex);
 	g.gameObjects.push_back(&BarrierBU);
 	//--------------BarrierUp-------------------------------
 
 	//--------------BarrierDown-------------------------------
 	Barrier BarrierBD(glm::vec3(0.0f, -1.02f, 0.0f) * 100.0f, glm::vec3(2.0f, 0.05f, 1.0f) * 100.0f);
-	BarrierBD.mesh = Mesh(sqrverts, sqrinds, defaultTex);
+	BarrierBD.mesh = Mesh(sqrverts, sqrinds, barrierDTex);
 	g.barriers.push_back(&BarrierBD);
 	g.gameObjects.push_back(&BarrierBD);
 	//--------------BarrierDown-------------------------------
@@ -350,7 +381,7 @@ int main() {
 
 	while (!glfwWindowShouldClose(window)) {
 
-		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+		glClearColor(0.0f, 0.0f, 0.01f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		if (!g.pause || g.framestep > 0) {
 			g.update();

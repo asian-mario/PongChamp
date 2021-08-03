@@ -5,7 +5,10 @@ void PowerupSpawn::update(Game* g) {
 
 		cout << currentPowerup << endl;
 
-		spawn(g, 0);
+		if (currentPowerup == powerups[0]) {
+			spawn(g, 0);
+		}
+	
 
 		maxSpawn = true;
 	
@@ -20,6 +23,8 @@ void PowerupSpawn::spawn(Game* g, int type) {
 		GameObject * p = new BallPlusPowerup(g, glm::vec3(rand() % 80, rand() % 90, 0.0f), glm::vec3(7.0f, 12.0f, 0.0f), glm::vec3(0.0f));
 
 		g->gameObjects.push_back(p);
+		
+		
 		break;
 
 	}
@@ -36,13 +41,27 @@ BallPlusPowerup::BallPlusPowerup(Game* g, glm::vec3 position, glm::vec3 scale, g
 
 }
 
+void BallPlusPowerup::delayEffect(Game* g) {
+	double dt = g->deltaTime;
+	effect -= dt;
+
+	if (effect <= 0.0 || g->balls[0]->position.x >= 95.0f || g->balls[0]->position.x <= -95.0f) {
+		g->balls[0]->rad = 3.0f;
+		g->balls[0]->scale = glm::vec3(9.6f, 19.1f, 0.0f);
+
+		g->deleteObj(this);
+	}
+}
+
 void BallPlusPowerup::update(Game* g) {
 	if (!hit) {
-		bool intersect = g->balls[0]->circintersects(g->balls[0]->position, position, g->balls[0]->rad, 5.5, 5.5);
+		bool intersect = g->balls[0]->circintersects(g->balls[0]->position, position, g->balls[0]->rad, 6.0, 6.0);
 
 		if (intersect) {
 			g->balls[0]->rad = 4.0f;
 			g->balls[0]->scale = g->balls[0]->scale * 2.0f;
+
+			
 
 			hit = true;
 		}
@@ -50,6 +69,7 @@ void BallPlusPowerup::update(Game* g) {
 		return;
 	}
 
+	delayEffect(g);
 }
 
 void BallPlusPowerup::draw(Game* g) {

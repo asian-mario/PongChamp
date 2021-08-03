@@ -49,11 +49,10 @@ void Ball::update(Game* g) {
 			g->particleSystems[3]->spawn(g, glm::vec3(g->barriers[2]->position.x, g->balls[0]->position.y, g->barriers[0]->position.z), glm::vec3(50.0f, rand() / 200.0f, 0.0f), glm::vec3(3.0f), glm::vec4(1.0f), 2.0f);
 		}
 		
-		position = glm::vec3(0.0f);
 		velocity = glm::vec3(-60.0f, -rand() / control, 0.0f);
 		if (g->texts[0]->score < 6) {
 			g->texts[0]->score++;
-			
+			position = glm::vec3(0.0f);
 		}
 
 		
@@ -65,10 +64,10 @@ void Ball::update(Game* g) {
 
 		}
 
-		position = glm::vec3(0.0f);
 		velocity = glm::vec3(60.0f, rand() / control, 0.0f);
 		if (g->texts[1]->score < 5) {
 			g->texts[1]->score++;
+			position = glm::vec3(0.0f);
 		}
 	}
 

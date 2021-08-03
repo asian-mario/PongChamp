@@ -62,6 +62,7 @@ class Game {
 
 		//--FRAME
 		void update();
+		void deleteObj(GameObject* GO);
 		void draw();
 
 		//--UTILITY
