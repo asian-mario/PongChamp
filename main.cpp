@@ -203,7 +203,7 @@ int main() {
 	};
 
 	Texture barrierU[]{
-	Texture("barrierU.png", "diffuse", 0, GL_RGBA, GL_UNSIGNED_BYTE)
+		Texture("barrierU.png", "diffuse", 0, GL_RGBA, GL_UNSIGNED_BYTE)
 	};
 
 
@@ -307,6 +307,7 @@ int main() {
 	//--------------BarrierUp-------------------------------
 	Barrier BarrierBU(glm::vec3(0.0f, 1.02f, 0.0f) * 100.0f, glm::vec3(2.0f, 0.05f, 1.0f) * 100.0f);
 	BarrierBU.mesh = Mesh(sqrverts, sqrinds, barrierUTex);
+	g.barriers.push_back(&BarrierBU);
 	g.gameObjects.push_back(&BarrierBU);
 	//--------------BarrierUp-------------------------------
 
