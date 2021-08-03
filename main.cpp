@@ -202,22 +202,16 @@ int main() {
 		Texture("powerup.png", "diffuse", 0, GL_RGBA, GL_UNSIGNED_BYTE)
 	};
 
-	Texture barrierU[]{
-		Texture("barrierU.png", "diffuse", 0, GL_RGBA, GL_UNSIGNED_BYTE)
+	Texture barTex[]{
+		Texture("barrier.png", "diffuse", 0, GL_RGBA, GL_UNSIGNED_BYTE)
 	};
-
-
-	Texture barrierD[]{
-		Texture("barrierD.png", "diffuse", 0, GL_RGBA, GL_UNSIGNED_BYTE)
-	};
-
 
 	Texture pad1Tex[]{
-		Texture("paddle.png", "diffuse", 0, GL_RGBA, GL_UNSIGNED_BYTE)
+		Texture("paddleB.png", "diffuse", 0, GL_RGBA, GL_UNSIGNED_BYTE)
 	};
 
 	Texture pad2Tex[]{
-		Texture("paddle2.png", "diffuse", 0, GL_RGBA, GL_UNSIGNED_BYTE)
+		Texture("paddleP.png", "diffuse", 0, GL_RGBA, GL_UNSIGNED_BYTE)
 	};
 
 
@@ -254,11 +248,9 @@ int main() {
 	std::vector <Texture> paddle2Tex(pad2Tex, pad2Tex + sizeof(pad2Tex) / sizeof(Texture));
 	g.texturesVec.push_back(paddle2Tex);
 
-	std::vector <Texture> barrierUTex(barrierU, barrierU + sizeof(barrierU) / sizeof(barrierU));
-	g.texturesVec.push_back(barrierUTex);
+	std::vector <Texture> barrierTex(barTex, barTex + sizeof(barTex) / sizeof(barTex));
+	g.texturesVec.push_back(barrierTex);
 
-	std::vector <Texture> barrierDTex(barrierD, barrierD + sizeof(barrierD) / sizeof(barrierD));
-	g.texturesVec.push_back(barrierDTex);
 
 	g.shaders.push_back(&shaderProgram);
 	
@@ -306,14 +298,14 @@ int main() {
 
 	//--------------BarrierUp-------------------------------
 	Barrier BarrierBU(glm::vec3(0.0f, 1.02f, 0.0f) * 100.0f, glm::vec3(2.0f, 0.05f, 1.0f) * 100.0f);
-	BarrierBU.mesh = Mesh(sqrverts, sqrinds, barrierUTex);
+	BarrierBU.mesh = Mesh(sqrverts, sqrinds, barrierTex);
 	g.barriers.push_back(&BarrierBU);
 	g.gameObjects.push_back(&BarrierBU);
 	//--------------BarrierUp-------------------------------
 
 	//--------------BarrierDown-------------------------------
 	Barrier BarrierBD(glm::vec3(0.0f, -1.02f, 0.0f) * 100.0f, glm::vec3(2.0f, 0.05f, 1.0f) * 100.0f);
-	BarrierBD.mesh = Mesh(sqrverts, sqrinds, barrierDTex);
+	BarrierBD.mesh = Mesh(sqrverts, sqrinds, barrierTex);
 	g.barriers.push_back(&BarrierBD);
 	g.gameObjects.push_back(&BarrierBD);
 	//--------------BarrierDown-------------------------------

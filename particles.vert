@@ -10,6 +10,7 @@ uniform vec2 offset;
 uniform vec4 color;
 
 uniform vec3 scale;
+uniform float xPosC;
 
 void main(){
 
