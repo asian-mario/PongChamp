@@ -38,6 +38,11 @@ bool Ball::boundsCheckL(glm::vec3 position, glm::vec3 velocity, float bounds) {
 
 void Ball::update(Game* g) {
 
+	glm::vec4 color = glm::vec4(1.0f);
+	if (g->balls[0]->position.x >= -100.0f && g->balls[0]->position.x <= -35.0f) {
+		color = glm::vec4(1.0f, 0.0f, 0.0f, 1.0f);
+	}
+
 	g->particleSystems[0]->spawn(g, g->balls[0]->position, g->balls[0]->velocity, glm::vec3(1.0f), glm::vec4(1.0f), 0.5f);
 
 	//--------------BOUNDS CHECK----------------------
@@ -77,8 +82,8 @@ void Ball::update(Game* g) {
 	double deltaTime = g->deltaTime;
 
 
-	bool intersect = circintersects(g->balls[0]->position, g->paddles[0]->position, rad, 1.5, 18.0);
-	bool intersect2 = circintersects(g->balls[0]->position, g->paddles[1]->position, rad, 1.5, 18.0);
+	bool intersect = circintersects(g->balls[0]->position, g->paddles[0]->position, rad, 1.5, 17.0);
+	bool intersect2 = circintersects(g->balls[0]->position, g->paddles[1]->position, rad, 1.5, 17.0);
 
 	if (intersect) {
 		velocity.x = -velocity.x;

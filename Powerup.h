@@ -12,6 +12,7 @@ public:
 	string powerups[3] = { "BallPlus", "PaddlePlus", "PaddleMinus" };
 	string currentPowerup = powerups[rand() % 3];
 
+	void resetPowerup();
 	void update(Game* g) override;
 	void spawn(Game* g, int tex);
 

@@ -418,7 +418,6 @@ int main() {
 		GUI::createDebugMenu(ball1, "Debug Ball", glm::vec3(-0.02f, 0.0f, 0.0f), VEC3_ZERO, glm::vec3(0.096f, 0.191f, 1.0f));
 		GUI::createDebugMenu(BarrierBU, "Debug Barrier Up", glm::vec3(0.0f, 0.85f, 0.0f), VEC3_ZERO, glm::vec3(1.7f, 0.05f, 1.0f));
 		GUI::createDebugMenu(BarrierBD, "Debug Barrier Bottom", glm::vec3(0.0f, -0.85f, 0.0f), VEC3_ZERO, glm::vec3(1.7f, 0.05f, 1.0f));
-
 		GUI::createDebugMenu(camera, "Camera", glm::vec3(0.0f, -0.85f, 0.0f), VEC3_ZERO, glm::vec3(1.7f, 0.05f, 1.0f));
 		GUI::createDebugMenu(&g);
 		//-------------------------------------DEBUG----------------------------------------------

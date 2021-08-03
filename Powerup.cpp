@@ -1,5 +1,9 @@
 #include "Powerup.h"
 
+void PowerupSpawn::resetPowerup() {
+	currentPowerup = powerups[rand() % 3];
+}
+
 void PowerupSpawn::update(Game* g) {
 	if (!maxSpawn) {
 
@@ -8,6 +12,15 @@ void PowerupSpawn::update(Game* g) {
 		if (currentPowerup == powerups[0]) {
 			spawn(g, 0);
 		}
+
+		if (currentPowerup == powerups[1]) {
+			spawn(g, 0);
+		}
+
+		if (currentPowerup == powerups[2]) {
+			spawn(g, 0);
+		}
+
 	
 
 		maxSpawn = true;
@@ -20,7 +33,8 @@ void PowerupSpawn::spawn(Game* g, int type) {
 
 	switch (type) {
 	case 0: 
-		GameObject * p = new BallPlusPowerup(g, glm::vec3(rand() % 80, rand() % 90, 0.0f), glm::vec3(7.0f, 12.0f, 0.0f), glm::vec3(0.0f));
+		GameObject * p = new BallPlusPowerup(g, glm::vec3(rand() % 70, rand() % 90, 0.0f), glm::vec3(7.0f, 12.0f, 0.0f), glm::vec3(0.0f));
+
 
 		g->gameObjects.push_back(p);
 		
@@ -37,7 +51,7 @@ BallPlusPowerup::BallPlusPowerup(Game* g, glm::vec3 position, glm::vec3 scale, g
 	this->scale = glm::vec3(scale);
 	this->velocity = glm::vec3(velocity);
 
-	this->mesh = Mesh(g->vertVec[0], g->indexVec[0], g->texturesVec[3]);
+	this->mesh = Mesh(g->vertVec[0], g->indexVec[0], g->texturesVec[0]);
 
 }
 
@@ -55,14 +69,14 @@ void BallPlusPowerup::delayEffect(Game* g) {
 
 void BallPlusPowerup::update(Game* g) {
 	if (!hit) {
-		bool intersect = g->balls[0]->circintersects(g->balls[0]->position, position, g->balls[0]->rad, 6.0, 6.0);
+		bool intersect = g->balls[0]->circintersects(g->balls[0]->position, position, g->balls[0]->rad, 6.5, 6.5);
 
 		if (intersect) {
 			g->balls[0]->rad = 4.0f;
 			g->balls[0]->scale = g->balls[0]->scale * 2.0f;
 
 			
-
+			g->powerups[0]->currentPowerup = g->powerups[0]->powerups[rand() % 3];
 			hit = true;
 		}
 

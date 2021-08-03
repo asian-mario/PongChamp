@@ -30,7 +30,7 @@ void Paddle::update(Game* g) {
 	}
 
 	if (velocity.y != 0)
-		velocity.y += (velocity.y < 0 ? 1.0f : -1.0f) * 110.0f * (float) g->deltaTime;
+		velocity.y += (velocity.y < 0 ? 1.0f : -1.0f) * 200.0f * (float) g->deltaTime;
 
 	if (abs(velocity.y) <= 0.05f) velocity.y = 0;
 
