@@ -43,7 +43,7 @@ class Game {
 		std::vector <gameFont*> texts;
 		std::vector <Font*> fonts;
 		std::vector <Texture*> textures;
-		std::vector <PowerupSpawn*> powerups;
+		std::vector <PowerupSpawn*> PowerupSpawner;
 
 		std::vector <std::vector<GLuint>> indexVec;
 		std::vector <std::vector<Texture>> texturesVec;

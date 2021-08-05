@@ -13,12 +13,17 @@ public:
 	string currentPowerup = powerups[rand() % 3];
 
 	void resetPowerup();
+	void deletePowerup(GameObject* GO);
+
 	void update(Game* g) override;
 	void spawn(Game* g, int tex);
 
-	bool maxSpawn = false;
+	const int maxSpawn = 1;
+	int crntSpawn = 0;
+	double delay = 8.0;
 
-
+private:
+	std::vector<GameObject*> activePowerup;
 };
 
 class BallPlusPowerup : public GameObject {

@@ -4,8 +4,19 @@ void PowerupSpawn::resetPowerup() {
 	currentPowerup = powerups[rand() % 3];
 }
 
+void PowerupSpawn::deletePowerup(GameObject* GO) {
+	for (GameObject*& g : activePowerup)
+		if (GO == g)
+		{
+			g = nullptr;  
+			activeSpwn--;
+			resetPowerup();
+
+			return;
+		}
+}
 void PowerupSpawn::update(Game* g) {
-	if (!maxSpawn) {
+	if (activeSpwn < maxSpawn) {
 
 		cout << currentPowerup << endl;
 
@@ -22,9 +33,6 @@ void PowerupSpawn::update(Game* g) {
 		}
 
 	
-
-		maxSpawn = true;
-	
 	}
 
 }
@@ -33,12 +41,20 @@ void PowerupSpawn::spawn(Game* g, int type) {
 
 	switch (type) {
 	case 0: 
-		GameObject * p = new BallPlusPowerup(g, glm::vec3(rand() % 70, rand() % 90, 0.0f), glm::vec3(7.0f, 12.0f, 0.0f), glm::vec3(0.0f));
+		float dt = g->deltaTime;
+		delay -= dt;
+
+		if (delay <= 0) {
+			GameObject* newP = new BallPlusPowerup(g, glm::vec3(rand() % 65, rand() % 80, 0.0f), glm::vec3(7.0f, 12.0f, 0.0f), glm::vec3(0.0f));
+			activeSpwn++;
+
+			g->gameObjects.push_back(newP);
+			this->activePowerup.push_back(newP);
+
+			delay = 8.0f;
+		}
 
 
-		g->gameObjects.push_back(p);
-		
-		
 		break;
 
 	}
@@ -51,7 +67,7 @@ BallPlusPowerup::BallPlusPowerup(Game* g, glm::vec3 position, glm::vec3 scale, g
 	this->scale = glm::vec3(scale);
 	this->velocity = glm::vec3(velocity);
 
-	this->mesh = Mesh(g->vertVec[0], g->indexVec[0], g->texturesVec[0]);
+	this->mesh = Mesh(g->vertVec[0], g->indexVec[0], g->texturesVec[3]);
 
 }
 
@@ -63,20 +79,19 @@ void BallPlusPowerup::delayEffect(Game* g) {
 		g->balls[0]->rad = 3.0f;
 		g->balls[0]->scale = glm::vec3(9.6f, 19.1f, 0.0f);
 
+		g->PowerupSpawner[0]->deletePowerup(this);
 		g->deleteObj(this);
 	}
 }
 
 void BallPlusPowerup::update(Game* g) {
 	if (!hit) {
-		bool intersect = g->balls[0]->circintersects(g->balls[0]->position, position, g->balls[0]->rad, 6.5, 6.5);
+		bool intersect = g->balls[0]->circintersects(g->balls[0]->position, position, g->balls[0]->rad, 7.5, 7.5);
 
 		if (intersect) {
 			g->balls[0]->rad = 4.0f;
 			g->balls[0]->scale = g->balls[0]->scale * 2.0f;
 
-			
-			g->powerups[0]->currentPowerup = g->powerups[0]->powerups[rand() % 3];
 			hit = true;
 		}
 
@@ -88,6 +103,11 @@ void BallPlusPowerup::update(Game* g) {
 
 void BallPlusPowerup::draw(Game* g) {
 	if (hit) return;
+
+
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 	glm::mat4 model = getModelMatrix();
 	glm::vec4 lightCol = g->lights[0]->color;
 	glm::vec3 lightPosition = g->lights[0]->position;

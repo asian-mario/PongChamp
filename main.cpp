@@ -370,6 +370,7 @@ int main() {
 	//----------------------PARTICLE SYSTEM---------------------
 
 	PowerupSpawn PowerS;
+	g.PowerupSpawner.push_back(&PowerS);
 	g.gameObjects.push_back(&PowerS);
 
 	while (!glfwWindowShouldClose(window)) {

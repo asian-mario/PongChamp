@@ -39,11 +39,12 @@ bool Ball::boundsCheckL(glm::vec3 position, glm::vec3 velocity, float bounds) {
 void Ball::update(Game* g) {
 
 	glm::vec4 color = glm::vec4(1.0f);
+
 	if (g->balls[0]->position.x >= -100.0f && g->balls[0]->position.x <= -35.0f) {
 		color = glm::vec4(1.0f, 0.0f, 0.0f, 1.0f);
 	}
 
-	g->particleSystems[0]->spawn(g, g->balls[0]->position, g->balls[0]->velocity, glm::vec3(1.0f), glm::vec4(1.0f), 0.5f);
+	g->particleSystems[0]->spawn(g, g->balls[0]->position, g->balls[0]->velocity, glm::vec3(1.0f), color, 0.5f);
 
 	//--------------BOUNDS CHECK----------------------
 	bool checkRight = boundsCheck(g->balls[0]->position, g->balls[0]->velocity, 1.0f * 100.0f);
@@ -54,10 +55,11 @@ void Ball::update(Game* g) {
 			g->particleSystems[3]->spawn(g, glm::vec3(g->barriers[2]->position.x, g->balls[0]->position.y, g->barriers[0]->position.z), glm::vec3(50.0f, rand() / 200.0f, 0.0f), glm::vec3(3.0f), glm::vec4(1.0f), 2.0f);
 		}
 		
-		velocity = glm::vec3(-60.0f, -rand() / control, 0.0f);
-		if (g->texts[0]->score < 6) {
-			g->texts[0]->score++;
-			position = glm::vec3(0.0f);
+		g->texts[0]->score++;
+		position = glm::vec3(0.0f);
+
+		if (g->texts[0]->score < 5) {
+			velocity = glm::vec3(-60.0f, -rand() / control, 0.0f);
 		}
 
 		
@@ -69,10 +71,11 @@ void Ball::update(Game* g) {
 
 		}
 
-		velocity = glm::vec3(60.0f, rand() / control, 0.0f);
-		if (g->texts[1]->score < 5) {
-			g->texts[1]->score++;
-			position = glm::vec3(0.0f);
+		g->texts[1]->score++;
+		position = glm::vec3(0.0f);
+
+		if (g->texts[1]->score <= 5) {
+			velocity = glm::vec3(60.0f, rand() / control, 0.0f);
 		}
 	}
 
@@ -82,8 +85,8 @@ void Ball::update(Game* g) {
 	double deltaTime = g->deltaTime;
 
 
-	bool intersect = circintersects(g->balls[0]->position, g->paddles[0]->position, rad, 1.5, 17.0);
-	bool intersect2 = circintersects(g->balls[0]->position, g->paddles[1]->position, rad, 1.5, 17.0);
+	bool intersect = circintersects(g->balls[0]->position, g->paddles[0]->position, rad, 1.5, 12.0);
+	bool intersect2 = circintersects(g->balls[0]->position, g->paddles[1]->position, rad, 1.5, 12.0);
 
 	if (intersect) {
 		velocity.x = -velocity.x;

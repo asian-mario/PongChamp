@@ -19,6 +19,7 @@ void Game::update() {
 	for (GameObject* o : gameObjects)
 		if (o != nullptr)
 			o->update(this);
+
 	for (GameObject* p : particleSystems)
 		p->update(this);
 
