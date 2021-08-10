@@ -6,6 +6,15 @@ Game::Game() {
 	this->gameWindow = gameWindow;
 }
 
+bool Game::timer(int time) {
+	if (time > 0) {
+		time--;
+	}
+
+	if (time <= 0) {
+		return true;
+	}
+}
 void Game::deleteObj(GameObject* GO) {	
 	for (auto c = gameObjects.begin(); c != gameObjects.end(); c++) {
 		if (*c == GO)

@@ -45,7 +45,9 @@ void gameFont::update(Game* g, GLFWwindow* window) {
 		}
 	}
 
-	if (g->texts[1]->score >= 5) {
+	if (g->texts[0]->score >= 5) {
+		g->balls[0]->velocity = glm::vec3(0.0f);
+
 		g->fonts[0]->drawString(600.0f, 450.0f, "PONG CHAMP", g->shaders[2]);
 		g->fonts[0]->drawString(550.0f, 600.0f, "PLAYER 2 WINS!", g->shaders[2]);
 		g->fonts[0]->drawString(550.0f, 800.0f, "RESTART? (Y/N)", g->shaders[2]);

@@ -203,5 +203,8 @@
     <Font Include="chargen.ttf">
       <Filter>Resource Files\Fonts</Filter>
     </Font>
+    <Font Include="Ghost.ttf">
+      <Filter>Resource Files\Fonts</Filter>
+    </Font>
   </ItemGroup>
 </Project>

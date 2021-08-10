@@ -69,9 +69,8 @@ void Ball::update(Game* g) {
 		g->texts[0]->score++;
 		position = glm::vec3(0.0f);
 
-		if (g->texts[0]->score < 5) {
-			velocity = glm::vec3(-60.0f, -rand() / control, 0.0f);
-		}
+		velocity = glm::vec3(-60.0f, -rand() / control, 0.0f);
+		
 
 		
 	}
@@ -85,9 +84,9 @@ void Ball::update(Game* g) {
 		g->texts[1]->score++;
 		position = glm::vec3(0.0f);
 
-		if (g->texts[1]->score <= 5) {
-			velocity = glm::vec3(60.0f, rand() / control, 0.0f);
-		}
+
+		velocity = glm::vec3(60.0f, rand() / control, 0.0f);
+
 	}
 
 	//--------------INTERSECTION-----------------------
@@ -141,7 +140,8 @@ void Ball::update(Game* g) {
 	position += velocity * (float) deltaTime;
 	//--------------INTERSECTION-----------------------
 
-	if (velocity.y >= 350.0f) {
+	if (velocity.y >= 300.0f) {
 		velocity.y = velocity.y - 60.0f;
 	}
+
 }

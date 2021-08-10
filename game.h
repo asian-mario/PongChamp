@@ -61,6 +61,7 @@ class Game {
 		Game();
 
 		//--FRAME
+		bool timer(int time);
 		void update();
 		void deleteObj(GameObject* GO);
 		void draw();
