@@ -7,11 +7,14 @@ Game::Game() {
 }
 
 void Game::deleteObj(GameObject* GO) {	
-	for (GameObject* &g : gameObjects)
-		if (GO == g)
+	for (auto c = gameObjects.begin(); c != gameObjects.end(); c++) {
+		if (*c == GO)
 		{
-			delete GO; g = nullptr;  return;
+			delete GO;
+			gameObjects.erase(c);
+			return;
 		}
+	}
 }
 void Game::update() {
 	deltaTime = (float)glfwGetTime() - lastTime;

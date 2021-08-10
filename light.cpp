@@ -5,7 +5,6 @@ Light::Light(glm::vec4 color, glm::vec3 position) {
 
 	this->color = glm::vec4(color);
 	this->position = glm::vec3(position);
-
 }
 
 void Light::draw(Game* g) {

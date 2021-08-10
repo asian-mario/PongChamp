@@ -92,6 +92,10 @@ void BallPlusPowerup::update(Game* g) {
 			g->balls[0]->rad = 4.0f;
 			g->balls[0]->scale = g->balls[0]->scale * 2.0f;
 
+			for (int i = 0; i < 25; i++) {
+				g->particleSystems[0]->spawn(g, glm::vec3(position.x + 2.0f, position.y + 2.0f, 0.0f), glm::vec3(rand() / 400.0f, rand() / 400.0f, 0.0f), glm::vec3(2.0f), glm::vec4(1.0f), 1.0f);
+			}
+
 			hit = true;
 		}
 

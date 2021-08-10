@@ -49,7 +49,7 @@ vec4 pointLight(){
 
 vec4 directLight(){
 	//''''ambient'''' lighting
-	float ambient = 0.05f;
+	float ambient = 3.0f;
 
 
 	vec3 normal = normalize(Normal);
@@ -92,7 +92,6 @@ vec4 spotlight(){
 }
 
 void main(){
-
 
 	//outputs final color
    FragColor = directLight();

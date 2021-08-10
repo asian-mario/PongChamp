@@ -19,7 +19,7 @@ public:
 	void spawn(Game* g, int tex);
 
 	const int maxSpawn = 1;
-	int crntSpawn = 0;
+	int activeSpwn = 0;
 	double delay = 8.0;
 
 private:

@@ -198,8 +198,8 @@ int main() {
 	};
 	g.textures.push_back(particleGoal);
 
-	Texture powerup[]{
-		Texture("powerup.png", "diffuse", 0, GL_RGBA, GL_UNSIGNED_BYTE)
+	Texture ballPlus[]{
+		Texture("BallPlus.png", "diffuse", 0, GL_RGBA, GL_UNSIGNED_BYTE)
 	};
 
 	Texture barTex[]{
@@ -239,7 +239,7 @@ int main() {
 	std::vector <Texture> particleTex(particle, particle + sizeof(particle) / sizeof(Texture));
 	g.texturesVec.push_back(particleTex);
 
-	std::vector <Texture> powerupTex(powerup, powerup + sizeof(powerup) / sizeof(Texture));
+	std::vector <Texture> powerupTex(ballPlus, ballPlus + sizeof(ballPlus) / sizeof(Texture));
 	g.texturesVec.push_back(powerupTex);
 
 	std::vector <Texture> paddle1Tex(pad1Tex, pad1Tex + sizeof(pad1Tex) / sizeof(Texture));
@@ -267,10 +267,12 @@ int main() {
 	g.shaders.push_back(&lightShader);
 
 	//-----------------------------Lights------------------------------------------------------------------
-	Light directLight(glm::vec4(10.0f, 10.0f, 10.0f, 10.0f), glm::vec3(0.0f, 0.5f, 1.5f));
+	Light directLight(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), glm::vec3(0.0f, 50.0f, 150.0f));
 	directLight.mesh = Mesh(lightVerts, lightInd, defaultTex);
 	g.lights.push_back(&directLight);
 	g.gameObjects.push_back(&directLight);
+
+
 
 	//------------------------------TEXT-------------------------------------------------------------------
 	Shader fShader("font.vert", "font.frag");
@@ -420,7 +422,8 @@ int main() {
 		GUI::createDebugMenu(BarrierBU, "Debug Barrier Up", glm::vec3(0.0f, 0.85f, 0.0f), VEC3_ZERO, glm::vec3(1.7f, 0.05f, 1.0f));
 		GUI::createDebugMenu(BarrierBD, "Debug Barrier Bottom", glm::vec3(0.0f, -0.85f, 0.0f), VEC3_ZERO, glm::vec3(1.7f, 0.05f, 1.0f));
 		GUI::createDebugMenu(camera, "Camera", glm::vec3(0.0f, -0.85f, 0.0f), VEC3_ZERO, glm::vec3(1.7f, 0.05f, 1.0f));
-		GUI::createDebugMenu(&g);
+		GUI::createDebugMenu(directLight, "Light", VEC3_ZERO, VEC3_ZERO, VEC3_ZERO);
+		GUI::createDebugMenu(&g); 
 		//-------------------------------------DEBUG----------------------------------------------
 
 
