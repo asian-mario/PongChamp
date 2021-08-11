@@ -49,3 +49,15 @@ public:
 	void update(Game* g) override;
 	void draw(Game* g) override;
 };
+
+class PaddleMinusPowerup : public GameObject {
+public:
+	bool hit = false;
+	double effect = 7.0;
+
+	PaddleMinusPowerup(Game* g, glm::vec3 position, glm::vec3 scale, glm::vec3 velocity);
+
+	void delayEffect(Game* g);
+	void update(Game* g) override;
+	void draw(Game* g) override;
+};

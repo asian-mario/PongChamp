@@ -218,6 +218,10 @@ int main() {
 		Texture("PaddlePlus.png", "diffuse", 0, GL_RGBA, GL_UNSIGNED_BYTE)
 	};
 
+	Texture paddleMinus[]{
+	Texture("PaddleMinus.png", "diffuse", 0, GL_RGBA, GL_UNSIGNED_BYTE)
+	};
+
 	//Creates shadeprogram from default.vert and default.frag
 	Shader shaderProgram("Default.vert", "default.frag");
 
@@ -256,6 +260,9 @@ int main() {
 
 	std::vector <Texture> paddleplusTex(paddlePlus, paddlePlus + sizeof(paddlePlus) / sizeof(Texture));
 	g.texturesVec.push_back(paddleplusTex);
+
+	std::vector <Texture> paddleminusTex(paddleMinus, paddleMinus + sizeof(paddleMinus) / sizeof(Texture));
+	g.texturesVec.push_back(paddleminusTex);
 
 	g.shaders.push_back(&shaderProgram);
 	
