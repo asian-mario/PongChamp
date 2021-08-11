@@ -57,8 +57,8 @@ void ParticleSystem::update(Game* g) {
         p->position -= p->velocity * dt;
         p->color.a -= dt * 2.5f;
         
-        bool collide = g->balls[0]->circintersects(p->position, g->paddles[0]->position, 3.0f, 1.5, 11.5);
-        bool collide2 = g->balls[0]->circintersects(p->position, g->paddles[1]->position, 3.0f, 1.5, 11.5);
+        bool collide = g->balls[0]->circintersects(p->position, g->paddles[0]->position, 2.5f, g->paddles[0]->width, g->paddles[0]->height);
+        bool collide2 = g->balls[0]->circintersects(p->position, g->paddles[1]->position, 2.5f, g->paddles[1]->width, g->paddles[1]->height);
 
 
         if (p->position.y >= 96.5f && p->position.y >= 105.0f || p->position.y <= -96.5f && p->position.y <= -105.0f) {

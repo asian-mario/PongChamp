@@ -24,5 +24,11 @@ public:
 
 	gameFont(glm::vec3 pos);
 	void update(Game* g, GLFWwindow* window);
+
 };
 
+class miscFont : public GameObject {
+public:
+	float timer = 5.0f;
+	void smashDraw(Game* g);
+};

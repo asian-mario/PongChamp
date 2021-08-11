@@ -198,10 +198,6 @@ int main() {
 	};
 	g.textures.push_back(particleGoal);
 
-	Texture ballPlus[]{
-		Texture("BallPlus.png", "diffuse", 0, GL_RGBA, GL_UNSIGNED_BYTE)
-	};
-
 	Texture barTex[]{
 		Texture("barrier.png", "diffuse", 0, GL_RGBA, GL_UNSIGNED_BYTE)
 	};
@@ -214,6 +210,13 @@ int main() {
 		Texture("paddleP.png", "diffuse", 0, GL_RGBA, GL_UNSIGNED_BYTE)
 	};
 
+	Texture ballPlus[]{
+		Texture("BallPlus.png", "diffuse", 0, GL_RGBA, GL_UNSIGNED_BYTE)
+	};
+
+	Texture paddlePlus[]{
+		Texture("PaddlePlus.png", "diffuse", 0, GL_RGBA, GL_UNSIGNED_BYTE)
+	};
 
 	//Creates shadeprogram from default.vert and default.frag
 	Shader shaderProgram("Default.vert", "default.frag");
@@ -239,9 +242,6 @@ int main() {
 	std::vector <Texture> particleTex(particle, particle + sizeof(particle) / sizeof(Texture));
 	g.texturesVec.push_back(particleTex);
 
-	std::vector <Texture> powerupTex(ballPlus, ballPlus + sizeof(ballPlus) / sizeof(Texture));
-	g.texturesVec.push_back(powerupTex);
-
 	std::vector <Texture> paddle1Tex(pad1Tex, pad1Tex + sizeof(pad1Tex) / sizeof(Texture));
 	g.texturesVec.push_back(paddle1Tex);
 
@@ -251,6 +251,11 @@ int main() {
 	std::vector <Texture> barrierTex(barTex, barTex + sizeof(barTex) / sizeof(barTex));
 	g.texturesVec.push_back(barrierTex);
 
+	std::vector <Texture> ballplusTex(ballPlus, ballPlus + sizeof(ballPlus) / sizeof(Texture));
+	g.texturesVec.push_back(ballplusTex);
+
+	std::vector <Texture> paddleplusTex(paddlePlus, paddlePlus + sizeof(paddlePlus) / sizeof(Texture));
+	g.texturesVec.push_back(paddleplusTex);
 
 	g.shaders.push_back(&shaderProgram);
 	
@@ -318,7 +323,7 @@ int main() {
 	g.gameObjects.push_back(&BarrierER);
 
 	//--------------BALL--------------------------------------
-	Ball ball1(glm::vec3(-0.02f, 0.0f, 0.0f) * 100.0f, glm::vec3(0.096f, 0.191f, 1.0f) * 100.0f, 3.0, glm::vec3(-65.0f, rand() / 10000.0f, 0.0f));
+	Ball ball1(glm::vec3(-0.02f, 0.0f, 0.0f) * 100.0f, glm::vec3(0.096f, 0.191f, 1.0f) * 100.0f, 2.5, glm::vec3(-65.0f, rand() / 10000.0f, 0.0f));
 	ball1.mesh = Mesh(ballsverts, ballinds, ballTex);
 	g.balls.push_back(&ball1);
 	g.gameObjects.push_back(&ball1);
@@ -357,6 +362,8 @@ int main() {
 	gameFont score2(glm::vec3(1650.0f, 150.0f, 0.0f));
 	g.texts.push_back(&score2);
 
+	miscFont miscFont;
+	g.miscfonts.push_back(&miscFont);
 
 	//---------------------------TEXT----------------------------
 
@@ -411,6 +418,7 @@ int main() {
 
 		font.drawString(g.texts[0]->pos.x, g.texts[0]->pos.y, g.texts[0]->text, &fShader);
 		font.drawString(g.texts[1]->pos.x, g.texts[1]->pos.y, g.texts[1]->text, &fShader);
+
 
 
 		//------------------------TEXT (NOTE: IMPLEMENT IN G.DRAW())----------------------------------------

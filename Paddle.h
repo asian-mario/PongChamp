@@ -19,6 +19,9 @@ class Paddle : public GameObject {
 	public:
 		bool lastHit = false;
 
+		double width = 1.8;
+		double height = 12.0;
+
 		enum CONTROLTYPE { WASD, ARROW };
 		CONTROLTYPE type;
 

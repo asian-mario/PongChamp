@@ -38,3 +38,14 @@ public:
 	void draw(Game* g) override;
 };
 
+class PaddlePlusPowerup : public GameObject {
+public:
+	bool hit = false;
+	double effect = 7.0;
+
+	PaddlePlusPowerup(Game* g, glm::vec3 position, glm::vec3 scale, glm::vec3 velocity);
+
+	void delayEffect(Game* g);
+	void update(Game* g) override;
+	void draw(Game* g) override;
+};

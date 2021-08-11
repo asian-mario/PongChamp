@@ -23,6 +23,7 @@ class Paddle;
 class Light;
 class Camera;
 class gameFont;
+class miscFont;
 struct Font;
 class Texture;
 class PowerupSpawn;
@@ -40,6 +41,7 @@ class Game {
 		std::vector <Barrier*> barriers;
 		std::vector <Shader*> shaders;
 		std::vector <Light*> lights;
+		std::vector <miscFont*> miscfonts;
 		std::vector <gameFont*> texts;
 		std::vector <Font*> fonts;
 		std::vector <Texture*> textures;
