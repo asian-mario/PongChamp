@@ -356,11 +356,11 @@ int main() {
 
 	//---------------------------TEXT----------------------------
 	Font font;
-	font.initFont("Ghost.ttf");
+	font.initFont("NexaBold.otf");
 	g.fonts.push_back(&font);
 
 	Font font2;
-	font2.initFont("chargen.ttf");
+	font2.initFont("NexaBold.otf");
 	g.fonts.push_back(&font2);
 
 	gameFont score1(glm::vec3(200.0f, 150.0f, 0.0f));
@@ -425,6 +425,8 @@ int main() {
 
 		font.drawString(g.texts[0]->pos.x, g.texts[0]->pos.y, g.texts[0]->text, &fShader);
 		font.drawString(g.texts[1]->pos.x, g.texts[1]->pos.y, g.texts[1]->text, &fShader);
+
+		font.drawString(g.texts[0]->pos.x, g.texts[0]->pos.y, "PEEEEE", &fShader);
 
 
 

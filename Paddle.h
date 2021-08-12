@@ -21,6 +21,7 @@ class Paddle : public GameObject {
 
 		double width = 1.8;
 		double height = 12.0;
+		float decayControl = 200.0f;
 
 		enum CONTROLTYPE { WASD, ARROW };
 		CONTROLTYPE type;

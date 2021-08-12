@@ -200,10 +200,13 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <Font Include="chargen.ttf">
+    <Font Include="NexaBold.otf">
       <Filter>Resource Files\Fonts</Filter>
     </Font>
-    <Font Include="Ghost.ttf">
+    <Font Include="NexaLight.otf">
+      <Filter>Resource Files\Fonts</Filter>
+    </Font>
+    <Font Include="Livvic-Bold.ttf">
       <Filter>Resource Files\Fonts</Filter>
     </Font>
   </ItemGroup>
