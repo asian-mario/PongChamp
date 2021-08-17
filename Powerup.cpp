@@ -21,15 +21,15 @@ void PowerupSpawn::update(Game* g) {
 		cout << currentPowerup << endl;
 
 		if (currentPowerup == powerups[0]) {
-			spawn(g, 3);
+			spawn(g, 0);
 		}
 
 		if (currentPowerup == powerups[1]) {
-			spawn(g, 3);
+			spawn(g, 1);
 		}
 
 		if (currentPowerup == powerups[2]) {
-			spawn(g, 3);
+			spawn(g, 2);
 		}
 
 		if (currentPowerup == powerups[3]) {
@@ -185,7 +185,7 @@ void PaddlePlusPowerup::delayEffect(Game* g) {
 	double dt = g->deltaTime;
 	effect -= dt;
 
-	if (effect <= 0.0 || g->balls[0]->position.x >= 95.0f || g->balls[0]->position.x <= -95.0f) {
+	if (effect <= 0.0) {
 		g->paddles[0]->height = 12.0;
 		g->paddles[0]->scale.y = 20.0f;
 
@@ -261,7 +261,7 @@ void PaddleMinusPowerup::delayEffect(Game* g) {
 	double dt = g->deltaTime;
 	effect -= dt;
 
-	if (effect <= 0.0 || g->balls[0]->position.x >= 95.0f || g->balls[0]->position.x <= -95.0f) {
+	if (effect <= 0.0) {
 		g->paddles[0]->height = 12.0;
 		g->paddles[0]->scale.y = 20.0f;
 
@@ -332,7 +332,7 @@ ButterPowerup::ButterPowerup(Game* g, glm::vec3 position, glm::vec3 scale, glm::
 	this->scale = glm::vec3(scale);
 	this->velocity = glm::vec3(velocity);
 
-	this->mesh = Mesh(g->vertVec[0], g->indexVec[0], g->texturesVec[0]);
+	this->mesh = Mesh(g->vertVec[0], g->indexVec[0], g->texturesVec[9]);
 
 }
 
@@ -340,7 +340,7 @@ void ButterPowerup::delayEffect(Game* g) {
 	double dt = g->deltaTime;
 	effect -= dt;
 
-	if (effect <= 0.0 || g->balls[0]->position.x >= 95.0f || g->balls[0]->position.x <= -95.0f) {
+	if (effect <= 0.0) {
 		g->paddles[0]->decayControl = 200.0;
 		g->paddles[1]->decayControl = 200.0;
 

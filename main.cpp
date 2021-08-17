@@ -219,7 +219,11 @@ int main() {
 	};
 
 	Texture paddleMinus[]{
-	Texture("PaddleMinus.png", "diffuse", 0, GL_RGBA, GL_UNSIGNED_BYTE)
+		Texture("PaddleMinus.png", "diffuse", 0, GL_RGBA, GL_UNSIGNED_BYTE)
+	};
+
+	Texture butterFingers[]{
+	Texture("ButterFingers.png", "diffuse", 0, GL_RGBA, GL_UNSIGNED_BYTE)
 	};
 
 	//Creates shadeprogram from default.vert and default.frag
@@ -263,6 +267,9 @@ int main() {
 
 	std::vector <Texture> paddleminusTex(paddleMinus, paddleMinus + sizeof(paddleMinus) / sizeof(Texture));
 	g.texturesVec.push_back(paddleminusTex);
+
+	std::vector <Texture> butterfingersTex(butterFingers, butterFingers + sizeof(butterFingers) / sizeof(Texture));
+	g.texturesVec.push_back(butterfingersTex);
 
 	g.shaders.push_back(&shaderProgram);
 	

@@ -65,7 +65,7 @@ public:
 class ButterPowerup : public GameObject {
 public:
 	bool hit = false;
-	double effect = 7.0;
+	double effect = 10.0;
 
 	ButterPowerup(Game* g, glm::vec3 position, glm::vec3 scale, glm::vec3 velocity);
 
