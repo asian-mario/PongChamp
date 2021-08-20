@@ -21,19 +21,23 @@ void PowerupSpawn::update(Game* g) {
 		cout << currentPowerup << endl;
 
 		if (currentPowerup == powerups[0]) {
-			spawn(g, 0);
+			spawn(g, 4);
 		}
 
 		if (currentPowerup == powerups[1]) {
-			spawn(g, 1);
+			spawn(g, 4);
 		}
 
 		if (currentPowerup == powerups[2]) {
-			spawn(g, 2);
+			spawn(g, 4);
 		}
 
 		if (currentPowerup == powerups[3]) {
-			spawn(g, 3);
+			spawn(g, 4);
+		}
+
+		if (currentPowerup == powerups[4]) {
+			spawn(g, 4);
 		}
 	
 	}
@@ -93,6 +97,17 @@ void PowerupSpawn::spawn(Game* g, int type) {
 	case 3:
 		if (delay <= 0) {
 			GameObject* newP = new ButterPowerup(g, glm::vec3(rand() % 65, rand() % 80, 0.0f), glm::vec3(7.0f, 12.0f, 0.0f), glm::vec3(0.0f));
+			activeSpwn++;
+
+			g->gameObjects.push_back(newP);
+			this->activePowerup.push_back(newP);
+
+			delay = 8.0f;
+		}
+
+	case 4:
+		if (delay <= 0) {
+			GameObject* newP = new UltraSmashPowerup(g, glm::vec3(rand() % 65, rand() % 80, 0.0f), glm::vec3(7.0f, 12.0f, 0.0f), glm::vec3(0.0f));
 			activeSpwn++;
 
 			g->gameObjects.push_back(newP);
@@ -381,6 +396,85 @@ void ButterPowerup::update(Game* g) {
 }
 
 void ButterPowerup::draw(Game* g) {
+	if (hit) return;
+
+
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	glm::mat4 model = getModelMatrix();
+	glm::vec4 lightCol = g->lights[0]->color;
+	glm::vec3 lightPosition = g->lights[0]->position;
+
+	g->shaders[0]->Activate();
+
+	glUniformMatrix4fv(glGetUniformLocation(g->shaders[0]->ID, "model"), 1, GL_FALSE, glm::value_ptr(model));
+	glUniform4f(glGetUniformLocation(g->shaders[0]->ID, "lightColor"), lightCol.x, lightCol.y, lightCol.z, lightCol.w);
+	glUniform3f(glGetUniformLocation(g->shaders[0]->ID, "lightPos"), lightPosition.x, lightPosition.y, lightPosition.z);
+	mesh.Draw(*g->shaders[0], *g->cameras[0]);
+}
+//----------------------------------------UltraSmash---------------------------------------------------
+UltraSmashPowerup::UltraSmashPowerup(Game* g, glm::vec3 position, glm::vec3 scale, glm::vec3 velocity) {
+	this->position = glm::vec3(position);
+	this->scale = glm::vec3(scale);
+	this->velocity = glm::vec3(velocity);
+
+	this->mesh = Mesh(g->vertVec[0], g->indexVec[0], g->texturesVec[0]);
+
+}
+
+void UltraSmashPowerup::delayEffect(Game* g) {
+	double dt = g->deltaTime;
+	strHint -= dt;
+
+	if (strHint > 0) {
+		g->fonts[1]->drawString(0.0f, -450.0f, "PRESS 'U'", g->shaders[2]);
+	}
+
+	if (glfwGetKey(g->gameWindow, GLFW_KEY_U)) {
+		g->balls[0]->limitSpeed = false;
+		exec = true;
+	}
+
+
+	if (exec == true) {
+		effect -= dt;
+
+		if (effect > 0) {
+			g->fonts[1]->drawString(0.0f, -450.0f, "ACTIVATED", g->shaders[2]);
+		}
+
+		if (effect <= 0.0) {
+			g->balls[0]->limitSpeed = true;
+
+			g->PowerupSpawner[0]->deletePowerup(this);
+			g->deleteObj(this);
+		}
+	}
+}
+
+void UltraSmashPowerup::update(Game* g) {
+	if (!hit) {
+		bool intersect = g->balls[0]->circintersects(g->balls[0]->position, position, g->balls[0]->rad, 7.5, 7.5);
+
+		if (intersect) {
+
+			for (int i = 0; i < 25; i++) {
+				g->particleSystems[0]->spawn(g, glm::vec3(position.x + 2.0f, position.y + 2.0f, 0.0f), glm::vec3(rand() / 400.0f, rand() / 400.0f, 0.0f), glm::vec3(2.0f), glm::vec4(1.0f), 1.0f);
+			}
+
+			position = glm::vec3(2000.0f, 2000.0f, 0.0f);
+			hit = true;
+		}
+
+
+		return;
+	}
+
+	delayEffect(g);
+}
+
+void UltraSmashPowerup::draw(Game* g) {
 	if (hit) return;
 
 

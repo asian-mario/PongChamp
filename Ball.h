@@ -14,6 +14,7 @@ class Ball : public GameObject {
 		double control = 1000.0;
 		const float maxSpeed = 200.0f;
 		double rad;
+		bool limitSpeed = true;
 
 		Ball(glm::vec3 pos, glm::vec3 scale, double rad, glm::vec3 velocity = glm::vec3(-0.005f, rand() / 10000000.0f, 0.0f));
 		bool circintersects(glm::vec3 circle, glm::vec3 rect, double circleRadius, double width, double height);

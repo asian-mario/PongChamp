@@ -128,11 +128,15 @@ void Ball::update(Game* g) {
 		g->particleSystems[2]->spawn(g, glm::vec3(g->balls[0]->position.x, g->barriers[1]->position.y, g->barriers[1]->position.z), glm::vec3(0.0f, -25.0f, 0.0f), glm::vec3(20.0f), color, 1.5f);
 	}
 
+	if (limitSpeed == true) {
+		//Speed control
+		if (roml::magnitude(velocity) >= 500.0f) {
+			float mag = roml::magnitude(velocity);
+			velocity = velocity * (500.0f / mag);
+		}
 
-	//Speed control
-	if (roml::magnitude(velocity) >= 500.0f) {
-		float mag = roml::magnitude(velocity);
-		velocity = velocity * (500.0f / mag);
+		if (velocity.y >= 300.0f)
+			velocity.y = velocity.y - 60.0f;
 	}
 
 
@@ -142,8 +146,6 @@ void Ball::update(Game* g) {
 	position += velocity * (float) deltaTime;
 	//--------------INTERSECTION-----------------------
 
-	if (velocity.y >= 300.0f) 
-		velocity.y = velocity.y - 60.0f;
 	
 
 	if (velocity.y >= 250.0f) 

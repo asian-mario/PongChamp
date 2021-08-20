@@ -9,8 +9,8 @@ class Game;
 
 class PowerupSpawn : public GameObject{
 public:
-	string powerups[4] = { "BallPlus", "PaddlePlus", "PaddleMinus", "ButterFingers"};
-	string currentPowerup = powerups[rand() % 4];
+	string powerups[5] = { "BallPlus", "PaddlePlus", "PaddleMinus", "ButterFingers", "UltraSmash"};
+	string currentPowerup = powerups[rand() % 5];
 
 	void resetPowerup();
 	void deletePowerup(GameObject* GO);
@@ -68,6 +68,21 @@ public:
 	double effect = 10.0;
 
 	ButterPowerup(Game* g, glm::vec3 position, glm::vec3 scale, glm::vec3 velocity);
+
+	void delayEffect(Game* g);
+	void update(Game* g) override;
+	void draw(Game* g) override;
+};
+
+class UltraSmashPowerup : public GameObject {
+public:
+	bool hit = false;
+	double effect = 3.0;
+	double strHint = 3.0;
+
+	bool exec = false;
+
+	UltraSmashPowerup(Game* g, glm::vec3 position, glm::vec3 scale, glm::vec3 velocity);
 
 	void delayEffect(Game* g);
 	void update(Game* g) override;
