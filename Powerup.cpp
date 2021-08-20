@@ -428,7 +428,7 @@ void UltraSmashPowerup::delayEffect(Game* g) {
 	strHint -= dt;
 
 	if (strHint > 0) {
-		g->fonts[1]->drawString(0.0f, -450.0f, "PRESS 'U'", g->shaders[2]);
+		g->fonts[1]->drawString(700.0f, 1050.0f, "PRESS 'U'", g->shaders[2]);
 	}
 
 	if (glfwGetKey(g->gameWindow, GLFW_KEY_U)) {
@@ -441,7 +441,7 @@ void UltraSmashPowerup::delayEffect(Game* g) {
 		effect -= dt;
 
 		if (effect > 0) {
-			g->fonts[1]->drawString(0.0f, -450.0f, "ACTIVATED", g->shaders[2]);
+			g->fonts[1]->drawString(700.0f, 1050.0f, "ACTIVATED", g->shaders[2]);
 		}
 
 		if (effect <= 0.0) {
