@@ -363,11 +363,11 @@ int main() {
 
 	//---------------------------TEXT----------------------------
 	Font font;
-	font.initFont("NexaBold.otf");
+	font.initFont("NexaBold.ttf");
 	g.fonts.push_back(&font);
 
 	Font font2;
-	font2.initFont("NexaBold.otf");
+	font2.initFont("NexaBold.ttf");
 	g.fonts.push_back(&font2);
 
 	gameFont score1(glm::vec3(200.0f, 150.0f, 0.0f));

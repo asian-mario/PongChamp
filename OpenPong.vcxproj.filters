@@ -209,5 +209,8 @@
     <Font Include="Livvic-Bold.ttf">
       <Filter>Resource Files\Fonts</Filter>
     </Font>
+    <Font Include="NexaBold.ttf">
+      <Filter>Resource Files\Fonts</Filter>
+    </Font>
   </ItemGroup>
 </Project>

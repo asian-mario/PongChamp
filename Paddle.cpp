@@ -32,7 +32,7 @@ void Paddle::update(Game* g) {
 	if (velocity.y != 0)
 		velocity.y += (velocity.y < 0 ? 1.0f : -1.0f) * decayControl * (float) g->deltaTime;
 
-	if (abs(velocity.y) <= 0.05f) velocity.y = 0;
+	if (abs(velocity.y) <= 0.05f) velocity.y = 0; //Stops paddle from stuttering at low speeds
 
 	float deltaTime = g->deltaTime;
 	
