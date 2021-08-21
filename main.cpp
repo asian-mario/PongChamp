@@ -223,7 +223,11 @@ int main() {
 	};
 
 	Texture butterFingers[]{
-	Texture("ButterFingers.png", "diffuse", 0, GL_RGBA, GL_UNSIGNED_BYTE)
+		Texture("ButterFingers.png", "diffuse", 0, GL_RGBA, GL_UNSIGNED_BYTE)
+	};
+
+	Texture ultraSmash[]{
+		Texture("UltraSmash.png", "diffuse", 0, GL_RGBA, GL_UNSIGNED_BYTE)
 	};
 
 	//Creates shadeprogram from default.vert and default.frag
@@ -270,6 +274,9 @@ int main() {
 
 	std::vector <Texture> butterfingersTex(butterFingers, butterFingers + sizeof(butterFingers) / sizeof(Texture));
 	g.texturesVec.push_back(butterfingersTex);
+
+	std::vector <Texture> ultrasmashTex(ultraSmash, ultraSmash + sizeof(ultraSmash) / sizeof(Texture));
+	g.texturesVec.push_back(ultrasmashTex);
 
 	g.shaders.push_back(&shaderProgram);
 	

@@ -419,7 +419,7 @@ UltraSmashPowerup::UltraSmashPowerup(Game* g, glm::vec3 position, glm::vec3 scal
 	this->scale = glm::vec3(scale);
 	this->velocity = glm::vec3(velocity);
 
-	this->mesh = Mesh(g->vertVec[0], g->indexVec[0], g->texturesVec[0]);
+	this->mesh = Mesh(g->vertVec[0], g->indexVec[0], g->texturesVec[10]);
 
 }
 
