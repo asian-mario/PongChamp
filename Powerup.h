@@ -78,7 +78,6 @@ class UltraSmashPowerup : public GameObject {
 public:
 	bool hit = false;
 	double effect = 3.0;
-	double strHint = 3.0;
 
 	bool exec = false;
 

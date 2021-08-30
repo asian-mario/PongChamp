@@ -425,11 +425,6 @@ UltraSmashPowerup::UltraSmashPowerup(Game* g, glm::vec3 position, glm::vec3 scal
 
 void UltraSmashPowerup::delayEffect(Game* g) {
 	double dt = g->deltaTime;
-	strHint -= dt;
-
-	if (strHint > 0) {
-		g->fonts[1]->drawString(700.0f, 1050.0f, "PRESS 'U'", g->shaders[2]);
-	}
 
 	if (glfwGetKey(g->gameWindow, GLFW_KEY_U)) {
 		g->balls[0]->limitSpeed = false;

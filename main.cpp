@@ -193,11 +193,6 @@ int main() {
 	};
 	g.textures.push_back(particleBD);
 
-	Texture particleGoal[]{
-		Texture("goal.png", "diffuse", 0, GL_RGBA, GL_UNSIGNED_BYTE)
-	};
-	g.textures.push_back(particleGoal);
-
 	Texture barTex[]{
 		Texture("barrier.png", "diffuse", 0, GL_RGBA, GL_UNSIGNED_BYTE)
 	};

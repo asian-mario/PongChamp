@@ -37,11 +37,12 @@ bool Ball::boundsCheckL(glm::vec3 position, glm::vec3 velocity, float bounds) {
 
 
 void Ball::update(Game* g) {
+	glm::vec4 color = glm::vec4(0.0f);
 
 	if (limitSpeed == true) {
-		glm::vec4 color = glm::vec4(1.0f);
+		
 
-		if (g->balls[0]->position.x >= -100.0f && g->balls[0]->position.x <= -25.0f) {
+		if (g->balls[0]->position.x > -100.0f && g->balls[0]->position.x <= -25.0f) {
 			color = glm::vec4(0.66f, 0.66f, 0.992f, 1.0f);
 		}
 
@@ -53,14 +54,16 @@ void Ball::update(Game* g) {
 			color = glm::vec4(0.48f, 0.125f, 0.76f, 1.0f);
 		}
 
-		if (g->balls[0]->position.x >= 40.1f && g->balls[0]->position.x <= 100.0f) {
+		if (g->balls[0]->position.x >= 40.1f && g->balls[0]->position.x < 100.0f) {
 			color = glm::vec4(0.6f, 0.17f, 0.93f, 1.0f);
 		}
 	}
-
+	
 	if (limitSpeed == false) {
-		glm::vec4 color = glm::vec4(1.0f, 0.0f, 0.0f, 1.0f);
+		color = glm::vec4(1.0f, 0.0f, 0.0f, 1.0f);
 	}
+	
+
 
 	g->particleSystems[0]->spawn(g, g->balls[0]->position, g->balls[0]->velocity, glm::vec3(1.0f), color, 0.5f);
 
