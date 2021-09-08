@@ -20,7 +20,7 @@ class Paddle : public GameObject {
 		bool lastHit = false;
 
 		double width = 1.8;
-		double height = 12.0;
+		double height = 13.0;
 		float decayControl = 200.0f;
 
 		enum CONTROLTYPE { WASD, ARROW };

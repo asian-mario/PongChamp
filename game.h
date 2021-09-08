@@ -69,6 +69,7 @@ class Game {
 		void draw();
 
 		//--UTILITY
+		void slowMo(float time);
 		float deltaTime;
 };
 

@@ -16,6 +16,8 @@ class Ball : public GameObject {
 		double rad;
 		bool limitSpeed = true;
 
+		glm::vec4 color;
+
 		Ball(glm::vec3 pos, glm::vec3 scale, double rad, glm::vec3 velocity = glm::vec3(-0.005f, rand() / 10000000.0f, 0.0f));
 		bool circintersects(glm::vec3 circle, glm::vec3 rect, double circleRadius, double width, double height);
 		bool boundsCheck(glm::vec3 position, glm::vec3 velocity, float bounds);

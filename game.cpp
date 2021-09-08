@@ -15,6 +15,16 @@ bool Game::timer(int time) {
 		return true;
 	}
 }
+
+void Game::slowMo(float time) {
+	time -= deltaTime;
+
+	if (time > 0) {
+		for (GameObject* o : gameObjects)
+			o->velocity = glm::vec3(1.0f);
+	}
+}
+
 void Game::deleteObj(GameObject* GO) {	
 	for (auto c = gameObjects.begin(); c != gameObjects.end(); c++) {
 		if (*c == GO)

@@ -86,6 +86,8 @@ void miscFont::smashDraw(Game* g) {
 
 	if (timer > 0) {
 		g->fonts[1]->drawString(550.0f, 600.0f, "PONG SMASH!", g->shaders[2]);
+		g->slowMo(timer);
+
 		timer -= g->deltaTime;
 	}	
 }

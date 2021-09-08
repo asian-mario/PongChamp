@@ -21,19 +21,19 @@ void PowerupSpawn::update(Game* g) {
 		cout << currentPowerup << endl;
 
 		if (currentPowerup == powerups[0]) {
-			spawn(g, 4);
+			spawn(g, 0);
 		}
 
 		if (currentPowerup == powerups[1]) {
-			spawn(g, 4);
+			spawn(g, 1);
 		}
 
 		if (currentPowerup == powerups[2]) {
-			spawn(g, 4);
+			spawn(g, 2);
 		}
 
 		if (currentPowerup == powerups[3]) {
-			spawn(g, 4);
+			spawn(g, 3);
 		}
 
 		if (currentPowerup == powerups[4]) {
@@ -153,7 +153,7 @@ void BallPlusPowerup::update(Game* g) {
 			g->balls[0]->scale = g->balls[0]->scale * 2.0f;
 
 			for (int i = 0; i < 25; i++) {
-				g->particleSystems[0]->spawn(g, glm::vec3(position.x + 2.0f, position.y + 2.0f, 0.0f), glm::vec3(rand() / 400.0f, rand() / 400.0f, 0.0f), glm::vec3(2.0f), glm::vec4(1.0f), 1.0f);
+				g->particleSystems[0]->spawn(g, glm::vec3(position.x + 2.0f, position.y + 2.0f, 0.0f), glm::vec3(rand() / 400.0f, rand() / 400.0f, 0.0f), glm::vec3(2.0f), g->balls[0]->color, 1.0f);
 			}
 
 			hit = true;
@@ -218,7 +218,7 @@ void PaddlePlusPowerup::update(Game* g) {
 			g->paddles[0]->height = 18.0;
 
 			for (int i = 0; i < 25; i++) {
-				g->particleSystems[0]->spawn(g, glm::vec3(position.x + 2.0f, position.y + 2.0f, 0.0f), glm::vec3(rand() / 400.0f, rand() / 400.0f, 0.0f), glm::vec3(2.0f), glm::vec4(1.0f), 1.0f);
+				g->particleSystems[0]->spawn(g, glm::vec3(position.x + 2.0f, position.y + 2.0f, 0.0f), glm::vec3(rand() / 400.0f, rand() / 400.0f, 0.0f), glm::vec3(2.0f), g->balls[0]->color, 1.0f);
 			}
 
 			hit = true;
@@ -229,7 +229,7 @@ void PaddlePlusPowerup::update(Game* g) {
 			g->paddles[1]->height = 18.0;
 
 			for (int i = 0; i < 25; i++) {
-				g->particleSystems[0]->spawn(g, glm::vec3(position.x + 2.0f, position.y + 2.0f, 0.0f), glm::vec3(rand() / 400.0f, rand() / 400.0f, 0.0f), glm::vec3(2.0f), glm::vec4(1.0f), 1.0f);
+				g->particleSystems[0]->spawn(g, glm::vec3(position.x + 2.0f, position.y + 2.0f, 0.0f), glm::vec3(rand() / 400.0f, rand() / 400.0f, 0.0f), glm::vec3(2.0f), g->balls[0]->color, 1.0f);
 			}
 
 			hit = true;
@@ -298,7 +298,7 @@ void PaddleMinusPowerup::update(Game* g) {
 			g->paddles[1]->height = 6.0;
 
 			for (int i = 0; i < 25; i++) {
-				g->particleSystems[0]->spawn(g, glm::vec3(position.x + 2.0f, position.y + 2.0f, 0.0f), glm::vec3(rand() / 400.0f, rand() / 400.0f, 0.0f), glm::vec3(2.0f), glm::vec4(1.0f), 1.0f);
+				g->particleSystems[0]->spawn(g, glm::vec3(position.x + 2.0f, position.y + 2.0f, 0.0f), glm::vec3(rand() / 400.0f, rand() / 400.0f, 0.0f), glm::vec3(2.0f), g->balls[0]->color, 1.0f);
 			}
 
 			hit = true;
@@ -309,7 +309,7 @@ void PaddleMinusPowerup::update(Game* g) {
 			g->paddles[0]->height = 6.0;
 
 			for (int i = 0; i < 25; i++) {
-				g->particleSystems[0]->spawn(g, glm::vec3(position.x + 2.0f, position.y + 2.0f, 0.0f), glm::vec3(rand() / 400.0f, rand() / 400.0f, 0.0f), glm::vec3(2.0f), glm::vec4(1.0f), 1.0f);
+				g->particleSystems[0]->spawn(g, glm::vec3(position.x + 2.0f, position.y + 2.0f, 0.0f), glm::vec3(rand() / 400.0f, rand() / 400.0f, 0.0f), glm::vec3(2.0f), g->balls[0]->color, 1.0f);
 			}
 
 			hit = true;
@@ -373,7 +373,7 @@ void ButterPowerup::update(Game* g) {
 			g->paddles[1]->decayControl = 75.0;
 
 			for (int i = 0; i < 25; i++) {
-				g->particleSystems[0]->spawn(g, glm::vec3(position.x + 2.0f, position.y + 2.0f, 0.0f), glm::vec3(rand() / 400.0f, rand() / 400.0f, 0.0f), glm::vec3(2.0f), glm::vec4(1.0f), 1.0f);
+				g->particleSystems[0]->spawn(g, glm::vec3(position.x + 2.0f, position.y + 2.0f, 0.0f), glm::vec3(rand() / 400.0f, rand() / 400.0f, 0.0f), glm::vec3(2.0f), g->balls[0]->color, 1.0f);
 			}
 
 			hit = true;
@@ -383,7 +383,7 @@ void ButterPowerup::update(Game* g) {
 			g->paddles[0]->decayControl = 75.0;
 
 			for (int i = 0; i < 25; i++) {
-				g->particleSystems[0]->spawn(g, glm::vec3(position.x + 2.0f, position.y + 2.0f, 0.0f), glm::vec3(rand() / 400.0f, rand() / 400.0f, 0.0f), glm::vec3(2.0f), glm::vec4(1.0f), 1.0f);
+				g->particleSystems[0]->spawn(g, glm::vec3(position.x + 2.0f, position.y + 2.0f, 0.0f), glm::vec3(rand() / 400.0f, rand() / 400.0f, 0.0f), glm::vec3(2.0f), g->balls[0]->color, 1.0f);
 			}
 
 			hit = true;
@@ -455,7 +455,7 @@ void UltraSmashPowerup::update(Game* g) {
 		if (intersect) {
 
 			for (int i = 0; i < 25; i++) {
-				g->particleSystems[0]->spawn(g, glm::vec3(position.x + 2.0f, position.y + 2.0f, 0.0f), glm::vec3(rand() / 400.0f, rand() / 400.0f, 0.0f), glm::vec3(2.0f), glm::vec4(1.0f), 1.0f);
+				g->particleSystems[0]->spawn(g, glm::vec3(position.x + 2.0f, position.y + 2.0f, 0.0f), glm::vec3(rand() / 400.0f, rand() / 400.0f, 0.0f), glm::vec3(2.0f), g->balls[0]->color, 1.0f);
 			}
 
 			position = glm::vec3(2000.0f, 2000.0f, 0.0f);

@@ -61,6 +61,7 @@ void ParticleSystem::update(Game* g) {
         bool collide2 = g->balls[0]->circintersects(p->position, g->paddles[1]->position, 2.5f, g->paddles[1]->width, g->paddles[1]->height);
 
 
+
         if (p->position.y >= 96.5f && p->position.y >= 105.0f || p->position.y <= -96.5f && p->position.y <= -105.0f) {
             p->velocity.y = -p->velocity.y - rand() / 250.0f;
         }

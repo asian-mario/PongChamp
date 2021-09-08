@@ -37,12 +37,11 @@ bool Ball::boundsCheckL(glm::vec3 position, glm::vec3 velocity, float bounds) {
 
 
 void Ball::update(Game* g) {
-	glm::vec4 color = glm::vec4(0.0f);
 
 	if (limitSpeed == true) {
 		
 
-		if (g->balls[0]->position.x > -100.0f && g->balls[0]->position.x <= -25.0f) {
+		if (g->balls[0]->position.x <= -25.0f) {
 			color = glm::vec4(0.66f, 0.66f, 0.992f, 1.0f);
 		}
 
@@ -54,7 +53,7 @@ void Ball::update(Game* g) {
 			color = glm::vec4(0.48f, 0.125f, 0.76f, 1.0f);
 		}
 
-		if (g->balls[0]->position.x >= 40.1f && g->balls[0]->position.x < 100.0f) {
+		if (g->balls[0]->position.x >= 40.1f) {
 			color = glm::vec4(0.6f, 0.17f, 0.93f, 1.0f);
 		}
 	}
@@ -73,7 +72,7 @@ void Ball::update(Game* g) {
 
 	if (checkRight == true) {
 		for (int i = 0; i < 25; i++) {
-			g->particleSystems[3]->spawn(g, glm::vec3(g->barriers[2]->position.x, g->balls[0]->position.y, g->barriers[0]->position.z), glm::vec3(50.0f, rand() / 200.0f, 0.0f), glm::vec3(3.0f), glm::vec4(1.0f), 2.0f);
+			g->particleSystems[3]->spawn(g, glm::vec3(g->barriers[2]->position.x, g->balls[0]->position.y, g->barriers[0]->position.z), glm::vec3(50.0f, rand() / 200.0f, 0.0f), glm::vec3(3.0f), color, 2.0f);
 		}
 		
 		position = glm::vec3(0.0f);
@@ -88,7 +87,7 @@ void Ball::update(Game* g) {
 
 	if (checkLeft == true) {
 		for (int i = 0; i < 25; i++) {
-			g->particleSystems[3]->spawn(g, glm::vec3(-g->barriers[2]->position.x, g->balls[0]->position.y, -g->barriers[0]->position.z), glm::vec3(-50.0f, rand() / 200.0f, 0.0f), glm::vec3(3.0f), glm::vec4(1.0f), 2.0f);
+			g->particleSystems[3]->spawn(g, glm::vec3(-g->barriers[2]->position.x, g->balls[0]->position.y, -g->barriers[0]->position.z), glm::vec3(-50.0f, rand() / 200.0f, 0.0f), glm::vec3(3.0f), color, 2.0f);
 
 		}
 
@@ -111,6 +110,8 @@ void Ball::update(Game* g) {
 	bool intersect2 = circintersects(g->balls[0]->position, g->paddles[1]->position, rad, g->paddles[1]->width, g->paddles[1]->height);
 
 	if (intersect) {
+		g->barriers[0]->barrierHit, g->barriers[1]->barrierHit = false;
+
 		velocity.x = -velocity.x;
 		velocity.y += g->paddles[0]->velocity.y;
 
@@ -119,6 +120,8 @@ void Ball::update(Game* g) {
 	}
 
 	if (intersect2) {
+		g->barriers[0]->barrierHit, g->barriers[1]->barrierHit = false;
+
 		velocity.x = -velocity.x;
 		velocity.y += g->paddles[1]->velocity.y;
 
@@ -127,14 +130,22 @@ void Ball::update(Game* g) {
 	}
 
 	if (position.y > 96.5f) {
+		g->barriers[0]->barrierHit = true;
+		g->barriers[1]->barrierHit = false;
+
 		velocity.y = -velocity.y;
 
+		velocity.y = velocity.y - 40.0f;
 		g->particleSystems[1]->spawn(g, glm::vec3(g->balls[0]->position.x, g->barriers[0]->position.y - 10.5f, g->barriers[0]->position.z), glm::vec3(0.0f, 25.0f, 0.0f), glm::vec3(20.0f), color, 1.5f);
 	}
 
 	if (position.y < -96.5f) {
+		g->barriers[0]->barrierHit = false;
+		g->barriers[1]->barrierHit = true;
+
 		velocity.y = -velocity.y;
 
+		velocity.y = velocity.y + 40.0f;
 		g->particleSystems[2]->spawn(g, glm::vec3(g->balls[0]->position.x, g->barriers[1]->position.y, g->barriers[1]->position.z), glm::vec3(0.0f, -25.0f, 0.0f), glm::vec3(20.0f), color, 1.5f);
 	}
 
@@ -149,6 +160,8 @@ void Ball::update(Game* g) {
 			velocity.y = velocity.y - 60.0f;
 	}
 
+	if (velocity.y >= 15.0f)
+		velocity.y = velocity.y + 20.0f;
 
 	//-------------------------------------COLLISION-----------------------------------------
 
@@ -158,7 +171,7 @@ void Ball::update(Game* g) {
 
 	
 
-	if (velocity.y >= 250.0f) 
+	if (velocity.y >= 250.0f && g->barriers[0]->barrierHit == false && g->barriers[1]->barrierHit == false)
 		g->miscfonts[0]->smashDraw(g);
 	
 
