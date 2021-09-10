@@ -57,7 +57,7 @@ class Game {
 		std::vector <GameObject*> gameObjects;
 
 		float lastTime;
-		bool pause = false;
+		bool debugPause = false;
 		int framestep = 0;
 
 		Game();

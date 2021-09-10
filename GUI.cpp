@@ -63,13 +63,13 @@ void GUI::createDebugMenu(GameObject& obj, string name, glm::vec3 orgPos, glm::v
 void GUI::createDebugMenu(Game* g) {
 	static int control = 1;
 	ImGui::Begin("Settings");
-	if (ImGui::Button(g->pause ? "Play" : "Pause")) {
-		g->pause = !g->pause;
-		if (!g->pause) // if unpausing
+	if (ImGui::Button(g->debugPause ? "Play" : "Pause")) {
+		g->debugPause = !g->debugPause;
+		if (!g->debugPause) // if unpausing
 			g->lastTime = glfwGetTime();
 	}
 
-	if (g->pause) {
+	if (g->debugPause) {
 		ImGui::Dummy(ImVec2(0.0f, 5.0f));
 
 		ImGui::SliderInt("Frames", &control, 1, 120);

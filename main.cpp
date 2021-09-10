@@ -406,7 +406,7 @@ int main() {
 
 		glClearColor(0.0f, 0.0f, 0.01f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		if (!g.pause || g.framestep > 0) {
+		if (!g.debugPause || g.framestep > 0) {
 			g.update();
 			if (g.framestep > 0)
 				g.framestep--;
@@ -434,7 +434,6 @@ int main() {
 
 		font.drawString(g.texts[0]->pos.x, g.texts[0]->pos.y, g.texts[0]->text, &fShader);
 		font.drawString(g.texts[1]->pos.x, g.texts[1]->pos.y, g.texts[1]->text, &fShader);
-		font.drawString(g.texts[0]->pos.x, g.texts[0]->pos.y, "PEEEEE", &fShader);
 
 		cout << g.balls[0]->limitSpeed << endl;
 
