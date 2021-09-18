@@ -108,6 +108,9 @@
     <ClCompile Include="Powerup.cpp">
       <Filter>Source Files\openpong</Filter>
     </ClCompile>
+    <ClCompile Include="Menu.cpp">
+      <Filter>Source Files\openpong</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EBO.h">

@@ -54,3 +54,8 @@ void Game::draw() {
 		if (o != nullptr)
 			o->draw(this);
 }
+
+void Game::initScreen() {
+	for (GameObject* o : gameObjects)
+		o->screen(this);
+}

@@ -9,9 +9,9 @@ class GameObject;
 class Game;
 
 class MenuHandler : public GameObject {
+public:
 	enum SCREENTYPE { GAME, PAUSE, MAIN };
 	SCREENTYPE screen;
-
 	MenuHandler(SCREENTYPE screen);
 
 	void MenuInit(Game g);
@@ -19,8 +19,22 @@ class MenuHandler : public GameObject {
 };
 
 class PauseMenu : public GameObject {
+public:
+	void screen(Game* g) override;
+	void update(Game* g) override;
+	void remove(Game* g);
+};
 
-	PauseMenu();
+class MainMenu : public GameObject {
+public:
+	void screen(Game* g) override;
+	void update(Game* g) override;
+	void remove(Game* g);
+};
 
-	
+class GameScreen : public GameObject {
+public:
+	void screen(Game* g) override;
+	void update(Game* g) override;
+	void remove(Game* g);
 };

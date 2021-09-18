@@ -17,8 +17,9 @@
 #include"GUI.h"
 #include"font.h"
 #include"gameFont.h"
-#include "Particles.h"
-#include "Powerup.h"
+#include"Particles.h"
+#include"Powerup.h"
+#include"Menu.h"
 
 #include <chrono>
 #include <cmath>
@@ -401,6 +402,13 @@ int main() {
 	PowerupSpawn PowerS;
 	g.PowerupSpawner.push_back(&PowerS);
 	g.gameObjects.push_back(&PowerS);
+
+	//----------------------PARTICLE SYSTEM---------------------
+
+	MenuHandler MenuHandler(MenuHandler::SCREENTYPE::GAME);
+	g.MenuHandler.push_back(&MenuHandler);
+
+	//----------------------MENU HANDLER---------------------
 
 	while (!glfwWindowShouldClose(window)) {
 
