@@ -405,7 +405,7 @@ int main() {
 
 	//----------------------PARTICLE SYSTEM---------------------
 
-	MenuHandler MenuHandler(MenuHandler::SCREENTYPE::GAME);
+	MenuHandler MenuHandler(MenuHandler::SCREENTYPE::MAIN);
 	g.MenuHandler.push_back(&MenuHandler);
 
 	//----------------------MENU HANDLER---------------------
@@ -414,7 +414,11 @@ int main() {
 
 		glClearColor(0.0f, 0.0f, 0.01f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		if (!g.debugPause || g.framestep > 0) {
+
+		MenuHandler.MenuInit(g);
+		g.screen();
+
+		/*if (!g.debugPause || g.framestep > 0) {
 			g.update();
 			if (g.framestep > 0)
 				g.framestep--;
@@ -443,7 +447,7 @@ int main() {
 		font.drawString(g.texts[0]->pos.x, g.texts[0]->pos.y, g.texts[0]->text, &fShader);
 		font.drawString(g.texts[1]->pos.x, g.texts[1]->pos.y, g.texts[1]->text, &fShader);
 
-		cout << g.balls[0]->limitSpeed << endl;
+		cout << g.balls[0]->limitSpeed << endl;*/
 
 
 		//------------------------TEXT (NOTE: IMPLEMENT IN G.DRAW())----------------------------------------

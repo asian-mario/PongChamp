@@ -70,7 +70,9 @@ class Game {
 		void update();
 		void deleteObj(GameObject* GO);
 		void draw();
-		void initScreen();
+
+		void screen();
+		//void screenUpdate();
 
 		//--UTILITY
 		void slowMo(float time);

@@ -55,7 +55,7 @@ void Game::draw() {
 			o->draw(this);
 }
 
-void Game::initScreen() {
-	for (GameObject* o : gameObjects)
+void Game::screen() {
+	for (GameObject* o : MenuHandler)
 		o->screen(this);
 }

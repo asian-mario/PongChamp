@@ -21,20 +21,20 @@ public:
 class PauseMenu : public GameObject {
 public:
 	void screen(Game* g) override;
-	void update(Game* g) override;
+	//void menuUpdate(Game* g) override;
 	void remove(Game* g);
 };
 
 class MainMenu : public GameObject {
 public:
 	void screen(Game* g) override;
-	void update(Game* g) override;
+	//void menuUpdate(Game* g) override;
 	void remove(Game* g);
 };
 
 class GameScreen : public GameObject {
 public:
 	void screen(Game* g) override;
-	void update(Game* g) override;
+	//void menuUpdate(Game* g) override;
 	void remove(Game* g);
 };
