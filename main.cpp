@@ -19,7 +19,7 @@
 #include"gameFont.h"
 #include"Particles.h"
 #include"Powerup.h"
-#include"Menu.h"
+#include"Screen.h"
 
 #include <chrono>
 #include <cmath>
@@ -405,9 +405,8 @@ int main() {
 
 	//----------------------PARTICLE SYSTEM---------------------
 
-	MenuHandler MenuHandler(MenuHandler::SCREENTYPE::MAIN);
-	g.MenuHandler.push_back(&MenuHandler);
-
+	ScreenHandler MenuHandler(ScreenHandler::SCREENTYPE::MAIN);
+	MenuHandler.MenuInit(&g);
 	//----------------------MENU HANDLER---------------------
 
 	while (!glfwWindowShouldClose(window)) {
@@ -415,42 +414,8 @@ int main() {
 		glClearColor(0.0f, 0.0f, 0.01f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		MenuHandler.MenuInit(g);
-		g.screen();
+		g.drawScreen();
 
-		/*if (!g.debugPause || g.framestep > 0) {
-			g.update();
-			if (g.framestep > 0)
-				g.framestep--;
-		}
-
-		//Exporting data & Render
-		g.draw();
-		//---------------------------------------------------------------------------------------------------------------------------------
-		camera.updateMatrix(45.0f, 0.0f, 500.0f);
-
-		//------------------------TEXT (NOTE: IMPLEMENT IN G.DRAW())----------------------------------------
-		fShader.Activate();
-
-
-
-		int w, h;
-		glfwGetWindowSize(window, &w, &h);
-		glm::mat4 orthoP = roml::createOrto(0.0f, (float)w, (float)h, 0.0f);
-		glUniformMatrix4fv(glGetUniformLocation(fShader.ID, "ModViewProj"), 1, GL_FALSE, &orthoP[0][0]);
-		glDisable(GL_CULL_FACE);
-		glDisable(GL_DEPTH_TEST);
-
-		score1.update(&g, window);
-		score2.update(&g, window);
-
-		font.drawString(g.texts[0]->pos.x, g.texts[0]->pos.y, g.texts[0]->text, &fShader);
-		font.drawString(g.texts[1]->pos.x, g.texts[1]->pos.y, g.texts[1]->text, &fShader);
-
-		cout << g.balls[0]->limitSpeed << endl;*/
-
-
-		//------------------------TEXT (NOTE: IMPLEMENT IN G.DRAW())----------------------------------------
 
 		//IMGUI
 		ImGui_ImplGlfwGL3_NewFrame();

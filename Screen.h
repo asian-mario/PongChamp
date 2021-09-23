@@ -5,36 +5,42 @@
 #include <glm/glm.hpp>
 #include <GLFW/glfw3.h>
 
-class GameObject;
 class Game;
 
-class MenuHandler : public GameObject {
+
+class Screen {
+public:
+	virtual void drawScreen(Game* g){}
+	virtual void updateScreen(Game* g){}
+};
+
+class ScreenHandler : public Screen {
 public:
 	enum SCREENTYPE { GAME, PAUSE, MAIN };
 	SCREENTYPE screen;
-	MenuHandler(SCREENTYPE screen);
+	ScreenHandler(SCREENTYPE screen);
 
-	void MenuInit(Game g);
+	void MenuInit(Game* g);
 	void MenuSwitch(SCREENTYPE screen);
 };
 
-class PauseMenu : public GameObject {
+class PauseMenu : public Screen {
 public:
-	void screen(Game* g) override;
+	void drawScreen(Game* g) override;
 	//void menuUpdate(Game* g) override;
 	void remove(Game* g);
 };
 
-class MainMenu : public GameObject {
+class MainMenu : public Screen {
 public:
-	void screen(Game* g) override;
+	void drawScreen(Game* g) override;
 	//void menuUpdate(Game* g) override;
 	void remove(Game* g);
 };
 
-class GameScreen : public GameObject {
+class GameScene : public Screen {
 public:
-	void screen(Game* g) override;
+	void drawScreen(Game* g) override;
 	//void menuUpdate(Game* g) override;
 	void remove(Game* g);
 };

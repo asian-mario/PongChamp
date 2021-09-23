@@ -1,30 +1,30 @@
-#include "Menu.h"
+#include "Screen.h"
 
-MenuHandler::MenuHandler(SCREENTYPE screen) {
+ScreenHandler::ScreenHandler(SCREENTYPE screen) {
 	this->screen = screen;
 }
 
-void MenuHandler::MenuInit(Game g) {
+void ScreenHandler::MenuInit(Game* g) {
 	if (screen == PAUSE) {
-		GameObject* crntMenu = new PauseMenu();
+		Screen* crntMenu = new PauseMenu();
 
-		g.gameObjects.push_back(crntMenu);
+		g->ScreenObject.push_back(crntMenu);
 	}
 
 	if (screen == MAIN) {
-		GameObject* crntMenu = new MainMenu();
+		Screen* crntMenu = new MainMenu();
 
-		g.gameObjects.push_back(crntMenu);
+		g->ScreenObject.push_back(crntMenu);
 	}
 
 	if (screen == GAME) {
-		GameObject* crntMenu = new GameScreen();
+		Screen* crntMenu = new GameScene();
 
-		g.gameObjects.push_back(crntMenu);
+		g->ScreenObject.push_back(crntMenu);
 	}
 }
 
-void MenuHandler::MenuSwitch(SCREENTYPE screen) {
+void ScreenHandler::MenuSwitch(SCREENTYPE screen) {
 	this->screen = screen;
 
 	if (screen == PAUSE) {
@@ -40,23 +40,34 @@ void MenuHandler::MenuSwitch(SCREENTYPE screen) {
 	}
 }
 
-void PauseMenu::screen(Game* g) {
+void PauseMenu::drawScreen(Game* g) {
 	g->fonts[1]->drawString(800.0f, 150.0f, "PAUSED", g->shaders[2]);
 }
 
 void PauseMenu::remove(Game* g) {
-	g->deleteObj(this);
+	g->removeScreen(this);
 }
 
-void MainMenu::screen(Game* g) {
-	g->fonts[1]->drawString(800.0f, 150.0f, "PongChamp!", g->shaders[2]);
+void MainMenu::drawScreen(Game* g) {
+	g->shaders[2]->Activate();
+
+
+
+	int w, h;
+	glfwGetWindowSize(g->gameWindow, &w, &h);
+	glm::mat4 orthoP = roml::createOrto(0.0f, (float)w, (float)h, 0.0f);
+	glUniformMatrix4fv(glGetUniformLocation(g->shaders[2]->ID, "ModViewProj"), 1, GL_FALSE, &orthoP[0][0]);
+	glDisable(GL_CULL_FACE);
+	glDisable(GL_DEPTH_TEST);
+
+	g->fonts[1]->drawString(800.0f, 150.0f, "Pong", g->shaders[2]);
 }
 
 void MainMenu::remove(Game* g) {
-	g->deleteObj(this);
+	g->removeScreen(this);
 }
 
-void GameScreen::screen(Game* g) {
+void GameScene::drawScreen(Game* g) {
 	if (!g->debugPause || g->framestep > 0) {
 		g->update();
 		if (g->framestep > 0)
@@ -89,6 +100,6 @@ void GameScreen::screen(Game* g) {
 	cout << g->balls[0]->limitSpeed << endl;
 }
 
-void GameScreen::remove(Game* g) {
-	g->deleteObj(this);
+void GameScene::remove(Game* g) {
+	g->removeScreen(this);
 }

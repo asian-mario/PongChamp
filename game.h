@@ -13,7 +13,7 @@
 #include "Particles.h"
 #include "VBO.h"
 #include "Powerup.h"
-#include "Menu.h"
+#include "Screen.h"
 #include <vector>
 
 class Game;
@@ -30,7 +30,7 @@ class Texture;
 class PowerupSpawn;
 class GameObject;
 class ParticleSystem;
-class MenuHandler;
+class Screen;
 struct Vertex;
 struct GLFWwindow;
 
@@ -48,7 +48,7 @@ class Game {
 		std::vector <Font*> fonts;
 		std::vector <Texture*> textures;
 		std::vector <PowerupSpawn*> PowerupSpawner;
-		std::vector <MenuHandler*> MenuHandler;
+		std::vector <Screen*> ScreenObject;
 
 		std::vector <std::vector<GLuint>> indexVec;
 		std::vector <std::vector<Texture>> texturesVec;
@@ -71,7 +71,8 @@ class Game {
 		void deleteObj(GameObject* GO);
 		void draw();
 
-		void screen();
+		void drawScreen();
+		void removeScreen(Screen* S);
 		//void screenUpdate();
 
 		//--UTILITY

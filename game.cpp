@@ -35,6 +35,17 @@ void Game::deleteObj(GameObject* GO) {
 		}
 	}
 }
+
+void Game::removeScreen(Screen* S) {
+	for (auto c = ScreenObject.begin(); c != ScreenObject.end(); c++) {
+		if (*c == S)
+		{
+			delete S;
+			ScreenObject.erase(c);
+			return;
+		}
+	}
+}
 void Game::update() {
 	deltaTime = (float)glfwGetTime() - lastTime;
 	lastTime = (float)glfwGetTime();
@@ -55,7 +66,8 @@ void Game::draw() {
 			o->draw(this);
 }
 
-void Game::screen() {
-	for (GameObject* o : MenuHandler)
-		o->screen(this);
+void Game::drawScreen() {
+	for (Screen* o : ScreenObject)
+		if (o != nullptr)
+			o->drawScreen(this);
 }
