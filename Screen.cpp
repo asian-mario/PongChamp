@@ -4,7 +4,7 @@ ScreenHandler::ScreenHandler(SCREENTYPE screen) {
 	this->screen = screen;
 }
 
-void ScreenHandler::MenuInit(Game* g) {
+void ScreenHandler::ScreenInit(Game* g) {
 	if (screen == PAUSE) {
 		Screen* crntMenu = new PauseMenu();
 
@@ -24,7 +24,7 @@ void ScreenHandler::MenuInit(Game* g) {
 	}
 }
 
-void ScreenHandler::MenuSwitch(SCREENTYPE screen) {
+void ScreenHandler::ScreenSwitch(SCREENTYPE screen) {
 	this->screen = screen;
 
 	if (screen == PAUSE) {
@@ -42,6 +42,14 @@ void ScreenHandler::MenuSwitch(SCREENTYPE screen) {
 
 void PauseMenu::drawScreen(Game* g) {
 	g->fonts[1]->drawString(800.0f, 150.0f, "PAUSED", g->shaders[2]);
+}
+
+void PauseMenu::updateScreen(Game* g) {
+	if (glfwGetKey(g->gameWindow, GLFW_KEY_P) == GLFW_PRESS) {
+		remove(g);
+		g->ScreenHandler[0]->ScreenSwitch(ScreenHandler::SCREENTYPE::GAME);
+		g->ScreenHandler[0]->ScreenInit(g);
+	}
 }
 
 void PauseMenu::remove(Game* g) {
@@ -98,6 +106,14 @@ void GameScene::drawScreen(Game* g) {
 	g->fonts[0]->drawString(g->texts[1]->pos.x, g->texts[1]->pos.y, g->texts[1]->text, g->shaders[2]);
 
 	cout << g->balls[0]->limitSpeed << endl;
+}
+
+void GameScene::updateScreen(Game* g) {
+	if (glfwGetKey(g->gameWindow, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
+		remove(g);
+		g->ScreenHandler[0]->ScreenSwitch(ScreenHandler::SCREENTYPE::PAUSE);
+		g->ScreenHandler[0]->ScreenInit(g);
+	}
 }
 
 void GameScene::remove(Game* g) {

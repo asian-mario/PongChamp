@@ -30,6 +30,7 @@ class Texture;
 class PowerupSpawn;
 class GameObject;
 class ParticleSystem;
+class ScreenHandler;
 class Screen;
 struct Vertex;
 struct GLFWwindow;
@@ -48,6 +49,7 @@ class Game {
 		std::vector <Font*> fonts;
 		std::vector <Texture*> textures;
 		std::vector <PowerupSpawn*> PowerupSpawner;
+		std::vector <ScreenHandler*> ScreenHandler;
 		std::vector <Screen*> ScreenObject;
 
 		std::vector <std::vector<GLuint>> indexVec;
@@ -73,7 +75,7 @@ class Game {
 
 		void drawScreen();
 		void removeScreen(Screen* S);
-		//void screenUpdate();
+		void updateScreen();
 
 		//--UTILITY
 		void slowMo(float time);

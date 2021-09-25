@@ -20,27 +20,27 @@ public:
 	SCREENTYPE screen;
 	ScreenHandler(SCREENTYPE screen);
 
-	void MenuInit(Game* g);
-	void MenuSwitch(SCREENTYPE screen);
+	void ScreenInit(Game* g);
+	void ScreenSwitch(SCREENTYPE screen);
 };
 
 class PauseMenu : public Screen {
 public:
 	void drawScreen(Game* g) override;
-	//void menuUpdate(Game* g) override;
+	void updateScreen(Game* g) override;
 	void remove(Game* g);
 };
 
 class MainMenu : public Screen {
 public:
 	void drawScreen(Game* g) override;
-	//void menuUpdate(Game* g) override;
+	//void updateScreen(Game* g) override;
 	void remove(Game* g);
 };
 
 class GameScene : public Screen {
 public:
 	void drawScreen(Game* g) override;
-	//void menuUpdate(Game* g) override;
+	void updateScreen(Game* g) override;
 	void remove(Game* g);
 };

@@ -405,8 +405,11 @@ int main() {
 
 	//----------------------PARTICLE SYSTEM---------------------
 
-	ScreenHandler MenuHandler(ScreenHandler::SCREENTYPE::MAIN);
-	MenuHandler.MenuInit(&g);
+	ScreenHandler ScreenHandler(ScreenHandler::SCREENTYPE::GAME);
+
+	//Only one screen handler but im doing this so I can access its values in other files
+	g.ScreenHandler.push_back(&ScreenHandler); 
+	g.ScreenHandler[0]->ScreenInit(&g);
 	//----------------------MENU HANDLER---------------------
 
 	while (!glfwWindowShouldClose(window)) {
@@ -415,7 +418,7 @@ int main() {
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		g.drawScreen();
-
+		g.updateScreen();
 
 		//IMGUI
 		ImGui_ImplGlfwGL3_NewFrame();

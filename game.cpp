@@ -60,6 +60,17 @@ void Game::update() {
 	
 }
 
+void Game::updateScreen() {
+	deltaTime = (float)glfwGetTime() - lastTime;
+	lastTime = (float)glfwGetTime();
+	for (Screen* o : ScreenObject)
+		if (o != nullptr)
+			o->updateScreen(this);
+
+
+}
+
+
 void Game::draw() {
 	for (GameObject* o : gameObjects)
 		if (o != nullptr)
