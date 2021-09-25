@@ -1,5 +1,9 @@
 #include "Screen.h"
 
+void Screen::getCursorPosition(Game* g) {
+	glfwGetCursorPos(g->gameWindow, &xpos, &ypos);
+}
+
 ScreenHandler::ScreenHandler(SCREENTYPE screen) {
 	this->screen = screen;
 }
@@ -40,8 +44,19 @@ void ScreenHandler::ScreenSwitch(SCREENTYPE screen) {
 	}
 }
 
+
 void PauseMenu::drawScreen(Game* g) {
-	g->fonts[1]->drawString(800.0f, 150.0f, "PAUSED", g->shaders[2]);
+	g->shaders[2]->Activate();
+
+	int w, h;
+	glfwGetWindowSize(g->gameWindow, &w, &h);
+	glm::mat4 orthoP = roml::createOrto(0.0f, (float)w, (float)h, 0.0f);
+	glUniformMatrix4fv(glGetUniformLocation(g->shaders[2]->ID, "ModViewProj"), 1, GL_FALSE, &orthoP[0][0]);
+	glDisable(GL_CULL_FACE);
+	glDisable(GL_DEPTH_TEST);
+
+	g->fonts[1]->drawString(750.0f, 150.0f, "PAUSED", g->shaders[2]);
+	g->fonts[0]->drawString(100.0f, 400.0f, "PAUSED", g->shaders[2]);
 }
 
 void PauseMenu::updateScreen(Game* g) {
@@ -59,8 +74,6 @@ void PauseMenu::remove(Game* g) {
 void MainMenu::drawScreen(Game* g) {
 	g->shaders[2]->Activate();
 
-
-
 	int w, h;
 	glfwGetWindowSize(g->gameWindow, &w, &h);
 	glm::mat4 orthoP = roml::createOrto(0.0f, (float)w, (float)h, 0.0f);
@@ -68,7 +81,7 @@ void MainMenu::drawScreen(Game* g) {
 	glDisable(GL_CULL_FACE);
 	glDisable(GL_DEPTH_TEST);
 
-	g->fonts[1]->drawString(800.0f, 150.0f, "Pong", g->shaders[2]);
+	g->fonts[1]->drawString(800.0f, 150.0f, "PLApla", g->shaders[2]);
 }
 
 void MainMenu::remove(Game* g) {
@@ -82,6 +95,7 @@ void GameScene::drawScreen(Game* g) {
 			g->framestep--;
 	}
 
+	
 	//Exporting data & Render
 	g->draw();
 	//-----------------------------------------------------------------

@@ -113,7 +113,7 @@ void Ball::update(Game* g) {
 		g->barriers[0]->barrierHit, g->barriers[1]->barrierHit = false;
 
 		velocity.x = -velocity.x;
-		velocity.y += g->paddles[0]->velocity.y;
+		velocity.y += g->paddles[0]->velocity.y / 2.5f;
 
 		g->paddles[1]->lastHit = false;
 		g->paddles[0]->lastHit = true;
@@ -123,7 +123,7 @@ void Ball::update(Game* g) {
 		g->barriers[0]->barrierHit, g->barriers[1]->barrierHit = false;
 
 		velocity.x = -velocity.x;
-		velocity.y += g->paddles[1]->velocity.y;
+		velocity.y += g->paddles[1]->velocity.y / 2.5f;
 
 		g->paddles[0]->lastHit = false;
 		g->paddles[1]->lastHit = true;
@@ -133,7 +133,7 @@ void Ball::update(Game* g) {
 		g->barriers[0]->barrierHit = true;
 		g->barriers[1]->barrierHit = false;
 
-		velocity.y = -velocity.y;
+		velocity.y = -velocity.y / 2.0f;
 
 		g->particleSystems[1]->spawn(g, glm::vec3(g->balls[0]->position.x, g->barriers[0]->position.y - 10.5f, g->barriers[0]->position.z), glm::vec3(0.0f, 25.0f, 0.0f), glm::vec3(20.0f), color, 1.5f);
 	}
@@ -142,7 +142,7 @@ void Ball::update(Game* g) {
 		g->barriers[0]->barrierHit = false;
 		g->barriers[1]->barrierHit = true;
 
-		velocity.y = -velocity.y;
+		velocity.y = -velocity.y / 2.0f;
 
 		g->particleSystems[2]->spawn(g, glm::vec3(g->balls[0]->position.x, g->barriers[1]->position.y, g->barriers[1]->position.z), glm::vec3(0.0f, -25.0f, 0.0f), glm::vec3(20.0f), color, 1.5f);
 	}

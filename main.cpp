@@ -405,13 +405,13 @@ int main() {
 
 	//----------------------PARTICLE SYSTEM---------------------
 
-	ScreenHandler ScreenHandler(ScreenHandler::SCREENTYPE::GAME);
+	ScreenHandler ScreenHandler(ScreenHandler::SCREENTYPE::PAUSE);
 
 	//Only one screen handler but im doing this so I can access its values in other files
 	g.ScreenHandler.push_back(&ScreenHandler); 
 	g.ScreenHandler[0]->ScreenInit(&g);
 	//----------------------MENU HANDLER---------------------
-
+	
 	while (!glfwWindowShouldClose(window)) {
 
 		glClearColor(0.0f, 0.0f, 0.01f, 1.0f);

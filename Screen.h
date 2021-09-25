@@ -10,8 +10,11 @@ class Game;
 
 class Screen {
 public:
+	double xpos, ypos;
+
 	virtual void drawScreen(Game* g){}
 	virtual void updateScreen(Game* g){}
+	void getCursorPosition(Game* g);
 };
 
 class ScreenHandler : public Screen {

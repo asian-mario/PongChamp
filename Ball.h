@@ -11,7 +11,7 @@ class Game;
 
 class Ball : public GameObject {
 	public:
-		double control = 1000.0;
+		double control = 2500.0;
 		const float maxSpeed = 200.0f;
 		double rad;
 		bool limitSpeed = true;

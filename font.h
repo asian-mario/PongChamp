@@ -100,7 +100,7 @@ public:
 
 
 private:
-	stbtt_bakedchar cdata[96];
+	stbtt_bakedchar cdata[999];
 	GLuint fontTexture;
 	fontVertex* fvBufferData;
 	uint32_t fvBufferCapacity;
