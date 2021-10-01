@@ -16,6 +16,7 @@ public:
 	static void createDebugMenu(GameObject& obj, string name, glm::vec3 orgScale, glm::vec3 orgRot, glm::vec3 orgPos);
 	static void createDebugMenu(Game* g);
 
-	GUI() = delete;
+	void onClickDebug(Game* g);
+
 };
 

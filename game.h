@@ -14,6 +14,7 @@
 #include "VBO.h"
 #include "Powerup.h"
 #include "Screen.h"
+#include "GUI.h"
 #include <vector>
 
 class Game;
@@ -32,6 +33,7 @@ class GameObject;
 class ParticleSystem;
 class ScreenHandler;
 class Screen;
+class GUI;
 struct Vertex;
 struct GLFWwindow;
 
@@ -51,6 +53,7 @@ class Game {
 		std::vector <PowerupSpawn*> PowerupSpawner;
 		std::vector <ScreenHandler*> ScreenHandler;
 		std::vector <Screen*> ScreenObject;
+		std::vector <GUI*> debugGUI;
 
 		std::vector <std::vector<GLuint>> indexVec;
 		std::vector <std::vector<Texture>> texturesVec;
@@ -62,7 +65,7 @@ class Game {
 		std::vector <GameObject*> gameObjects;
 
 		float lastTime;
-		bool debugPause = false;
+		bool pause = false;
 		int framestep = 0;
 
 		Game();

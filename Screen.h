@@ -21,10 +21,9 @@ class ScreenHandler : public Screen {
 public:
 	enum SCREENTYPE { GAME, PAUSE, MAIN };
 	SCREENTYPE screen;
-	ScreenHandler(SCREENTYPE screen);
 
 	void ScreenInit(Game* g);
-	void ScreenSwitch(SCREENTYPE screen);
+	void ScreenSwitch(SCREENTYPE screen, Game* g);
 };
 
 class PauseMenu : public Screen {

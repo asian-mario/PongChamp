@@ -18,7 +18,7 @@ void PowerupSpawn::deletePowerup(GameObject* GO) {
 void PowerupSpawn::update(Game* g) {
 	if (activeSpwn < maxSpawn) {
 
-		cout << currentPowerup << endl;
+		//cout << currentPowerup << endl;
 
 		if (currentPowerup == powerups[0]) {
 			spawn(g, 0);

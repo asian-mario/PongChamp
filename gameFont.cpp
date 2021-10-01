@@ -25,7 +25,7 @@ void gameFont::update(Game* g, GLFWwindow* window) {
 		g->fonts[1]->drawString(550.0f, 600.0f, "PLAYER 1 WINS!", g->shaders[2]);
 		g->fonts[1]->drawString(550.0f, 800.0f, "RESTART? (Y/N)", g->shaders[2]);
 
-		g->debugPause = true;
+		g->pause = true;
 
 
 
@@ -42,7 +42,7 @@ void gameFont::update(Game* g, GLFWwindow* window) {
 			g->paddles[1]->velocity = glm::vec3(0.0f);
 			g->balls[0]->velocity = glm::vec3(-65.0f, 0.0f, 0.0f);
 
-			g->debugPause = false;
+			g->pause = false;
 		}
 		if (glfwGetKey(g->gameWindow, GLFW_KEY_N)) {
 			glfwSetWindowShouldClose(window, GL_TRUE);
@@ -59,7 +59,7 @@ void gameFont::update(Game* g, GLFWwindow* window) {
 		g->fonts[1]->drawString(600.0f, 450.0f, "PONG CHAMP", g->shaders[2]);
 		g->fonts[1]->drawString(550.0f, 600.0f, "PLAYER 2 WINS!", g->shaders[2]);
 		g->fonts[1]->drawString(550.0f, 800.0f, "RESTART? (Y/N)", g->shaders[2]);
-		g->debugPause = true;
+		g->pause = true;
 
 		if (glfwGetKey(g->gameWindow, GLFW_KEY_Y)) {
 			g->texts[0]->score = 0;
@@ -72,7 +72,7 @@ void gameFont::update(Game* g, GLFWwindow* window) {
 			g->paddles[1]->velocity = glm::vec3(0.0f);
 			g->balls[0]->velocity = glm::vec3(65.0f, 0.0f, 0.0f);
 
-			g->debugPause = false;
+			g->pause = false;
 		}
 		if (glfwGetKey(g->gameWindow, GLFW_KEY_N)) {
 			glfwSetWindowShouldClose(window, GL_TRUE);

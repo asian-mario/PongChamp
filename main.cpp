@@ -3,6 +3,7 @@
 #include<iostream>
 #include<stdlib.h>
 #include <Windows.h>
+#include <map>
 
 #include<glad/glad.h>
 #include<stb/stb_image.h>
@@ -139,6 +140,9 @@ int main() {
 		4, 5, 6,
 		4, 6, 7
 	};
+
+	//------------------------------------------------------------------------------------------------
+	map<std::string, GameObject*> gquiz1;
 
 	//------------------------------------------------------------------------------------------------
 	Game g;
@@ -405,13 +409,18 @@ int main() {
 
 	//----------------------PARTICLE SYSTEM---------------------
 
-	ScreenHandler ScreenHandler(ScreenHandler::SCREENTYPE::PAUSE);
+	ScreenHandler ScreenHandler;
 
 	//Only one screen handler but im doing this so I can access its values in other files
 	g.ScreenHandler.push_back(&ScreenHandler); 
+
+	g.ScreenHandler[0]->ScreenSwitch(ScreenHandler::SCREENTYPE::PAUSE, &g);
 	g.ScreenHandler[0]->ScreenInit(&g);
 	//----------------------MENU HANDLER---------------------
 	
+	GUI DebugGUI;
+	g.debugGUI.push_back(&DebugGUI);
+
 	while (!glfwWindowShouldClose(window)) {
 
 		glClearColor(0.0f, 0.0f, 0.01f, 1.0f);
@@ -419,20 +428,23 @@ int main() {
 
 		g.drawScreen();
 		g.updateScreen();
+		//cout << g.pause << endl;
 		
 		//IMGUI
 		ImGui_ImplGlfwGL3_NewFrame();
 
 
 		//---------------------------DEBUG----------------------------------
-		GUI::createDebugMenu(paddle1, "Debug Paddle 1", glm::vec3(-0.75f, 0.0f, 0.0f), VEC3_ZERO, glm::vec3(0.015f, 0.2f, 1.0f));
-		GUI::createDebugMenu(paddle2, "Debug Paddle 2", glm::vec3(0.75f, 0.0f, 0.0f), VEC3_ZERO, glm::vec3(0.015f, 0.2f, 1.0f));
-		GUI::createDebugMenu(ball1, "Debug Ball", glm::vec3(-0.02f, 0.0f, 0.0f), VEC3_ZERO, glm::vec3(0.096f, 0.191f, 1.0f));
-		GUI::createDebugMenu(BarrierBU, "Debug Barrier Up", glm::vec3(0.0f, 0.85f, 0.0f), VEC3_ZERO, glm::vec3(1.7f, 0.05f, 1.0f));
-		GUI::createDebugMenu(BarrierBD, "Debug Barrier Bottom", glm::vec3(0.0f, -0.85f, 0.0f), VEC3_ZERO, glm::vec3(1.7f, 0.05f, 1.0f));
-		GUI::createDebugMenu(camera, "Camera", glm::vec3(0.0f, -0.85f, 0.0f), VEC3_ZERO, glm::vec3(1.7f, 0.05f, 1.0f));
-		GUI::createDebugMenu(directLight, "Light", VEC3_ZERO, VEC3_ZERO, VEC3_ZERO);
-		GUI::createDebugMenu(&g); 
+		g.debugGUI[0]->onClickDebug(&g);
+		g.debugGUI[0]->createDebugMenu(paddle1, "Debug Paddle 1", glm::vec3(-0.75f, 0.0f, 0.0f), VEC3_ZERO, glm::vec3(0.015f, 0.2f, 1.0f));
+		g.debugGUI[0]->createDebugMenu(paddle2, "Debug Paddle 2", glm::vec3(0.75f, 0.0f, 0.0f), VEC3_ZERO, glm::vec3(0.015f, 0.2f, 1.0f));
+		g.debugGUI[0]->createDebugMenu(ball1, "Debug Ball", glm::vec3(-0.02f, 0.0f, 0.0f), VEC3_ZERO, glm::vec3(0.096f, 0.191f, 1.0f));
+		g.debugGUI[0]->createDebugMenu(BarrierBU, "Debug Barrier Up", glm::vec3(0.0f, 0.85f, 0.0f), VEC3_ZERO, glm::vec3(1.7f, 0.05f, 1.0f));
+		g.debugGUI[0]->createDebugMenu(BarrierBD, "Debug Barrier Bottom", glm::vec3(0.0f, -0.85f, 0.0f), VEC3_ZERO, glm::vec3(1.7f, 0.05f, 1.0f));
+		g.debugGUI[0]->createDebugMenu(camera, "Camera", glm::vec3(0.0f, -0.85f, 0.0f), VEC3_ZERO, glm::vec3(1.7f, 0.05f, 1.0f));
+		g.debugGUI[0]->createDebugMenu(directLight, "Light", VEC3_ZERO, VEC3_ZERO, VEC3_ZERO);
+					 
+		g.debugGUI[0]->createDebugMenu(&g); 
 		//-------------------------------------DEBUG----------------------------------------------
 
 

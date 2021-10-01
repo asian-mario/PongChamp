@@ -4,9 +4,7 @@ void Screen::getCursorPosition(Game* g) {
 	glfwGetCursorPos(g->gameWindow, &xpos, &ypos);
 }
 
-ScreenHandler::ScreenHandler(SCREENTYPE screen) {
-	this->screen = screen;
-}
+
 
 void ScreenHandler::ScreenInit(Game* g) {
 	if (screen == PAUSE) {
@@ -28,19 +26,19 @@ void ScreenHandler::ScreenInit(Game* g) {
 	}
 }
 
-void ScreenHandler::ScreenSwitch(SCREENTYPE screen) {
+void ScreenHandler::ScreenSwitch(SCREENTYPE screen, Game* g) {
 	this->screen = screen;
 
 	if (screen == PAUSE) {
-		
+		g->pause = true;
 	}
 
 	if (screen == MAIN) {
-		
+		g->pause = true;
 	}
 
 	if (screen == GAME) {
-		
+		g->pause = false;
 	}
 }
 
@@ -64,7 +62,7 @@ void PauseMenu::updateScreen(Game* g) {
 
 	if (glfwGetKey(g->gameWindow, GLFW_KEY_P) == GLFW_PRESS) {
 		remove(g);
-		g->ScreenHandler[0]->ScreenSwitch(ScreenHandler::SCREENTYPE::GAME);
+		g->ScreenHandler[0]->ScreenSwitch(ScreenHandler::SCREENTYPE::GAME, g);
 		g->ScreenHandler[0]->ScreenInit(g);
 	}
 
@@ -75,8 +73,10 @@ void PauseMenu::updateScreen(Game* g) {
 
 		if (g->ScreenObject[0]->xpos <= 379.0 && g->ScreenObject[0]->xpos >= 96.0 && g->ScreenObject[0]->ypos >= 272.0 && g->ScreenObject[0]->ypos <= 357.0) {
 			remove(g);
-			g->ScreenHandler[0]->ScreenSwitch(ScreenHandler::SCREENTYPE::GAME);
+			g->ScreenHandler[0]->ScreenSwitch(ScreenHandler::SCREENTYPE::GAME, g);
 			g->ScreenHandler[0]->ScreenInit(g);
+
+			g->pause = false;
 		}
 	}
 
@@ -106,7 +106,7 @@ void MainMenu::remove(Game* g) {
 }
 
 void GameScene::drawScreen(Game* g) {
-	if (!g->debugPause || g->framestep > 0) {
+	if (!g->pause || g->framestep > 0) {
 		g->update();
 		if (g->framestep > 0)
 			g->framestep--;
@@ -136,14 +136,15 @@ void GameScene::drawScreen(Game* g) {
 	g->fonts[0]->drawString(g->texts[0]->pos.x, g->texts[0]->pos.y, g->texts[0]->text, g->shaders[2]);
 	g->fonts[0]->drawString(g->texts[1]->pos.x, g->texts[1]->pos.y, g->texts[1]->text, g->shaders[2]);
 
-	cout << g->balls[0]->limitSpeed << endl;
 }
 
 void GameScene::updateScreen(Game* g) {
 	if (glfwGetKey(g->gameWindow, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
 		remove(g);
-		g->ScreenHandler[0]->ScreenSwitch(ScreenHandler::SCREENTYPE::PAUSE);
+		g->ScreenHandler[0]->ScreenSwitch(ScreenHandler::SCREENTYPE::PAUSE, g);
 		g->ScreenHandler[0]->ScreenInit(g);
+
+		g->pause = true;
 	}
 }
 

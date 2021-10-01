@@ -7,6 +7,9 @@
 #include<imgui/imgui_impl_glfw_gl3.h>
 #include<imgui/imgui_internal.h>
 
+
+#define VEC3_ZERO glm::vec3(0.0f)
+
 void GUI::createDebugMenu(GameObject& obj, string name, glm::vec3 orgPos, glm::vec3 orgRot, glm::vec3 orgScale) {
 	{
 		ImGui::Begin(name.c_str());
@@ -63,13 +66,13 @@ void GUI::createDebugMenu(GameObject& obj, string name, glm::vec3 orgPos, glm::v
 void GUI::createDebugMenu(Game* g) {
 	static int control = 1;
 	ImGui::Begin("Settings");
-	if (ImGui::Button(g->debugPause ? "Play" : "Pause")) {
-		g->debugPause = !g->debugPause;
-		if (!g->debugPause) // if unpausing
+	if (ImGui::Button(g->pause ? "Play" : "Pause")) {
+		g->pause = !g->pause;
+		if (!g->pause) // if unpausing
 			g->lastTime = glfwGetTime();
 	}
 
-	if (g->debugPause) {
+	if (g->pause) {
 		ImGui::Dummy(ImVec2(0.0f, 5.0f));
 
 		ImGui::SliderInt("Frames", &control, 1, 120);
@@ -81,4 +84,22 @@ void GUI::createDebugMenu(Game* g) {
 	}
 
 	ImGui::End();
+}
+
+void GUI::onClickDebug(Game* g) {
+	if (g->ScreenHandler[0]->screen == ScreenHandler::SCREENTYPE::GAME) {
+		int state = glfwGetMouseButton(g->gameWindow, GLFW_MOUSE_BUTTON_LEFT);
+
+		if (state == GLFW_PRESS) {
+			g->ScreenObject[0]->getCursorPosition(g);
+			cout << g->ScreenObject[0]->xpos << endl;
+
+			if (g->ScreenObject[0]->xpos <= g->paddles[0]->position.x + 20.0 + g->ScreenObject[0]->xpos >= g->paddles[0]->position.x - 20.0) {
+				g->debugGUI[0]->createDebugMenu(g->paddles[0], "Debug Paddle 1", glm::vec3(-0.75f, 0.0f, 0.0f), VEC3_ZERO, glm::vec3(0.015f, 0.2f, 1.0f));
+			}
+		}
+	}
+	else {
+		return;
+	}
 }
