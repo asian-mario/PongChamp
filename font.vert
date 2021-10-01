@@ -10,7 +10,7 @@ out vec2 vTexCoord;
 uniform mat4 ModViewProj;
 
 void main(){
-	gl_Position = ModViewProj * vec4(aPosition, 0.5f, 1.0f);
+	gl_Position = ModViewProj * vec4(aPosition, 1.0f, 1.0f);
 
 	vTexCoord = aTexture;
 }

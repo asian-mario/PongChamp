@@ -56,15 +56,32 @@ void PauseMenu::drawScreen(Game* g) {
 	glDisable(GL_DEPTH_TEST);
 
 	g->fonts[1]->drawString(750.0f, 150.0f, "PAUSED", g->shaders[2]);
-	g->fonts[0]->drawString(100.0f, 400.0f, "PAUSED", g->shaders[2]);
+	g->fonts[1]->drawString(100.0f, 350.0f, "PLAY", g->shaders[2]);
 }
 
 void PauseMenu::updateScreen(Game* g) {
+	int state = glfwGetMouseButton(g->gameWindow, GLFW_MOUSE_BUTTON_LEFT);
+
 	if (glfwGetKey(g->gameWindow, GLFW_KEY_P) == GLFW_PRESS) {
 		remove(g);
 		g->ScreenHandler[0]->ScreenSwitch(ScreenHandler::SCREENTYPE::GAME);
 		g->ScreenHandler[0]->ScreenInit(g);
 	}
+
+	if (state == GLFW_PRESS)
+	{
+		g->ScreenObject[0]->getCursorPosition(g);
+		cout << g->ScreenObject[0]->ypos << endl;
+
+		if (g->ScreenObject[0]->xpos <= 379.0 && g->ScreenObject[0]->xpos >= 96.0 && g->ScreenObject[0]->ypos >= 272.0 && g->ScreenObject[0]->ypos <= 357.0) {
+			remove(g);
+			g->ScreenHandler[0]->ScreenSwitch(ScreenHandler::SCREENTYPE::GAME);
+			g->ScreenHandler[0]->ScreenInit(g);
+		}
+	}
+
+		
+	
 }
 
 void PauseMenu::remove(Game* g) {
