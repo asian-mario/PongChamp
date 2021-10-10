@@ -50,8 +50,13 @@ void Game::update() {
 	deltaTime = (float)glfwGetTime() - lastTime;
 	lastTime = (float)glfwGetTime();
 	for (GameObject* o : gameObjects)
-		if (o != nullptr)
+		if (o != nullptr) {
 			o->update(this);
+
+			if (o->name != "") {
+				o->boundingBox = o->createBoundingBox();
+			}
+		}
 
 	for (GameObject* p : particleSystems)
 		p->update(this);
@@ -80,3 +85,4 @@ void Game::drawScreen() {
 		if (o != nullptr)
 			o->drawScreen(this);
 }
+

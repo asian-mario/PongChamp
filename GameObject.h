@@ -18,8 +18,10 @@ public:
 
 	glm::vec3 velocity;
 	glm::vec4 color;
+	
+	std::string name;
 
-
+	glm::vec4 boundingBox;
 	Mesh mesh;
 
 	GameObject() :position(0.0f), rotation(0.0f), scale(1.0f), velocity(0.0f), color(0.0f) {};
@@ -27,6 +29,7 @@ public:
 	
 	virtual glm::mat4 getModelMatrix();
 	virtual glm::vec3 findWorldPos();
+	virtual glm::vec4 createBoundingBox();
 	virtual void draw(Game* game);
 	virtual void screen(Game* game){}
 	virtual void menuUpdate(Game* game){}

@@ -21,6 +21,7 @@
 #include"Particles.h"
 #include"Powerup.h"
 #include"Screen.h"
+#include"GOList.h"
 
 #include <chrono>
 #include <cmath>
@@ -142,12 +143,15 @@ int main() {
 	};
 
 	//------------------------------------------------------------------------------------------------
-	map<std::string, GameObject*> gquiz1;
+
 
 	//------------------------------------------------------------------------------------------------
 	Game g;
 	auto monitor = glfwGetPrimaryMonitor();
 	const GLFWvidmode* mode = glfwGetVideoMode(monitor);
+
+	GOList ObjectList;
+	g.OBJList.push_back(&ObjectList);
 
 	glfwWindowHint(GLFW_RED_BITS, mode->redBits);
 	glfwWindowHint(GLFW_GREEN_BITS, mode->greenBits);
@@ -311,43 +315,50 @@ int main() {
 	//--------------------------------------------MESH-----------------------------------------------------
 
 	//--------------Paddle1---------------------------------
-	Paddle paddle1(glm::vec3(-0.85f, 0.0f, 0.0f) * 100.0f, glm::vec3(0.015f, 0.2f, 0.0f) * 100.0f, Paddle::CONTROLTYPE::WASD, glm::vec3(0.0f));
+	Paddle paddle1(glm::vec3(-0.85f, 0.0f, 0.0f) * 100.0f, glm::vec3(0.015f, 0.2f, 1.0f) * 100.0f, Paddle::CONTROLTYPE::WASD, glm::vec3(0.0f), "Paddle1");
 	paddle1.mesh = Mesh(sqrverts, sqrinds, paddle1Tex);
 	g.paddles.push_back(&paddle1);
 	g.gameObjects.push_back(&paddle1);
+
+	ObjectList.GOList.insert(pair<std::string, GameObject*>(paddle1.name, &paddle1));
 	//--------------Paddle1---------------------------------
 
 	//--------------Paddle2---------------------------------
-	Paddle paddle2(glm::vec3(0.85f, 0.0f, 0.0f) * 100.0f, glm::vec3(0.015f, 0.2f, 0.0f) * 100.0f, Paddle::CONTROLTYPE::ARROW, glm::vec3(0.0f));
+	Paddle paddle2(glm::vec3(0.85f, 0.0f, 0.0f) * 100.0f, glm::vec3(0.015f, 0.2f, 1.0f) * 100.0f, Paddle::CONTROLTYPE::ARROW, glm::vec3(0.0f), "Paddle2");
 	paddle2.mesh = Mesh(sqrverts, sqrinds, paddle2Tex);
 	g.paddles.push_back(&paddle2);
 	g.gameObjects.push_back(&paddle2);
+
+	ObjectList.GOList.insert(pair<std::string, GameObject*>(paddle2.name, &paddle2));
 	//--------------Paddle2---------------------------------
 
 	//--------------BarrierUp-------------------------------
-	Barrier BarrierBU(glm::vec3(0.0f, 1.02f, 0.0f) * 100.0f, glm::vec3(2.0f, 0.05f, 1.0f) * 100.0f);
+	Barrier BarrierBU(glm::vec3(0.0f, 1.02f, 0.0f) * 100.0f, glm::vec3(2.0f, 0.05f, 1.0f) * 100.0f, "BarrierUp");
 	BarrierBU.mesh = Mesh(sqrverts, sqrinds, barrierTex);
 	g.barriers.push_back(&BarrierBU);
 	g.gameObjects.push_back(&BarrierBU);
+	ObjectList.GOList.insert(pair<std::string, GameObject*>(BarrierBU.name, &BarrierBU));
 	//--------------BarrierUp-------------------------------
 
 	//--------------BarrierDown-------------------------------
-	Barrier BarrierBD(glm::vec3(0.0f, -1.02f, 0.0f) * 100.0f, glm::vec3(2.0f, 0.05f, 1.0f) * 100.0f);
+	Barrier BarrierBD(glm::vec3(0.0f, -1.02f, 0.0f) * 100.0f, glm::vec3(2.0f, 0.05f, 1.0f) * 100.0f, "BarrierDown");
 	BarrierBD.mesh = Mesh(sqrverts, sqrinds, barrierTex);
 	g.barriers.push_back(&BarrierBD);
 	g.gameObjects.push_back(&BarrierBD);
+	ObjectList.GOList.insert(pair<std::string, GameObject*>(BarrierBD.name, &BarrierBD));
 	//--------------BarrierDown-------------------------------
 
-	Barrier BarrierER(glm::vec3(1.0f, 0.0f, 0.0f) * 100.0f, glm::vec3(0.0f, 2.0f, 0.0f) * 100.0f);
+	Barrier BarrierER(glm::vec3(1.0f, 0.0f, 0.0f) * 100.0f, glm::vec3(0.0f, 2.0f, 1.0f) * 100.0f, "BarrierEnd");
 	BarrierER.mesh = Mesh(sqrverts, sqrinds, defaultTex);
 	g.barriers.push_back(&BarrierER);
 	g.gameObjects.push_back(&BarrierER);
-
+	ObjectList.GOList.insert(pair<std::string, GameObject*>(BarrierER.name, &BarrierER));
 	//--------------BALL--------------------------------------
-	Ball ball1(glm::vec3(-0.02f, 0.0f, 0.0f) * 100.0f, glm::vec3(0.096f, 0.191f, 1.0f) * 100.0f, 2.5, glm::vec3(-65.0f, rand() / 10000.0f, 0.0f));
+	Ball ball1("Ball1", glm::vec3(-0.02f, 0.0f, 0.0f) * 100.0f, glm::vec3(0.096f, 0.191f, 1.0f) * 100.0f, 2.5, glm::vec3(-65.0f, rand() / 10000.0f, 0.0f));
 	ball1.mesh = Mesh(ballsverts, ballinds, ballTex);
 	g.balls.push_back(&ball1);
 	g.gameObjects.push_back(&ball1);
+	ObjectList.GOList.insert(pair<std::string, GameObject*>(ball1.name, &ball1));
 	//--------------BALL--------------------------------------
 
 	//--------------------------------------------MESH-----------------------------------------------------
@@ -436,13 +447,6 @@ int main() {
 
 		//---------------------------DEBUG----------------------------------
 		g.debugGUI[0]->onClickDebug(&g);
-		g.debugGUI[0]->createDebugMenu(paddle1, "Debug Paddle 1", glm::vec3(-0.75f, 0.0f, 0.0f), VEC3_ZERO, glm::vec3(0.015f, 0.2f, 1.0f));
-		g.debugGUI[0]->createDebugMenu(paddle2, "Debug Paddle 2", glm::vec3(0.75f, 0.0f, 0.0f), VEC3_ZERO, glm::vec3(0.015f, 0.2f, 1.0f));
-		g.debugGUI[0]->createDebugMenu(ball1, "Debug Ball", glm::vec3(-0.02f, 0.0f, 0.0f), VEC3_ZERO, glm::vec3(0.096f, 0.191f, 1.0f));
-		g.debugGUI[0]->createDebugMenu(BarrierBU, "Debug Barrier Up", glm::vec3(0.0f, 0.85f, 0.0f), VEC3_ZERO, glm::vec3(1.7f, 0.05f, 1.0f));
-		g.debugGUI[0]->createDebugMenu(BarrierBD, "Debug Barrier Bottom", glm::vec3(0.0f, -0.85f, 0.0f), VEC3_ZERO, glm::vec3(1.7f, 0.05f, 1.0f));
-		g.debugGUI[0]->createDebugMenu(camera, "Camera", glm::vec3(0.0f, -0.85f, 0.0f), VEC3_ZERO, glm::vec3(1.7f, 0.05f, 1.0f));
-		g.debugGUI[0]->createDebugMenu(directLight, "Light", VEC3_ZERO, VEC3_ZERO, VEC3_ZERO);
 					 
 		g.debugGUI[0]->createDebugMenu(&g); 
 		//-------------------------------------DEBUG----------------------------------------------

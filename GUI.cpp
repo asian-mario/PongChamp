@@ -6,12 +6,15 @@
 #include<imgui/imgui.h>
 #include<imgui/imgui_impl_glfw_gl3.h>
 #include<imgui/imgui_internal.h>
+#include<glm/glm.hpp>
+#include<glm/gtc/type_ptr.hpp>
 
 
 #define VEC3_ZERO glm::vec3(0.0f)
 
-void GUI::createDebugMenu(GameObject& obj, string name, glm::vec3 orgPos, glm::vec3 orgRot, glm::vec3 orgScale) {
+void GUI::createDebugMenu( GOList* obj, string name, glm::vec3 orgPos, glm::vec3 orgRot, glm::vec3 orgScale) { //name has to match the same name in the GOList map
 	{
+		GameObject* objDebug = obj->GOList.at(name);
 		ImGui::Begin(name.c_str());
 
 		bool resetScale = false;
@@ -20,39 +23,39 @@ void GUI::createDebugMenu(GameObject& obj, string name, glm::vec3 orgPos, glm::v
 
 		ImGui::Text("Mesh Controls");
 		ImGui::Dummy(ImVec2(0.0f, 5.0f));
-		ImGui::SliderFloat("Scale X", &obj.scale.x, 0.0f, 200.0f);
-		ImGui::SliderFloat("Scale Y", &obj.scale.y, 0.0f, 200.0f);
-		ImGui::SliderFloat("Scale Z", &obj.scale.z, 0.0f, 200.0f);
+		ImGui::SliderFloat("Scale X", &objDebug->scale.x, 0.0f, 200.0f);
+		ImGui::SliderFloat("Scale Y", &objDebug->scale.y, 0.0f, 200.0f);
+		ImGui::SliderFloat("Scale Z", &objDebug->scale.z, 0.0f, 200.0f);
 
 		if (ImGui::Button("Reset Scale"))
 			resetScale = true;
 
 		if (resetScale == true) {
-			obj.scale = orgScale;
+			objDebug->scale = orgScale;
 		}
 
 		ImGui::Dummy(ImVec2(0.0f, 5.0f));
 
-		ImGui::SliderFloat("Translation X", &obj.position.x, -200.0f, 200.0f);
-		ImGui::SliderFloat("Translation Y", &obj.position.y, -200.0f, 200.0f);
-		ImGui::SliderFloat("Translation Z", &obj.position.z, -200.0f, 200.0f);
+		ImGui::SliderFloat("Translation X", &objDebug->position.x, -200.0f, 200.0f);
+		ImGui::SliderFloat("Translation Y", &objDebug->position.y, -200.0f, 200.0f);
+		ImGui::SliderFloat("Translation Z", &objDebug->position.z, -200.0f, 200.0f);
 		if (ImGui::Button("Reset Position"))
 			resetPos = true;
 
 		if (resetPos == true) {
-			obj.position = orgPos;
+			objDebug->position = orgPos;
 		}
 
 		ImGui::Dummy(ImVec2(0.0f, 5.0f));
 
-		ImGui::SliderFloat("Rotation X", &obj.rotation.x, -360.0f, 360.0f);
-		ImGui::SliderFloat("Rotation Y", &obj.rotation.y, -360.0f, 360.0f);
-		ImGui::SliderFloat("Rotation Z", &obj.rotation.z, -360.0f, 360.0f);
+		ImGui::SliderFloat("Rotation X", &objDebug->rotation.x, -360.0f, 360.0f);
+		ImGui::SliderFloat("Rotation Y", &objDebug->rotation.y, -360.0f, 360.0f);
+		ImGui::SliderFloat("Rotation Z", &objDebug->rotation.z, -360.0f, 360.0f);
 		if (ImGui::Button("Reset Rotation"))
 			resetRot = true;
 
 		if (resetRot == true) {
-			obj.rotation = orgRot;
+			objDebug->rotation = orgRot;
 		}
 
 
@@ -90,16 +93,21 @@ void GUI::onClickDebug(Game* g) {
 	if (g->ScreenHandler[0]->screen == ScreenHandler::SCREENTYPE::GAME) {
 		int state = glfwGetMouseButton(g->gameWindow, GLFW_MOUSE_BUTTON_LEFT);
 
-		if (state == GLFW_PRESS) {
-			g->ScreenObject[0]->getCursorPosition(g);
-			cout << g->ScreenObject[0]->xpos << endl;
+		g->ScreenObject[0]->getCursorPosition(g);
+		g->ScreenObject[0]->screenToWorldCord();
 
-			if (g->ScreenObject[0]->xpos <= g->paddles[0]->position.x + 20.0 + g->ScreenObject[0]->xpos >= g->paddles[0]->position.x - 20.0) {
-				g->debugGUI[0]->createDebugMenu(g->paddles[0], "Debug Paddle 1", glm::vec3(-0.75f, 0.0f, 0.0f), VEC3_ZERO, glm::vec3(0.015f, 0.2f, 1.0f));
+		cout << g->paddles[0]->boundingBox.x << endl;
+
+		if (state == GLFW_PRESS) {
+			for (GameObject* o : g->gameObjects) {
+				bool mouseIntersect = g->ScreenObject[0]->collisionBB(g, o);
+				if (o->name != "") {
+					if (mouseIntersect == true) {
+						g->debugGUI[0]->createDebugMenu(g->OBJList[0], o->name, glm::vec3(-0.75f, 0.0f, 0.0f), VEC3_ZERO, glm::vec3(0.015f, 0.2f, 1.0f));
+					}
+				}
 			}
+
 		}
-	}
-	else {
-		return;
 	}
 }

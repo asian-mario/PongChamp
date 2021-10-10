@@ -15,6 +15,7 @@
 #include "Powerup.h"
 #include "Screen.h"
 #include "GUI.h"
+#include "GOList.h"
 #include <vector>
 
 class Game;
@@ -34,6 +35,7 @@ class ParticleSystem;
 class ScreenHandler;
 class Screen;
 class GUI;
+class GOList;
 struct Vertex;
 struct GLFWwindow;
 
@@ -54,6 +56,7 @@ class Game {
 		std::vector <ScreenHandler*> ScreenHandler;
 		std::vector <Screen*> ScreenObject;
 		std::vector <GUI*> debugGUI;
+		std::vector <GOList*> OBJList;
 
 		std::vector <std::vector<GLuint>> indexVec;
 		std::vector <std::vector<Texture>> texturesVec;

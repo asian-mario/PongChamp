@@ -3,12 +3,14 @@
 #include<stdlib.h>
 #include <cmath>
 
-Ball::Ball(glm::vec3 position, glm::vec3 scale, double rad, glm::vec3 velocity) {
+Ball::Ball(std::string name, glm::vec3 position, glm::vec3 scale, double rad, glm::vec3 velocity) {
 	this->position = glm::vec3(position);
 	this->rotation = glm::vec3(0.0f);
 	this->scale = glm::vec3(scale);
 	this->velocity = glm::vec3(velocity);
 	this->rad = rad;
+	this->name = name;
+	this->boundingBox = createBoundingBox();
 }
 
 bool Ball::circintersects(glm::vec3 circle, glm::vec3 rect, double circleRadius, double width, double height)

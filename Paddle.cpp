@@ -1,12 +1,14 @@
 
 #include "Paddle.h"
 
-Paddle::Paddle(glm::vec3 position, glm::vec3 scale, CONTROLTYPE type, glm::vec3 velocity) {
+Paddle::Paddle(glm::vec3 position, glm::vec3 scale, CONTROLTYPE type, glm::vec3 velocity, std::string name) {
 	this->position = glm::vec3(position);
 	this->rotation = glm::vec3(0.0f);
 	this->scale = glm::vec3(scale);
 	this->type = type;
 	this->velocity = glm::vec3(velocity);
+	this->name = name;
+	this->boundingBox = createBoundingBox();
 } 
 
 

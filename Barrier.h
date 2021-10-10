@@ -11,6 +11,6 @@ class Barrier : public GameObject {
 	public:
 		bool barrierHit = false;
 
-		Barrier(glm::vec3 pos, glm::vec3 scale);
+		Barrier(glm::vec3 pos, glm::vec3 scale, std::string name);
 };
 

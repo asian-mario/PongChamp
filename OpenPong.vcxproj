@@ -183,6 +183,7 @@
     <ClInclude Include="game.h" />
     <ClInclude Include="gameFont.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="GOList.h" />
     <ClInclude Include="GUI.h" />
     <ClInclude Include="light.h" />
     <ClInclude Include="Screen.h" />

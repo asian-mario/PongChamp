@@ -15,6 +15,22 @@ glm::vec3 GameObject::findWorldPos() {
 	return getModelMatrix() * glm::vec4(1.0f);
 }
 
+//AABB because its easier to implement
+glm::vec4 GameObject::createBoundingBox() {
+	glm::vec4 boundingBox = glm::vec4(1.0f);
+
+	//RIGHT
+	boundingBox.x = position.x + scale.x;
+	//LEFT
+	boundingBox.y = position.x - scale.x;
+	//UP
+	boundingBox.z = position.y + scale.y;
+	//DOWN							   
+	boundingBox.w = position.y - scale.y;
+
+	return boundingBox;
+}
+
 void GameObject::draw(Game* game) {
 	glm::mat4 model = getModelMatrix();
 	glm::vec4 color = game->lights[0]->color;

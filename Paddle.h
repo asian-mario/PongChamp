@@ -26,7 +26,7 @@ class Paddle : public GameObject {
 		enum CONTROLTYPE { WASD, ARROW };
 		CONTROLTYPE type;
 
-		Paddle(glm::vec3 position, glm::vec3 scale, CONTROLTYPE type, glm::vec3 velocity);
+		Paddle(glm::vec3 position, glm::vec3 scale, CONTROLTYPE type, glm::vec3 velocity, std::string name);
 		void update(Game* g) override;
 };
 

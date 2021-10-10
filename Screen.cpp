@@ -4,8 +4,22 @@ void Screen::getCursorPosition(Game* g) {
 	glfwGetCursorPos(g->gameWindow, &xpos, &ypos);
 }
 
+void Screen::screenToWorldCord() {
+	float x = ((2.0f * xpos) / 1920 - 1.0f) * 100.0;
+	float y = (1.0f - (2.0f * ypos) / 1080) * 100.0;
+	
+	xpos = x;
+	ypos = y;
+}
 
-
+bool Screen::collisionBB(Game* g, GameObject* GO) {
+	if (xpos <= GO->boundingBox.x && xpos >= GO->boundingBox.y && ypos <= GO->boundingBox.z && ypos >= GO->boundingBox.w) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
 void ScreenHandler::ScreenInit(Game* g) {
 	if (screen == PAUSE) {
 		Screen* crntMenu = new PauseMenu();
@@ -55,6 +69,7 @@ void PauseMenu::drawScreen(Game* g) {
 
 	g->fonts[1]->drawString(750.0f, 150.0f, "PAUSED", g->shaders[2]);
 	g->fonts[1]->drawString(100.0f, 350.0f, "PLAY", g->shaders[2]);
+	g->fonts[1]->drawString(100.0f, 850.0f, "EXIT", g->shaders[2]);
 }
 
 void PauseMenu::updateScreen(Game* g) {
@@ -78,6 +93,13 @@ void PauseMenu::updateScreen(Game* g) {
 
 			g->pause = false;
 		}
+
+		if (g->ScreenObject[0]->xpos <= 379.0 && g->ScreenObject[0]->xpos >= 96.0 && g->ScreenObject[0]->ypos >= 760.0 && g->ScreenObject[0]->ypos <= 860.0) {
+			remove(g);
+			g->ScreenHandler[0]->ScreenSwitch(ScreenHandler::SCREENTYPE::MAIN, g);
+			g->ScreenHandler[0]->ScreenInit(g);
+
+		}
 	}
 
 		
@@ -98,7 +120,7 @@ void MainMenu::drawScreen(Game* g) {
 	glDisable(GL_CULL_FACE);
 	glDisable(GL_DEPTH_TEST);
 
-	g->fonts[1]->drawString(800.0f, 150.0f, "PLApla", g->shaders[2]);
+	g->fonts[1]->drawString(600.0f, 150.0f, "PONGCHAMP!", g->shaders[2]);
 }
 
 void MainMenu::remove(Game* g) {
@@ -135,6 +157,7 @@ void GameScene::drawScreen(Game* g) {
 
 	g->fonts[0]->drawString(g->texts[0]->pos.x, g->texts[0]->pos.y, g->texts[0]->text, g->shaders[2]);
 	g->fonts[0]->drawString(g->texts[1]->pos.x, g->texts[1]->pos.y, g->texts[1]->text, g->shaders[2]);
+
 
 }
 
