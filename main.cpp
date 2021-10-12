@@ -437,22 +437,11 @@ int main() {
 		glClearColor(0.0f, 0.0f, 0.01f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		g.drawScreen();
-		g.updateScreen();
-		//cout << g.pause << endl;
-		
 		//IMGUI
 		ImGui_ImplGlfwGL3_NewFrame();
 
-
-		//---------------------------DEBUG----------------------------------
-		g.debugGUI[0]->onClickDebug(&g);
-					 
-		g.debugGUI[0]->createDebugMenu(&g); 
-		//-------------------------------------DEBUG----------------------------------------------
-
-
-
+		g.drawScreen();
+		g.updateScreen();
 
 		ImGui::Render();
 		ImGui_ImplGlfwGL3_RenderDrawData(ImGui::GetDrawData());

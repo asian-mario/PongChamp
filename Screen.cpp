@@ -1,5 +1,7 @@
 #include "Screen.h"
 
+#define VEC3_ZERO glm::vec3(0.0f)
+
 void Screen::getCursorPosition(Game* g) {
 	glfwGetCursorPos(g->gameWindow, &xpos, &ypos);
 }
@@ -157,6 +159,15 @@ void GameScene::drawScreen(Game* g) {
 
 	g->fonts[0]->drawString(g->texts[0]->pos.x, g->texts[0]->pos.y, g->texts[0]->text, g->shaders[2]);
 	g->fonts[0]->drawString(g->texts[1]->pos.x, g->texts[1]->pos.y, g->texts[1]->text, g->shaders[2]);
+
+	//--------------DEBUG----------------------------
+	g->debugGUI[0]->onClickDebug(g);
+
+	g->debugGUI[0]->createDebugMenu(g);
+
+	if (g->ScreenHandler[0]->renderDebugScreen) {
+		g->debugGUI[0]->createDebugMenu(g->OBJList[0], g->ScreenHandler[0]->currentDebugObj, glm::vec3(-0.75f, 0.0f, 0.0f), VEC3_ZERO, glm::vec3(0.015f, 0.2f, 1.0f));
+	}
 
 
 }

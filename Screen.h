@@ -22,12 +22,18 @@ public:
 	//help
 	void screenToWorldCord();
 	bool collisionBB(Game* g, GameObject* GO);
+
 };
 
 class ScreenHandler : public Screen {
 public:
 	enum SCREENTYPE { GAME, PAUSE, MAIN };
 	SCREENTYPE screen;
+
+	//----------------DEBUG VARIABLES----------------
+	bool renderDebugScreen = false;
+	std::string currentDebugObj;
+	//----------------DEBUG VARIABLES----------------
 
 	void ScreenInit(Game* g);
 	void ScreenSwitch(SCREENTYPE screen, Game* g);

@@ -103,7 +103,8 @@ void GUI::onClickDebug(Game* g) {
 				bool mouseIntersect = g->ScreenObject[0]->collisionBB(g, o);
 				if (o->name != "") {
 					if (mouseIntersect == true) {
-						g->debugGUI[0]->createDebugMenu(g->OBJList[0], o->name, glm::vec3(-0.75f, 0.0f, 0.0f), VEC3_ZERO, glm::vec3(0.015f, 0.2f, 1.0f));
+						g->ScreenHandler[0]->renderDebugScreen = true;
+						g->ScreenHandler[0]->currentDebugObj = o->name;
 					}
 				}
 			}
