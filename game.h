@@ -71,6 +71,9 @@ class Game {
 		bool pause = false;
 		int framestep = 0;
 
+		int screenWidth = 1920;
+		int screenHeight = 1080;
+
 		Game();
 
 		//--FRAME

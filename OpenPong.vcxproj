@@ -151,6 +151,7 @@
     <ClCompile Include="Barrier.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="EBO.cpp" />
+    <ClCompile Include="FBO.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="gameFont.cpp" />
     <ClCompile Include="GameObject.cpp" />
@@ -179,6 +180,7 @@
     <ClInclude Include="Barrier.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="EBO.h" />
+    <ClInclude Include="FBO.h" />
     <ClInclude Include="font.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="gameFont.h" />
@@ -202,6 +204,8 @@
     <None Include="Default.vert" />
     <None Include="font.frag" />
     <None Include="font.vert" />
+    <None Include="framebuffer.frag" />
+    <None Include="framebuffer.vert" />
     <None Include="light.frag" />
     <None Include="light.vert" />
     <None Include="particles.frag" />

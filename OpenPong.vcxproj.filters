@@ -111,6 +111,9 @@
     <ClCompile Include="Screen.cpp">
       <Filter>Source Files\openpong</Filter>
     </ClCompile>
+    <ClCompile Include="FBO.cpp">
+      <Filter>Source Files\openpong</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EBO.h">
@@ -176,6 +179,9 @@
     <ClInclude Include="GOList.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="FBO.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="light.vert">
@@ -200,6 +206,12 @@
       <Filter>Resource Files\Shaders</Filter>
     </None>
     <None Include="particles.frag">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="framebuffer.vert">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="framebuffer.frag">
       <Filter>Resource Files\Shaders</Filter>
     </None>
   </ItemGroup>

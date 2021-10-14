@@ -22,6 +22,7 @@
 #include"Powerup.h"
 #include"Screen.h"
 #include"GOList.h"
+#include"FBO.h"
 
 #include <chrono>
 #include <cmath>
@@ -142,6 +143,18 @@ int main() {
 		4, 6, 7
 	};
 
+	float rectangleVertices[] =
+	{
+		
+		 100.0f, -100.0f,  100.0f, 0.0f,
+		-100.0f, -100.0f,  0.0f, 0.0f,
+		-100.0f,  100.0f,  0.0f, 100.0f,
+
+		 100.0f,  100.0f,  100.0f, 100.0f,
+		 100.0f, -100.0f,  100.0f, 0.0f,
+		-100.0f,  100.0f,  0.0f, 100.0f
+	};
+
 	//------------------------------------------------------------------------------------------------
 
 
@@ -159,7 +172,7 @@ int main() {
 	glfwWindowHint(GLFW_REFRESH_RATE, mode->refreshRate);
 	glfwWindowHint(GLFW_DECORATED, GLFW_FALSE);
 
-	GLFWwindow* window = glfwCreateWindow(mode->width, mode->height, "OpenPong", NULL, NULL);
+	GLFWwindow* window = glfwCreateWindow(mode->width, mode->height, "PongChamp!", NULL, NULL);
 	g.gameWindow = window;
 	glfwSetWindowMonitor(window, NULL, 0, 0, mode->width, mode->height, mode->refreshRate);
 	if (window == NULL) {
@@ -173,7 +186,17 @@ int main() {
 
 	glViewport(0, 0, width, height); //where we want the opengl to show stuff
 
-
+	// Prepare framebuffer rectangle VBO and VAO
+	unsigned int rectVAO, rectVBO;
+	glGenVertexArrays(1, &rectVAO);
+	glGenBuffers(1, &rectVBO);
+	glBindVertexArray(rectVAO);
+	glBindBuffer(GL_ARRAY_BUFFER, rectVBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(rectangleVertices), &rectangleVertices, GL_STATIC_DRAW);
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
 
 	Texture textures[]{
 		//----------TEXTURES-------------------------------
@@ -311,7 +334,11 @@ int main() {
 	Shader particleShader("particles.vert", "particles.frag");
 	g.shaders.push_back(&particleShader);
 
+	Shader framebufferProgram("framebuffer.vert", "framebuffer.frag");
+	g.shaders.push_back(&framebufferProgram);
 
+	g.shaders[4]->Activate();
+	glUniform1i(glGetUniformLocation(g.shaders[4]->ID, "screenTexture"), 0);
 	//--------------------------------------------MESH-----------------------------------------------------
 
 	//--------------Paddle1---------------------------------
@@ -360,6 +387,15 @@ int main() {
 	g.gameObjects.push_back(&ball1);
 	ObjectList.GOList.insert(pair<std::string, GameObject*>(ball1.name, &ball1));
 	//--------------BALL--------------------------------------
+
+	//------------FRAME BUFFER TINGS-------------------
+	FBO FBO(&g);
+
+	//Error Checks
+	auto fboStatus = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+	if (fboStatus != GL_FRAMEBUFFER_COMPLETE) {
+		cout << "Error:" << fboStatus << endl;
+	}
 
 	//--------------------------------------------MESH-----------------------------------------------------
 
@@ -425,24 +461,38 @@ int main() {
 	//Only one screen handler but im doing this so I can access its values in other files
 	g.ScreenHandler.push_back(&ScreenHandler); 
 
-	g.ScreenHandler[0]->ScreenSwitch(ScreenHandler::SCREENTYPE::PAUSE, &g);
+	g.ScreenHandler[0]->ScreenSwitch(ScreenHandler::SCREENTYPE::GAME, &g);
 	g.ScreenHandler[0]->ScreenInit(&g);
 	//----------------------MENU HANDLER---------------------
 	
 	GUI DebugGUI;
 	g.debugGUI.push_back(&DebugGUI);
 
+
 	while (!glfwWindowShouldClose(window)) {
 
 		glClearColor(0.0f, 0.0f, 0.01f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+
 		//IMGUI
 		ImGui_ImplGlfwGL3_NewFrame();
+
+		//Framebuffer
+		FBO.Bind();
+		glEnable(GL_DEPTH_TEST);
 
 		g.drawScreen();
 		g.updateScreen();
 
+
+		FBO.Unbind();
+
+		//Draw the framebuffer rectangle
+		g.shaders[4]->Activate();
+		glBindVertexArray(rectVAO);
+		FBO.drawRectangleScreen();
+		 
 		ImGui::Render();
 		ImGui_ImplGlfwGL3_RenderDrawData(ImGui::GetDrawData());
 
