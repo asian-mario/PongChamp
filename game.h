@@ -89,5 +89,6 @@ class Game {
 		//--UTILITY
 		void slowMo(float time);
 		float deltaTime;
+		float gamma = 2.2f;
 };
 

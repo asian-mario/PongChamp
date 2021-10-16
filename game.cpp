@@ -50,7 +50,7 @@ void Game::update() {
 	deltaTime = (float)glfwGetTime() - lastTime;
 	lastTime = (float)glfwGetTime();
 	for (GameObject* o : gameObjects)
-		if (o != nullptr || o != NULL) {
+		if (o != nullptr) {
 			o->update(this);
 
 			if (o->name != "") {

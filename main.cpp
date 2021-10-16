@@ -339,6 +339,7 @@ int main() {
 
 	g.shaders[4]->Activate();
 	glUniform1i(glGetUniformLocation(g.shaders[4]->ID, "screenTexture"), 0);
+	glUniform1i(glGetUniformLocation(g.shaders[4]->ID, "gamma"), g.gamma);
 	//--------------------------------------------MESH-----------------------------------------------------
 
 	//--------------Paddle1---------------------------------
@@ -392,12 +393,6 @@ int main() {
 	FBO FBO(&g);
 
 	//--------------------------------------------MESH-----------------------------------------------------
-
-	glClearColor(0.0f, 0.0f, 0.0f, 1.0f); 
-	glClear(GL_COLOR_BUFFER_BIT); //le execute with the color buffer
-	glfwSwapBuffers(window);
-
-	glEnable(GL_DEPTH_TEST); //fixes depth issues
 
 	//GUI
 	ImGui::CreateContext();
@@ -468,7 +463,7 @@ int main() {
 		//Framebuffer
 		FBO.Bind();
 
-		glClearColor(0.0f, 0.0f, 0.01f, 1.0f);
+		glClearColor(pow(0.0f, g.gamma), pow(0.0f, g.gamma), pow(0.01f, g.gamma), 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 
