@@ -89,12 +89,12 @@ void Ball::update(Game* g) {
 
 	if (checkLeft == true) {
 		for (int i = 0; i < 25; i++) {
-			g->particleSystems[3]->spawn(g, glm::vec3(-g->barriers[2]->position.x, g->balls[0]->position.y, -g->barriers[0]->position.z), glm::vec3(-50.0f, rand() / 200.0f, 0.0f), glm::vec3(3.0f), color, 2.0f);
+			g->particleSystems[3]->spawn(g, glm::vec3(-g->barriers[2]->position.x, g->balls[0]->position.y, -g->barriers[0]->position.z), glm::vec3(-rand() / 200.0f, rand() / 200.0f, 0.0f), glm::vec3(3.0f), color, 2.0f);
 
 		}
 
-		
-		position = glm::vec3(0.0f);
+		//At zero it causes weird bounding box issues
+		position = glm::vec3(0.01f);
 
 		if (g->texts[1]->score < 5) {
 			velocity = glm::vec3(60.0f, rand() / control, 0.0f);

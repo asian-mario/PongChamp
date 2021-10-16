@@ -145,14 +145,14 @@ int main() {
 
 	float rectangleVertices[] =
 	{
-		
-		 100.0f, -100.0f,  100.0f, 0.0f,
-		-100.0f, -100.0f,  0.0f, 0.0f,
-		-100.0f,  100.0f,  0.0f, 100.0f,
+		// Coords    // texCoords
+		 1.0f, -1.0f,  1.0f, 0.0f,
+		-1.0f, -1.0f,  0.0f, 0.0f,
+		-1.0f,  1.0f,  0.0f, 1.0f,
 
-		 100.0f,  100.0f,  100.0f, 100.0f,
-		 100.0f, -100.0f,  100.0f, 0.0f,
-		-100.0f,  100.0f,  0.0f, 100.0f
+		 1.0f,  1.0f,  1.0f, 1.0f,
+		 1.0f, -1.0f,  1.0f, 0.0f,
+		-1.0f,  1.0f,  0.0f, 1.0f
 	};
 
 	//------------------------------------------------------------------------------------------------
@@ -391,12 +391,6 @@ int main() {
 	//------------FRAME BUFFER TINGS-------------------
 	FBO FBO(&g);
 
-	//Error Checks
-	auto fboStatus = glCheckFramebufferStatus(GL_FRAMEBUFFER);
-	if (fboStatus != GL_FRAMEBUFFER_COMPLETE) {
-		cout << "Error:" << fboStatus << endl;
-	}
-
 	//--------------------------------------------MESH-----------------------------------------------------
 
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f); 
@@ -471,6 +465,9 @@ int main() {
 
 	while (!glfwWindowShouldClose(window)) {
 
+		//Framebuffer
+		FBO.Bind();
+
 		glClearColor(0.0f, 0.0f, 0.01f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -478,13 +475,14 @@ int main() {
 		//IMGUI
 		ImGui_ImplGlfwGL3_NewFrame();
 
-		//Framebuffer
-		FBO.Bind();
-		glEnable(GL_DEPTH_TEST);
-
 		g.drawScreen();
 		g.updateScreen();
 
+		//Error Checks For FBO
+		/*auto fboStatus = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+		if (fboStatus != GL_FRAMEBUFFER_COMPLETE) {
+			cout << "Error:" << fboStatus << endl;
+		}*/
 
 		FBO.Unbind();
 

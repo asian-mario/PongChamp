@@ -2,6 +2,7 @@
 
 FBO::FBO(Game* g) {
 	glGenFramebuffers(1, &ID);
+	Bind();
 
 	glGenTextures(1, &framebufferTexture);
 	glBindTexture(GL_TEXTURE_2D, framebufferTexture);

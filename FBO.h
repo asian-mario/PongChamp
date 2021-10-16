@@ -7,7 +7,7 @@
 
 class FBO {
 public:
-	unsigned int framebufferTexture;
+	GLuint framebufferTexture;
 	GLuint ID; 
 	FBO(Game* g);
 
