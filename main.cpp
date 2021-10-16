@@ -187,7 +187,7 @@ int main() {
 	glViewport(0, 0, width, height); //where we want the opengl to show stuff
 
 	// Prepare framebuffer rectangle VBO and VAO
-	unsigned int rectVAO, rectVBO;
+	GLuint rectVAO, rectVBO;
 	glGenVertexArrays(1, &rectVAO);
 	glGenBuffers(1, &rectVBO);
 	glBindVertexArray(rectVAO);
@@ -198,64 +198,83 @@ int main() {
 	glEnableVertexAttribArray(1);
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
 
+	g.FBOBuffers.push_back(rectVAO);
+	g.FBOBuffers.push_back(rectVBO);
+
 	Texture textures[]{
 		//----------TEXTURES-------------------------------
 		Texture("white.png", "diffuse", 0, GL_RGBA, GL_UNSIGNED_BYTE)
 		//-------------------------------------------------
 	};
 	g.textures.push_back(textures);
+	g.texWithBloom.push_back(textures);
 
 	Texture circle[]{
 		Texture("ballAlt.png", "diffuse", 0, GL_RGBA, GL_UNSIGNED_BYTE)
 	};
 	g.textures.push_back(circle);
+	g.texWithBloom.push_back(circle);
 
 	Texture particle[]{
 		Texture("particle.png", "diffuse", 0, GL_RGBA, GL_UNSIGNED_BYTE)
 	};
 	g.textures.push_back(particle);
+	g.texWithBloom.push_back(particle);
 
 	Texture particleBU[]{
 		Texture("ParticleBU.png", "diffuse", 0, GL_RGBA, GL_UNSIGNED_BYTE)
 	};
 	g.textures.push_back(particleBU);
+	g.texWithBloom.push_back(particleBU);
 
 	Texture particleBD[]{
 		Texture("particleBD.png", "diffuse", 0, GL_RGBA, GL_UNSIGNED_BYTE)
 	};
 	g.textures.push_back(particleBD);
+	g.texWithBloom.push_back(particleBD);
 
 	Texture barTex[]{
 		Texture("barrier.png", "diffuse", 0, GL_RGBA, GL_UNSIGNED_BYTE)
 	};
+	g.textures.push_back(barTex);
+	g.texWithBloom.push_back(barTex);
 
 	Texture pad1Tex[]{
 		Texture("paddleB.png", "diffuse", 0, GL_RGBA, GL_UNSIGNED_BYTE)
 	};
+	g.textures.push_back(pad1Tex);
+	g.texWithBloom.push_back(pad1Tex);
 
 	Texture pad2Tex[]{
 		Texture("paddleP.png", "diffuse", 0, GL_RGBA, GL_UNSIGNED_BYTE)
 	};
+	g.textures.push_back(pad2Tex);
+	g.texWithBloom.push_back(pad2Tex);
 
 	Texture ballPlus[]{
 		Texture("BallPlus.png", "diffuse", 0, GL_RGBA, GL_UNSIGNED_BYTE)
 	};
+	g.textures.push_back(ballPlus);
 
 	Texture paddlePlus[]{
 		Texture("PaddlePlus.png", "diffuse", 0, GL_RGBA, GL_UNSIGNED_BYTE)
 	};
+	g.textures.push_back(paddlePlus);
 
 	Texture paddleMinus[]{
 		Texture("PaddleMinus.png", "diffuse", 0, GL_RGBA, GL_UNSIGNED_BYTE)
 	};
+	g.textures.push_back(paddleMinus);
 
 	Texture butterFingers[]{
 		Texture("ButterFingers.png", "diffuse", 0, GL_RGBA, GL_UNSIGNED_BYTE)
 	};
+	g.textures.push_back(butterFingers);
 
 	Texture ultraSmash[]{
 		Texture("UltraSmash.png", "diffuse", 0, GL_RGBA, GL_UNSIGNED_BYTE)
 	};
+	g.textures.push_back(ultraSmash);
 
 	//Creates shadeprogram from default.vert and default.frag
 	Shader shaderProgram("Default.vert", "default.frag");
@@ -339,7 +358,14 @@ int main() {
 
 	g.shaders[4]->Activate();
 	glUniform1i(glGetUniformLocation(g.shaders[4]->ID, "screenTexture"), 0);
+	glUniform1i(glGetUniformLocation(g.shaders[4]->ID, "bloomTexture"), 1);
 	glUniform1i(glGetUniformLocation(g.shaders[4]->ID, "gamma"), g.gamma);
+
+	Shader blurProgram("framebuffer.vert", "blur.frag");
+	g.shaders.push_back(&blurProgram);
+
+	g.shaders[5]->Activate();
+	glUniform1i(glGetUniformLocation(g.shaders[5]->ID, "screenTexture"), 0);
 	//--------------------------------------------MESH-----------------------------------------------------
 
 	//--------------Paddle1---------------------------------
@@ -392,6 +418,7 @@ int main() {
 	//------------FRAME BUFFER TINGS-------------------
 	FBO FBO(&g);
 
+	FBO.PingPongBuffers(&g);
 	//--------------------------------------------MESH-----------------------------------------------------
 
 	//GUI
@@ -462,11 +489,11 @@ int main() {
 
 		//Framebuffer
 		FBO.Bind();
-
+		//glEnable(GL_FRAMEBUFFER_SRGB);
 		glClearColor(pow(0.0f, g.gamma), pow(0.0f, g.gamma), pow(0.01f, g.gamma), 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-
+		
 		//IMGUI
 		ImGui_ImplGlfwGL3_NewFrame();
 
@@ -478,6 +505,8 @@ int main() {
 		if (fboStatus != GL_FRAMEBUFFER_COMPLETE) {
 			cout << "Error:" << fboStatus << endl;
 		}*/
+
+		FBO.ActivateBloom(&g);
 
 		FBO.Unbind();
 

@@ -52,6 +52,7 @@ class Game {
 		std::vector <gameFont*> texts;
 		std::vector <Font*> fonts;
 		std::vector <Texture*> textures;
+		std::vector <Texture*> texWithBloom;
 		std::vector <PowerupSpawn*> PowerupSpawner;
 		std::vector <ScreenHandler*> ScreenHandler;
 		std::vector <Screen*> ScreenObject;
@@ -67,6 +68,8 @@ class Game {
 		std::vector <Camera*> cameras;
 		std::vector <GameObject*> gameObjects;
 
+		//i am sorry
+		std::vector <GLuint> FBOBuffers;
 		float lastTime;
 		bool pause = false;
 		int framestep = 0;

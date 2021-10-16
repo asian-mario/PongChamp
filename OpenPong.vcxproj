@@ -200,6 +200,7 @@
     <ClInclude Include="VBO.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="blur.frag" />
     <None Include="default.frag" />
     <None Include="Default.vert" />
     <None Include="font.frag" />

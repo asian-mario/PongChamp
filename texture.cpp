@@ -1,5 +1,5 @@
 #include"Texture.h"
-
+#include"game.h"
 Texture::Texture(const char* image, const char* texType, GLuint slot, GLenum format, GLenum pixelType) {
 	type = texType;
 
@@ -40,6 +40,21 @@ Texture::Texture(const char* image, const char* texType, GLuint slot, GLenum for
 	stbi_image_free(bytes); //delete data
 	glBindTexture(GL_TEXTURE_2D, 0); //unbind texture
 
+
+}
+
+void Texture::BloomTexture(Game* g) {
+	glGenTextures(1, &bloomTexture);
+	glBindTexture(GL_TEXTURE_2D, bloomTexture);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB16F, g->screenWidth, g->screenHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, bloomTexture, 0);
+
+	unsigned int attachments[2] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1 };
+	glDrawBuffers(2, attachments);
 
 }
 

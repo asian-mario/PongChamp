@@ -5,6 +5,7 @@
 
 #include"shaderclass.h"
 
+class Game;
 using namespace std;
 
 
@@ -13,8 +14,11 @@ class Texture {
 		GLuint ID;
 		const char* type;
 		GLuint unit;
+		// Create Second Framebuffer Texture
+		unsigned int bloomTexture;
 
 		Texture(const char* image, const char* texType, GLuint slot, GLenum format, GLenum pixelType);
+		void BloomTexture(Game* g);
 
 		void texUnit(Shader& shader, const char* uniform, GLuint unit);
 		void Bind();
