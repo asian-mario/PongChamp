@@ -152,17 +152,16 @@ void Ball::update(Game* g) {
 
 	if (limitSpeed == true) {
 		//Speed control
-		if (roml::magnitude(velocity) >= 500.0f) {
+		if (roml::magnitude(velocity) >= 600.0f) {
 			float mag = roml::magnitude(velocity);
 			velocity = velocity * (500.0f / mag);
 		}
 
-		if (velocity.y >= 300.0f)
+		if (velocity.y >= 450.0f)
 			velocity.y = velocity.y - 60.0f;
 	}
 
-	if (velocity.y >= 15.0f)
-		velocity.y = velocity.y + 20.0f;
+
 
 	//-------------------------------------COLLISION-----------------------------------------
 

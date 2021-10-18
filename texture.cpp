@@ -34,12 +34,12 @@ Texture::Texture(const char* image, const char* texType, GLuint slot, GLenum for
 		glTexParamterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, flatColor);
 	*/
 
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, widthImg, heightImg, 0, format, pixelType, bytes); //Texture type, ~, type of col channels, width, height, ~, color channels our image has, datatype of pixels, image info
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_SRGB_ALPHA, widthImg, heightImg, 0, format, pixelType, bytes); //Texture type, ~, type of col channels, width, height, ~, color channels our image has, datatype of pixels, image info
 
 	//-------------------------------FOR BLOOM-------------------------------
 	glGenTextures(1, &bloomTexture);
 	glBindTexture(GL_TEXTURE_2D, bloomTexture);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, 1920, 1080, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_SRGB_ALPHA, 1920, 1080, 0, GL_SRGB_ALPHA, GL_UNSIGNED_BYTE, NULL);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);

@@ -339,7 +339,7 @@ int main() {
 	g.shaders.push_back(&lightShader);
 
 	//-----------------------------Lights------------------------------------------------------------------
-	Light directLight(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), glm::vec3(0.0f, 50.0f, 150.0f));
+	Light directLight(glm::vec4(1.0f, 1.0f, 1.0f, 4.0f), glm::vec3(0.0f, 50.0f, 150.0f));
 	directLight.mesh = Mesh(lightVerts, lightInd, defaultTex);
 	g.lights.push_back(&directLight);
 	g.gameObjects.push_back(&directLight);
@@ -491,6 +491,7 @@ int main() {
 
 		//Framebuffer
 		FBO.Bind();
+
 		//glEnable(GL_FRAMEBUFFER_SRGB);
 		glClearColor(pow(0.0f, g.gamma), pow(0.0f, g.gamma), pow(0.01f, g.gamma), 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
