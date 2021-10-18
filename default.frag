@@ -99,7 +99,7 @@ void main(){
    FragColor = directLight();
 
    if (FragColor.r > 0.05f){
-		FragColor *= 5.0f;
+		FragColor.r *= 5.0f;
    }	
 
 	float brightness = dot(FragColor.rgb, vec3(0.2126f, 0.7152f, 0.0722f));

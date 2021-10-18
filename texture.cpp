@@ -35,18 +35,11 @@ Texture::Texture(const char* image, const char* texType, GLuint slot, GLenum for
 	*/
 
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, widthImg, heightImg, 0, format, pixelType, bytes); //Texture type, ~, type of col channels, width, height, ~, color channels our image has, datatype of pixels, image info
-	glGenerateMipmap(GL_TEXTURE_2D); //smaller resolution versions
 
-	stbi_image_free(bytes); //delete data
-	glBindTexture(GL_TEXTURE_2D, 0); //unbind texture
-
-
-}
-
-void Texture::BloomTexture(Game* g) {
+	//-------------------------------FOR BLOOM-------------------------------
 	glGenTextures(1, &bloomTexture);
 	glBindTexture(GL_TEXTURE_2D, bloomTexture);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, g->screenWidth, g->screenHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, 1920, 1080, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -56,7 +49,14 @@ void Texture::BloomTexture(Game* g) {
 	unsigned int attachments[2] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1 };
 	glDrawBuffers(2, attachments);
 
+	glGenerateMipmap(GL_TEXTURE_2D); //smaller resolution versions
+
+	stbi_image_free(bytes); //delete data
+	glBindTexture(GL_TEXTURE_2D, 0); //unbind texture
+
+
 }
+
 
 
 void Texture::texUnit(Shader& shader, const char* uniform, GLuint unit) {

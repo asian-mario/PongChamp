@@ -16,7 +16,7 @@ void main(){
     float exposure = 0.8f;
     vec3 toneMapped = vec3(1.0f) - exp(-color * exposure);
 
-    FragColor = pow(toneMapped, vec3(1.0f / gamma));
+    FragColor.rgb = pow(toneMapped, vec3(1.0f / gamma));
 }
 
 
