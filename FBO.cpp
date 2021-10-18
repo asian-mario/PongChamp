@@ -78,12 +78,12 @@ void FBO::ActivateBloom(Game* g) {
 void FBO::drawRectangleScreen(Game* g) {
 	glDisable(GL_DEPTH_TEST);
 
-	for (Texture* o : g->texWithBloom) {
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, framebufferTexture);
-		glActiveTexture(GL_TEXTURE1);
-		glBindTexture(GL_TEXTURE_2D, pingpongBuffer[!horizontal]);
-	}
+	
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, framebufferTexture);
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, pingpongBuffer[!horizontal]);
+	
 	
 
 	glDrawArrays(GL_TRIANGLES, 0, 6);

@@ -17,6 +17,7 @@ void main(){
     vec3 toneMapped = vec3(1.0f) - exp(-color * exposure);
 
     FragColor = toneMapped;
+
 }
 
 
