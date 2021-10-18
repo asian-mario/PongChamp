@@ -46,7 +46,7 @@ Texture::Texture(const char* image, const char* texType, GLuint slot, GLenum for
 void Texture::BloomTexture(Game* g) {
 	glGenTextures(1, &bloomTexture);
 	glBindTexture(GL_TEXTURE_2D, bloomTexture);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB16F, g->screenWidth, g->screenHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB16F, g->screenWidth, g->screenHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);

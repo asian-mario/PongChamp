@@ -96,7 +96,6 @@ void GUI::onClickDebug(Game* g) {
 		g->ScreenObject[0]->getCursorPosition(g);
 		g->ScreenObject[0]->screenToWorldCord();
 
-		cout << g->paddles[0]->boundingBox.x << endl;
 
 		if (state == GLFW_PRESS) {
 			for (GameObject* o : g->gameObjects) {
