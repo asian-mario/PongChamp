@@ -13,7 +13,7 @@ public:
 	GLuint pingpongBuffer[2];
 
 	bool horizontal = true, first_iteration = true;
-	int amount = 4;
+	int amount = 8;
 
 	FBO(Game* g);
 
