@@ -421,6 +421,9 @@ int main() {
 	FBO.PingPongBuffers(&g);
 	//--------------------------------------------MESH-----------------------------------------------------
 
+
+	glEnable(GL_MULTISAMPLE);
+
 	//GUI
 	ImGui::CreateContext();
 	ImGui_ImplGlfwGL3_Init(window, true);
@@ -484,7 +487,6 @@ int main() {
 	GUI DebugGUI;
 	g.debugGUI.push_back(&DebugGUI);
 
-
 	while (!glfwWindowShouldClose(window)) {
 
 		//Framebuffer
@@ -513,7 +515,7 @@ int main() {
 		//Draw the framebuffer rectangle
 		g.shaders[4]->Activate();
 		glBindVertexArray(rectVAO);
-		FBO.drawRectangleScreen();
+		FBO.drawRectangleScreen(&g);
 		 
 		ImGui::Render();
 		ImGui_ImplGlfwGL3_RenderDrawData(ImGui::GetDrawData());
@@ -530,6 +532,8 @@ int main() {
 	lightShader.Delete();
 	fShader.Delete();
 	particleShader.Delete();
+	framebufferProgram.Delete();
+	blurProgram.Delete();
 	//-----------------------------
 
 
@@ -538,5 +542,6 @@ int main() {
 	ImGui_ImplGlfwGL3_Shutdown();
 	ImGui::DestroyContext();
 	glfwTerminate(); //terminating glfw after function
+
 	return 0;
 }

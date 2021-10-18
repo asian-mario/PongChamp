@@ -13,12 +13,12 @@ public:
 	GLuint pingpongBuffer[2];
 
 	bool horizontal = true, first_iteration = true;
-	int amount = 8;
+	int amount = 4;
 
 	FBO(Game* g);
 
 
-	void drawRectangleScreen();
+	void drawRectangleScreen(Game* g);
 	//Ping Pong Framebuffers (pass data back and forth)
 	void PingPongBuffers(Game* g);
 	void ActivateBloom(Game* g);
