@@ -98,13 +98,7 @@ void main(){
 	//outputs final color
    FragColor = directLight();
 
-   if (FragColor.r > 0.05f){
-		FragColor.r *= 5.0f;
-   }	
-
 	float brightness = dot(FragColor.rgb, vec3(0.2126f, 0.7152f, 0.0722f));
     if(brightness > 0.15f)
         BloomColor = vec4(FragColor.rgb, 1.0f);
-    else
-        BloomColor = vec4(0.0f, 0.0f, 0.0f, 1.0f);
 }

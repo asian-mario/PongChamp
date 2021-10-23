@@ -70,7 +70,8 @@ void PauseMenu::drawScreen(Game* g) {
 	glDisable(GL_DEPTH_TEST);
 
 	g->fonts[1]->drawString(750.0f, 150.0f, "PAUSED", g->shaders[2]);
-	g->fonts[1]->drawString(100.0f, 350.0f, "PLAY", g->shaders[2]);
+	g->fonts[1]->drawString(100.0f, 350.0f, "CONTINUE", g->shaders[2]);
+	g->fonts[1]->drawString(100.0f, 550.0f, "OPTIONS", g->shaders[2]);
 	g->fonts[1]->drawString(100.0f, 850.0f, "EXIT", g->shaders[2]);
 }
 
@@ -88,7 +89,7 @@ void PauseMenu::updateScreen(Game* g) {
 		g->ScreenObject[0]->getCursorPosition(g);
 		cout << g->ScreenObject[0]->ypos << endl;
 
-		if (g->ScreenObject[0]->xpos <= 379.0 && g->ScreenObject[0]->xpos >= 96.0 && g->ScreenObject[0]->ypos >= 272.0 && g->ScreenObject[0]->ypos <= 357.0) {
+		if (g->ScreenObject[0]->xpos <= 650.0 && g->ScreenObject[0]->xpos >= 96.0 && g->ScreenObject[0]->ypos >= 272.0 && g->ScreenObject[0]->ypos <= 357.0) {
 			remove(g);
 			g->ScreenHandler[0]->ScreenSwitch(ScreenHandler::SCREENTYPE::GAME, g);
 			g->ScreenHandler[0]->ScreenInit(g);
@@ -123,6 +124,8 @@ void MainMenu::drawScreen(Game* g) {
 	glDisable(GL_DEPTH_TEST);
 
 	g->fonts[1]->drawString(600.0f, 150.0f, "PONGCHAMP!", g->shaders[2]);
+	g->fonts[1]->drawString(100.0f, 350.0f, "PLAY", g->shaders[2]);
+
 }
 
 void MainMenu::remove(Game* g) {
