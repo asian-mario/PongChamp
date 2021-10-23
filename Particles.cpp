@@ -70,6 +70,8 @@ void ParticleSystem::update(Game* g) {
             p->velocity = -p->velocity + rand() / 250.0f;
         }
 
+
+
     }
     draw(g);
 }

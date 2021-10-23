@@ -8,16 +8,15 @@ uniform sampler2D bloomTexture;
 uniform float gamma;
 
 void main(){
-    vec4 fragment = texture(screenTexture, texCoords);
-    vec4 bloom = texture(bloomTexture, texCoords);
+    vec3 fragment = texture(screenTexture, texCoords).rgb;
+    vec3 bloom = texture(bloomTexture, texCoords).rgb;
        
-    vec4 color = fragment + bloom;
+    fragment += bloom;
        
     float exposure = 0.8f;
-    vec4 toneMapped = vec4(1.0f) - exp(-color * exposure);
+    vec3 toneMapped = vec3(1.0f) - exp(-fragment * exposure);
 
-    FragColor.rgb = toneMapped;
-
+    FragColor = toneMapped;
 }
 
 
