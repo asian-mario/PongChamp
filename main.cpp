@@ -184,7 +184,7 @@ int main() {
 
 	gladLoadGL(); //load the config for opengl
 
-	glViewport(0, 0, width, height); //where we want the opengl to show stuff
+	glViewport(0, 0, g.screenWidth, g.screenHeight); //where we want the opengl to show stuff
 
 	// Prepare framebuffer rectangle VBO and VAO
 	GLuint rectVAO, rectVBO;

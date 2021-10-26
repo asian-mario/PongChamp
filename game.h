@@ -72,6 +72,7 @@ class Game {
 		std::vector <GLuint> FBOBuffers;
 		float lastTime;
 		bool pause = false;
+		bool inDebugMode = false;
 		int framestep = 0;
 
 		int screenWidth = 1920;

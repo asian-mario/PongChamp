@@ -36,7 +36,13 @@ void ScreenHandler::ScreenInit(Game* g) {
 	}
 
 	if (screen == GAME) {
-		Screen* crntMenu = new GameScene();
+		Screen* crntMenu = new GameScreen();
+
+		g->ScreenObject.push_back(crntMenu);
+	}
+
+	if (screen == SETTINGS) {
+		Screen* crntMenu = new SettingScreen();
 
 		g->ScreenObject.push_back(crntMenu);
 	}
@@ -56,6 +62,10 @@ void ScreenHandler::ScreenSwitch(SCREENTYPE screen, Game* g) {
 	if (screen == GAME) {
 		g->pause = false;
 	}
+
+	if (screen == SETTINGS) {
+		g->pause = true;
+	}
 }
 
 
@@ -71,8 +81,8 @@ void PauseMenu::drawScreen(Game* g) {
 
 	g->fonts[1]->drawString(750.0f, 150.0f, "PAUSED", g->shaders[2]);
 	g->fonts[1]->drawString(100.0f, 350.0f, "CONTINUE", g->shaders[2]);
-	g->fonts[1]->drawString(100.0f, 550.0f, "OPTIONS", g->shaders[2]);
-	g->fonts[1]->drawString(100.0f, 850.0f, "EXIT", g->shaders[2]);
+	g->fonts[1]->drawString(100.0f, 500.0f, "OPTIONS", g->shaders[2]);
+	g->fonts[1]->drawString(100.0f, 1000.0f, "EXIT", g->shaders[2]);
 }
 
 void PauseMenu::updateScreen(Game* g) {
@@ -97,19 +107,108 @@ void PauseMenu::updateScreen(Game* g) {
 			g->pause = false;
 		}
 
-		if (g->ScreenObject[0]->xpos <= 379.0 && g->ScreenObject[0]->xpos >= 96.0 && g->ScreenObject[0]->ypos >= 760.0 && g->ScreenObject[0]->ypos <= 860.0) {
+		if (g->ScreenObject[0]->xpos <= 550.0 && g->ScreenObject[0]->xpos >= 96.0 && g->ScreenObject[0]->ypos >= 412.0 && g->ScreenObject[0]->ypos <= 510.0) {
+			remove(g);
+			g->ScreenHandler[0]->ScreenSwitch(ScreenHandler::SCREENTYPE::SETTINGS, g);
+			g->ScreenHandler[0]->ScreenInit(g);
+
+			g->pause = false;
+		}
+
+		if (g->ScreenObject[0]->xpos <= 379.0 && g->ScreenObject[0]->xpos >= 96.0 && g->ScreenObject[0]->ypos >= 960.0 && g->ScreenObject[0]->ypos <= 1030.0) {
 			remove(g);
 			g->ScreenHandler[0]->ScreenSwitch(ScreenHandler::SCREENTYPE::MAIN, g);
 			g->ScreenHandler[0]->ScreenInit(g);
 
 		}
 	}
-
 		
 	
 }
 
 void PauseMenu::remove(Game* g) {
+	g->removeScreen(this);
+}
+
+
+void SettingScreen::drawScreen(Game* g) {
+	g->shaders[2]->Activate();
+
+	int w, h;
+	glfwGetWindowSize(g->gameWindow, &w, &h);
+	glm::mat4 orthoP = roml::createOrto(0.0f, (float)w, (float)h, 0.0f);
+	glUniformMatrix4fv(glGetUniformLocation(g->shaders[2]->ID, "ModViewProj"), 1, GL_FALSE, &orthoP[0][0]);
+	glDisable(GL_CULL_FACE);
+	glDisable(GL_DEPTH_TEST);
+
+	g->fonts[1]->drawString(670.0f, 150.0f, settingType, g->shaders[2]);
+	g->fonts[1]->drawString(100.0f, 350.0f, "RESOLUTION:", g->shaders[2]);
+	g->fonts[1]->drawString(900.0f, 350.0f, resSetting, g->shaders[2]);
+	g->fonts[1]->drawString(100.0f, 500.0f, "OPTIONS", g->shaders[2]);
+	g->fonts[1]->drawString(100.0f, 1000.0f, "RETURN", g->shaders[2]);
+}
+
+void SettingScreen::updateScreen(Game* g) {
+	int state = glfwGetMouseButton(g->gameWindow, GLFW_MOUSE_BUTTON_LEFT);
+
+	if (glfwGetKey(g->gameWindow, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
+		remove(g);
+		g->ScreenHandler[0]->ScreenSwitch(ScreenHandler::SCREENTYPE::PAUSE, g);
+		g->ScreenHandler[0]->ScreenInit(g);
+	}
+
+	if (state == GLFW_PRESS)
+	{
+		g->ScreenObject[0]->getCursorPosition(g);
+		cout << "Y POS: " << g->ScreenObject[0]->ypos << endl;
+		cout << "X POS: " << g->ScreenObject[0]->xpos << endl;
+
+
+		if (g->ScreenObject[0]->xpos <= 1708.0 && g->ScreenObject[0]->xpos >= 1653.0 && g->ScreenObject[0]->ypos >= 284.0 && g->ScreenObject[0]->ypos <= 351.0) {
+			if (resID == FHD) {
+				resSetting = "< 2560 X 1440 >";
+				resID = TWOK;
+				g->screenWidth = 2560;
+				g->screenHeight = 1440;
+			}
+
+			if (resID == HD) {
+				resSetting = "< 1920 X 1080 >";
+				resID = FHD;
+				g->screenWidth = 1920;
+				g->screenHeight = 1080;
+			}
+		}
+
+		if (g->ScreenObject[0]->xpos <= 948.0 && g->ScreenObject[0]->xpos >= 893.0 && g->ScreenObject[0]->ypos >= 284.0 && g->ScreenObject[0]->ypos <= 351.0) {
+			if (resID == FHD) {
+				resSetting = "< 1280 X 720 >";
+				resID = HD;
+				g->screenWidth = 1280;
+				g->screenHeight = 720;
+			}
+
+			if (resID == TWOK) {
+				resSetting = "< 1920 X 1080 >";
+				resID = FHD;
+				g->screenWidth = 1920;
+				g->screenHeight = 1080;
+			}
+		}
+
+		if (g->ScreenObject[0]->xpos <= 379.0 && g->ScreenObject[0]->xpos >= 96.0 && g->ScreenObject[0]->ypos >= 960.0 && g->ScreenObject[0]->ypos <= 1030.0) {
+			remove(g);
+			g->ScreenHandler[0]->ScreenSwitch(ScreenHandler::SCREENTYPE::PAUSE, g);
+			g->ScreenHandler[0]->ScreenInit(g);
+
+		}
+
+	}
+		
+	
+}
+
+void SettingScreen::remove(Game* g) {
 	g->removeScreen(this);
 }
 
@@ -132,7 +231,7 @@ void MainMenu::remove(Game* g) {
 	g->removeScreen(this);
 }
 
-void GameScene::drawScreen(Game* g) {
+void GameScreen::drawScreen(Game* g) {
 	if (!g->pause || g->framestep > 0) {
 		g->update();
 		if (g->framestep > 0)
@@ -175,7 +274,7 @@ void GameScene::drawScreen(Game* g) {
 
 }
 
-void GameScene::updateScreen(Game* g) {
+void GameScreen::updateScreen(Game* g) {
 	if (glfwGetKey(g->gameWindow, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
 		remove(g);
 		g->ScreenHandler[0]->ScreenSwitch(ScreenHandler::SCREENTYPE::PAUSE, g);
@@ -185,6 +284,6 @@ void GameScene::updateScreen(Game* g) {
 	}
 }
 
-void GameScene::remove(Game* g) {
+void GameScreen::remove(Game* g) {
 	g->removeScreen(this);
 }

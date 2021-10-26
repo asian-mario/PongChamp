@@ -19,6 +19,8 @@ public:
 	virtual void updateScreen(Game* g){}
 	void getCursorPosition(Game* g);
 
+	//void screenDelay()
+
 	//help
 	void screenToWorldCord();
 	bool collisionBB(Game* g, GameObject* GO);
@@ -27,7 +29,7 @@ public:
 
 class ScreenHandler : public Screen {
 public:
-	enum SCREENTYPE { GAME, PAUSE, MAIN };
+	enum SCREENTYPE { GAME, PAUSE, MAIN, SETTINGS };
 	SCREENTYPE screen;
 
 	//----------------DEBUG VARIABLES----------------
@@ -41,7 +43,6 @@ public:
 
 class PauseMenu : public Screen {
 public:
-	float spaceX = 100.0f;
 	void drawScreen(Game* g) override;
 	void updateScreen(Game* g) override;
 	void remove(Game* g);
@@ -54,7 +55,21 @@ public:
 	void remove(Game* g);
 };
 
-class GameScene : public Screen {
+class SettingScreen : public Screen {
+public:
+	//Screen Settings
+	const char* settingType = "< SCREEN >";
+	const char* resSetting = "< 1920 X 1080 >";
+
+	enum RESID { HD, FHD, TWOK, FOURK };
+	RESID resID = FHD;
+
+	void drawScreen(Game* g) override;
+	void updateScreen(Game* g) override;
+	void remove(Game* g);
+};
+
+class GameScreen : public Screen {
 public:
 	void drawScreen(Game* g) override;
 	void updateScreen(Game* g) override;
