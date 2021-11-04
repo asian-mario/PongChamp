@@ -23,6 +23,7 @@
 #include"Screen.h"
 #include"GOList.h"
 #include"FBO.h"
+#include"soundDevice.h"
 
 #include <chrono>
 #include <cmath>
@@ -165,6 +166,8 @@ int main() {
 
 	GOList ObjectList;
 	g.OBJList.push_back(&ObjectList);
+
+	soundDevice * sndDevice = soundDevice::get();
 
 	glfwWindowHint(GLFW_RED_BITS, mode->redBits);
 	glfwWindowHint(GLFW_GREEN_BITS, mode->greenBits);
@@ -472,7 +475,6 @@ int main() {
 	PowerupSpawn PowerS;
 	g.PowerupSpawner.push_back(&PowerS);
 	g.gameObjects.push_back(&PowerS);
-
 	//----------------------PARTICLE SYSTEM---------------------
 
 	ScreenHandler ScreenHandler;
@@ -486,6 +488,8 @@ int main() {
 	
 	GUI DebugGUI;
 	g.debugGUI.push_back(&DebugGUI);
+
+	
 
 	while (!glfwWindowShouldClose(window)) {
 
@@ -508,6 +512,7 @@ int main() {
 		if (fboStatus != GL_FRAMEBUFFER_COMPLETE) {
 			cout << "Error:" << fboStatus << endl;
 		}*/
+
 
 		FBO.ActivateBloom(&g);
 

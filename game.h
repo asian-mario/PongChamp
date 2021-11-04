@@ -72,7 +72,8 @@ class Game {
 		std::vector <GLuint> FBOBuffers;
 		float lastTime;
 		bool pause = false;
-		bool inDebugMode = false;
+		bool inDebugMode = true;
+		bool postProcessingOn = true;
 		int framestep = 0;
 
 		int screenWidth = 1920;
@@ -94,5 +95,15 @@ class Game {
 		void slowMo(float time);
 		float deltaTime;
 		float gamma = 2.2f;
+
+		//--SETTING
+		//Screen Settings
+		const char* settingType = "< VIDEO >";
+		const char* resSetting = "< 1920 X 1080 >";
+
+		enum RESID { HD, FHD, TWOK, FOURK };
+		RESID resID = FHD;
+
+		const char* debugSetting = "< ON ";
 };
 

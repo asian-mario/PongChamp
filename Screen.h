@@ -57,13 +57,6 @@ public:
 
 class SettingScreen : public Screen {
 public:
-	//Screen Settings
-	const char* settingType = "< SCREEN >";
-	const char* resSetting = "< 1920 X 1080 >";
-
-	enum RESID { HD, FHD, TWOK, FOURK };
-	RESID resID = FHD;
-
 	void drawScreen(Game* g) override;
 	void updateScreen(Game* g) override;
 	void remove(Game* g);

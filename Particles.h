@@ -18,9 +18,6 @@ class Texture;
 
 class Particle: public GameObject{
 public:
-	
-
-
 	float life;
 	Particle(glm::vec3 position, glm::vec3 velocity, glm::vec3 scale, glm::vec4 color, float life);
 	void draw(Game* g, VAO* vao, Texture* texture, Camera* camera);

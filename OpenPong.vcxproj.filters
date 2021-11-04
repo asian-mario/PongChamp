@@ -114,6 +114,9 @@
     <ClCompile Include="FBO.cpp">
       <Filter>Source Files\openpong</Filter>
     </ClCompile>
+    <ClCompile Include="soundDevice.cpp">
+      <Filter>Source Files\openpong</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EBO.h">
@@ -180,6 +183,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="FBO.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="soundDevice.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

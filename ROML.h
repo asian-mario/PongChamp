@@ -9,7 +9,7 @@
 
 using namespace std;
 namespace roml {
-	glm::mat4 translate(glm::mat4 matrix, glm::vec3 camera);
+	glm::mat4 translate(glm::mat4 matrix, glm::vec3 translateV);
 	glm::mat4 scale(glm::mat4 mat, glm::vec3 scalar);
 	glm::mat4 createPerspective(float FOV, float screenAspect, float nearClip, float farClip);
 	glm::mat4 createOrto(float left, float right, float bottom, float top, float nearClip, float farClip);

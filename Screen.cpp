@@ -85,7 +85,7 @@ void PauseMenu::drawScreen(Game* g) {
 	g->fonts[1]->drawString(100.0f, 1000.0f, "EXIT", g->shaders[2]);
 }
 
-void PauseMenu::updateScreen(Game* g) {
+void PauseMenu::updateScreen(Game* g) {	
 	int state = glfwGetMouseButton(g->gameWindow, GLFW_MOUSE_BUTTON_LEFT);
 
 	if (glfwGetKey(g->gameWindow, GLFW_KEY_P) == GLFW_PRESS) {
@@ -141,10 +141,11 @@ void SettingScreen::drawScreen(Game* g) {
 	glDisable(GL_CULL_FACE);
 	glDisable(GL_DEPTH_TEST);
 
-	g->fonts[1]->drawString(670.0f, 150.0f, settingType, g->shaders[2]);
+	g->fonts[1]->drawString(670.0f, 150.0f, g->settingType, g->shaders[2]);
 	g->fonts[1]->drawString(100.0f, 350.0f, "RESOLUTION:", g->shaders[2]);
-	g->fonts[1]->drawString(900.0f, 350.0f, resSetting, g->shaders[2]);
-	g->fonts[1]->drawString(100.0f, 500.0f, "OPTIONS", g->shaders[2]);
+	g->fonts[1]->drawString(900.0f, 350.0f, g->resSetting, g->shaders[2]);
+	g->fonts[1]->drawString(100.0f, 500.0f, "DEBUG:", g->shaders[2]);
+	g->fonts[1]->drawString(550.0f, 500.0f, g->debugSetting, g->shaders[2]);
 	g->fonts[1]->drawString(100.0f, 1000.0f, "RETURN", g->shaders[2]);
 }
 
@@ -165,42 +166,57 @@ void SettingScreen::updateScreen(Game* g) {
 
 
 		if (g->ScreenObject[0]->xpos <= 1708.0 && g->ScreenObject[0]->xpos >= 1653.0 && g->ScreenObject[0]->ypos >= 284.0 && g->ScreenObject[0]->ypos <= 351.0) {
-			if (resID == FHD) {
-				resSetting = "< 2560 X 1440 >";
-				resID = TWOK;
+			if (g->resID == g->FHD) {
+				g->resSetting = "< 2560 X 1440 >";
+				g->resID = g->TWOK;
 				g->screenWidth = 2560;
 				g->screenHeight = 1440;
+				glfwWaitEvents();
 			}
 
-			if (resID == HD) {
-				resSetting = "< 1920 X 1080 >";
-				resID = FHD;
+			if (g->resID == g->HD) {
+				g->resSetting = "< 1920 X 1080 >";
+				g->resID = g->FHD;
 				g->screenWidth = 1920;
 				g->screenHeight = 1080;
+				glfwWaitEvents();
 			}
 		}
 
 		if (g->ScreenObject[0]->xpos <= 948.0 && g->ScreenObject[0]->xpos >= 893.0 && g->ScreenObject[0]->ypos >= 284.0 && g->ScreenObject[0]->ypos <= 351.0) {
-			if (resID == FHD) {
-				resSetting = "< 1280 X 720 >";
-				resID = HD;
+			if (g->resID == g->FHD) {
+				g->resSetting = "< 1280 X 720 >";
+				g->resID = g->HD;
 				g->screenWidth = 1280;
 				g->screenHeight = 720;
+				glfwWaitEvents();
+				//glfwWaitEventsTimeout(0.1); could work, a bit weird tho
 			}
 
-			if (resID == TWOK) {
-				resSetting = "< 1920 X 1080 >";
-				resID = FHD;
+			if (g->resID == g->TWOK) {
+				g->resSetting = "< 1920 X 1080 >";
+				g->resID = g->FHD;
 				g->screenWidth = 1920;
 				g->screenHeight = 1080;
+				glfwWaitEvents();
 			}
+		}
+
+		if (g->ScreenObject[0]->xpos <= 600.0 && g->ScreenObject[0]->xpos >= 547.0 && g->ScreenObject[0]->ypos >= 434.0 && g->ScreenObject[0]->ypos <= 500.0) {
+			g->debugSetting = " OFF >";
+			g->inDebugMode = false;
+		}
+
+		if (g->ScreenObject[0]->xpos <= 876.0 && g->ScreenObject[0]->xpos >= 822.0 && g->ScreenObject[0]->ypos >= 434.0 && g->ScreenObject[0]->ypos <= 500.0) {
+			g->debugSetting = "< ON ";
+			g->inDebugMode = true;
 		}
 
 		if (g->ScreenObject[0]->xpos <= 379.0 && g->ScreenObject[0]->xpos >= 96.0 && g->ScreenObject[0]->ypos >= 960.0 && g->ScreenObject[0]->ypos <= 1030.0) {
 			remove(g);
 			g->ScreenHandler[0]->ScreenSwitch(ScreenHandler::SCREENTYPE::PAUSE, g);
 			g->ScreenHandler[0]->ScreenInit(g);
-
+			glfwWaitEvents();
 		}
 
 	}
@@ -267,8 +283,10 @@ void GameScreen::drawScreen(Game* g) {
 
 	g->debugGUI[0]->createDebugMenu(g);
 
-	if (g->ScreenHandler[0]->renderDebugScreen) {
-		g->debugGUI[0]->createDebugMenu(g->OBJList[0], g->ScreenHandler[0]->currentDebugObj, glm::vec3(-0.75f, 0.0f, 0.0f), VEC3_ZERO, glm::vec3(0.015f, 0.2f, 1.0f));
+	if (g->inDebugMode == true) {
+		if (g->ScreenHandler[0]->renderDebugScreen) {
+			g->debugGUI[0]->createDebugMenu(g->OBJList[0], g->ScreenHandler[0]->currentDebugObj, glm::vec3(-0.75f, 0.0f, 0.0f), VEC3_ZERO, glm::vec3(0.015f, 0.2f, 1.0f));
+		}
 	}
 
 
