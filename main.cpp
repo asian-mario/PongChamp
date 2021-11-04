@@ -168,6 +168,7 @@ int main() {
 	g.OBJList.push_back(&ObjectList);
 
 	soundDevice * sndDevice = soundDevice::get();
+	g.soundDevice.push_back(sndDevice);
 
 	glfwWindowHint(GLFW_RED_BITS, mode->redBits);
 	glfwWindowHint(GLFW_GREEN_BITS, mode->greenBits);

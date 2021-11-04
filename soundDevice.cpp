@@ -8,7 +8,7 @@ soundDevice* soundDevice::get() {
 }
 
 soundDevice::soundDevice() {
-	//Gets default audio device
+	//nullptr = default audio device
 	p_ALCDevice = alcOpenDevice(nullptr); 
 	if (!p_ALCDevice) 
 		throw("ERROR: DEFAULT AUDIO DEVICE NOT FOUND");

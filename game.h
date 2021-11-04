@@ -16,6 +16,7 @@
 #include "Screen.h"
 #include "GUI.h"
 #include "GOList.h"
+#include "soundDevice.h"
 #include <vector>
 
 class Game;
@@ -36,6 +37,7 @@ class ScreenHandler;
 class Screen;
 class GUI;
 class GOList;
+class soundDevice;
 struct Vertex;
 struct GLFWwindow;
 
@@ -58,6 +60,7 @@ class Game {
 		std::vector <Screen*> ScreenObject;
 		std::vector <GUI*> debugGUI;
 		std::vector <GOList*> OBJList;
+		std::vector <soundDevice*> soundDevice;
 
 		std::vector <std::vector<GLuint>> indexVec;
 		std::vector <std::vector<Texture>> texturesVec;
