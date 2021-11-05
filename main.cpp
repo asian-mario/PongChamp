@@ -24,6 +24,8 @@
 #include"GOList.h"
 #include"FBO.h"
 #include"soundDevice.h"
+#include"soundBuffer.h"
+#include"soundSource.h"
 
 #include <chrono>
 #include <cmath>
@@ -169,6 +171,11 @@ int main() {
 
 	soundDevice * sndDevice = soundDevice::get();
 	g.soundDevice.push_back(sndDevice);
+
+	uint32_t sndHit = soundBuffer::get()->addSoundEffect("./Sounds/hit.wav");
+	g.sounds.push_back(&sndHit);
+
+	soundSource crntSpeaker;
 
 	glfwWindowHint(GLFW_RED_BITS, mode->redBits);
 	glfwWindowHint(GLFW_GREEN_BITS, mode->greenBits);
