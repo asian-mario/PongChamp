@@ -73,6 +73,8 @@ void Ball::update(Game* g) {
 	bool checkLeft = boundsCheckL(g->balls[0]->position, g->balls[0]->velocity, -1.0f * 100.0f);
 
 	if (checkRight == true) {
+		g->soundSource[0]->Play(g->sounds[1]);
+
 		for (int i = 0; i < 25; i++) {
 			g->particleSystems[3]->spawn(g, glm::vec3(g->barriers[2]->position.x, g->balls[0]->position.y, g->barriers[0]->position.z), glm::vec3(rand() / 200.0f, rand() / 100.0f, 0.0f), glm::vec3(3.0f), color, 2.0f);
 		}
@@ -88,6 +90,8 @@ void Ball::update(Game* g) {
 	}
 
 	if (checkLeft == true) {
+		g->soundSource[0]->Play(g->sounds[1]);
+
 		for (int i = 0; i < 25; i++) {
 			g->particleSystems[3]->spawn(g, glm::vec3(-g->barriers[2]->position.x, g->balls[0]->position.y, -g->barriers[0]->position.z), glm::vec3(-rand() / 200.0f, rand() / 100.0f, 0.0f), glm::vec3(3.0f), color, 2.0f);
 
@@ -126,6 +130,7 @@ void Ball::update(Game* g) {
 
 	if (intersect2) {
 		g->soundSource[0]->Play(g->sounds[0]);
+
 		g->barriers[0]->barrierHit, g->barriers[1]->barrierHit = false;
 
 		velocity.x = -velocity.x;
@@ -136,6 +141,8 @@ void Ball::update(Game* g) {
 	}
 
 	if (position.y > 98.0f) {
+		g->soundSource[0]->Play(g->sounds[0]);
+
 		g->barriers[0]->barrierHit = true;
 		g->barriers[1]->barrierHit = false;
 
@@ -145,6 +152,8 @@ void Ball::update(Game* g) {
 	}
 
 	if (position.y < -98.0f) {
+		g->soundSource[0]->Play(g->sounds[0]);
+
 		g->barriers[0]->barrierHit = false;
 		g->barriers[1]->barrierHit = true;
 
@@ -162,7 +171,6 @@ void Ball::update(Game* g) {
 
 
 	}
-
 
 
 	//-------------------------------------COLLISION-----------------------------------------

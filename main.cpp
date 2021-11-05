@@ -172,8 +172,15 @@ int main() {
 	soundDevice * sndDevice = soundDevice::get();
 	g.soundDevice.push_back(sndDevice);
 
+	//uint32_t = ALuint
 	uint32_t sndHit = soundBuffer::get()->addSoundEffect("./Sounds/hit.wav");
+	//this is fine for now. will make a map so it isnt as messy
 	g.sounds.push_back(sndHit);
+
+	uint32_t sndGoal = soundBuffer::get()->addSoundEffect("./Sounds/score.wav");
+	g.sounds.push_back(sndGoal);
+
+
 
 	soundSource crntSpeaker;
 	g.soundSource.push_back(&crntSpeaker);
