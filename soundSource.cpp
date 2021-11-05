@@ -23,5 +23,5 @@ void soundSource::Play(const ALuint buffer) {
 
 	}
 
-	alSourcePlay(se_source);
+	alSourcePlay(se_source);  
 }

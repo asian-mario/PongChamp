@@ -113,6 +113,8 @@ void Ball::update(Game* g) {
 
 	//---------TODO: FIX LIMITS AAAAAAAAAAAA------------
 	if (intersect) {
+		g->soundSource[0]->Play(g->sounds[0]);
+
 		g->barriers[0]->barrierHit, g->barriers[1]->barrierHit = false;
 
 		velocity.x = -velocity.x;
@@ -123,6 +125,7 @@ void Ball::update(Game* g) {
 	}
 
 	if (intersect2) {
+		g->soundSource[0]->Play(g->sounds[0]);
 		g->barriers[0]->barrierHit, g->barriers[1]->barrierHit = false;
 
 		velocity.x = -velocity.x;

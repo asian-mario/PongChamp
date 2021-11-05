@@ -67,7 +67,7 @@ class Game {
 		std::vector <soundDevice*> soundDevice;
 		std::vector <soundBuffer*> soundBuffer;
 		std::vector <soundSource*> soundSource;
-		std::vector <uint32_t*> sounds;
+		std::vector <uint32_t> sounds;
 
 		std::vector <std::vector<GLuint>> indexVec;
 		std::vector <std::vector<Texture>> texturesVec;

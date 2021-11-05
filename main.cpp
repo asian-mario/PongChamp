@@ -173,9 +173,10 @@ int main() {
 	g.soundDevice.push_back(sndDevice);
 
 	uint32_t sndHit = soundBuffer::get()->addSoundEffect("./Sounds/hit.wav");
-	g.sounds.push_back(&sndHit);
+	g.sounds.push_back(sndHit);
 
 	soundSource crntSpeaker;
+	g.soundSource.push_back(&crntSpeaker);
 
 	glfwWindowHint(GLFW_RED_BITS, mode->redBits);
 	glfwWindowHint(GLFW_GREEN_BITS, mode->greenBits);
