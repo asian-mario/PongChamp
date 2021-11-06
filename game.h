@@ -19,6 +19,7 @@
 #include "soundDevice.h"
 #include "soundBuffer.h"
 #include "soundSource.h"
+#include "musicBuffer.h"
 #include <vector>
 
 class Game;
@@ -42,6 +43,7 @@ class GOList;
 class soundDevice;
 class soundBuffer;
 class soundSource;
+class musicBuffer;
 struct Vertex;
 struct GLFWwindow;
 
@@ -68,6 +70,7 @@ class Game {
 		std::vector <soundBuffer*> soundBuffer;
 		std::vector <soundSource*> soundSource;
 		std::vector <uint32_t> sounds;
+		std::vector <musicBuffer*> musicBuffer;
 
 		std::vector <std::vector<GLuint>> indexVec;
 		std::vector <std::vector<Texture>> texturesVec;

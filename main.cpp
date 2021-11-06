@@ -26,6 +26,7 @@
 #include"soundDevice.h"
 #include"soundBuffer.h"
 #include"soundSource.h"
+#include"musicBuffer.h"
 
 #include <chrono>
 #include <cmath>
@@ -180,10 +181,14 @@ int main() {
 	uint32_t sndGoal = soundBuffer::get()->addSoundEffect("./Sounds/score.wav");
 	g.sounds.push_back(sndGoal);
 
+	uint32_t sndPowerup = soundBuffer::get()->addSoundEffect("./Sounds/powerup.wav");
+	g.sounds.push_back(sndPowerup);
 
 
 	soundSource crntSpeaker;
 	g.soundSource.push_back(&crntSpeaker);
+
+	musicBuffer bruhndertale("./Music/notUndertale.wav");
 
 	glfwWindowHint(GLFW_RED_BITS, mode->redBits);
 	glfwWindowHint(GLFW_GREEN_BITS, mode->greenBits);
@@ -519,10 +524,10 @@ int main() {
 		
 		//IMGUI
 		ImGui_ImplGlfwGL3_NewFrame();
-
+		bruhndertale.Play();
 		g.drawScreen();
 		g.updateScreen();
-
+		bruhndertale.updateBufferStream();
 		//Error Checks For FBO
 		/*auto fboStatus = glCheckFramebufferStatus(GL_FRAMEBUFFER);
 		if (fboStatus != GL_FRAMEBUFFER_COMPLETE) {

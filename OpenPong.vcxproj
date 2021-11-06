@@ -163,6 +163,7 @@
     <ClCompile Include="Libraries\include\imgui\imgui_impl_glfw_gl3.cpp" />
     <ClCompile Include="light.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="musicBuffer.cpp" />
     <ClCompile Include="Screen.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="Paddle.cpp" />
@@ -191,6 +192,7 @@
     <ClInclude Include="GOList.h" />
     <ClInclude Include="GUI.h" />
     <ClInclude Include="light.h" />
+    <ClInclude Include="musicBuffer.h" />
     <ClInclude Include="Screen.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Paddle.h" />
