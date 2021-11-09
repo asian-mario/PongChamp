@@ -188,7 +188,8 @@ int main() {
 	soundSource crntSpeaker;
 	g.soundSource.push_back(&crntSpeaker);
 
-	musicBuffer bruhndertale("./Music/notUndertale.wav");
+	//OpenAL does not like mp3's
+	musicBuffer bruhndertale("./Music/PongChamp.wav");
 
 	glfwWindowHint(GLFW_RED_BITS, mode->redBits);
 	glfwWindowHint(GLFW_GREEN_BITS, mode->greenBits);

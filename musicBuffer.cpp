@@ -20,18 +20,17 @@ void musicBuffer::Play() {
 		slen *= se_sfinfo.channels * (sf_count_t)sizeof(short);
 		alBufferData(se_buffers[i], se_format, se_membuf, (ALsizei)slen, se_sfinfo.samplerate);
 
-		if (alGetError != AL_NO_ERROR) {
-			throw("ERROR: Cannot buffer playback.");
-		}
+	}
+	if (alGetError != AL_NO_ERROR) {
+		throw("ERROR: Cannot buffer playback.");
+	}
 
-		//queue and start playback
-		alSourceQueueBuffers(se_source, i, se_buffers);
-		alSourcePlay(se_source);
+	//queue and start playback
+	alSourceQueueBuffers(se_source, i, se_buffers);
+	alSourcePlay(se_source);
 
-		if (alGetError != AL_NO_ERROR) {
-			throw("ERROR: Cannot start playback	");
-		}
-
+	if (alGetError != AL_NO_ERROR) {
+		throw("ERROR: Cannot start playback	");
 	}
 
 }
@@ -121,7 +120,7 @@ musicBuffer::musicBuffer(const char* filename) {
 
 	if (!se_format) {
 		sf_close(se_sndfile);
-		se_sndfile == NULL;
+		se_sndfile = NULL;
 		throw("ERROR: Unsupported channel count. Unable to figure format.");
 	}
 
@@ -133,6 +132,7 @@ musicBuffer::musicBuffer(const char* filename) {
 
 musicBuffer::~musicBuffer() {
 	//bog standard
+	alDeleteSources(1, &se_source);
 	if (se_sndfile)
 		sf_close(se_sndfile);
 
