@@ -55,18 +55,20 @@ void musicBuffer::updateBufferStream() {
 		sf_count_t slen;
 
 		alSourceUnqueueBuffers(se_source, 1, &bufid);
+		processed--;
 
 		//read the rest of the data, refill the buffers and re-queue
 		slen = sf_readf_short(se_sndfile, se_membuf, b_samples);
 		if (slen > 0) {
+			slen *= se_sfinfo.channels * (sf_count_t)sizeof(short);
 			alBufferData(bufid, se_format, se_membuf, (ALsizei)slen, se_sfinfo.samplerate);
+			alSourceQueueBuffers(se_source, 1, &bufid);
 		}
 
+	}
 
-		if (alGetError != AL_NO_ERROR) {
-			throw("ERROR: Cannot buffer playback.");
-		}
-
+	if (alGetError != AL_NO_ERROR) {
+		throw("ERROR: Cannot buffer playback.");
 	}
 
 	//checking if source is underrun
