@@ -72,7 +72,7 @@ class Game {
 		std::vector <soundDevice*> soundDevice;
 		std::vector <soundBuffer*> soundBuffer;
 		std::vector <soundSource*> soundSource;
-		std::vector <SoundList> SoundList;
+		std::vector <SoundList*> SoundList;
 		//temporary on hold, issue with file reads
 		std::vector <musicBuffer*> musictracks;
 
