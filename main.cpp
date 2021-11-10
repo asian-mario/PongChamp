@@ -170,26 +170,34 @@ int main() {
 	GOList ObjectList;
 	g.OBJList.push_back(&ObjectList);
 
+	SoundList SndList;
+	g.SoundList.push_back(&SndList);
+
 	soundDevice * sndDevice = soundDevice::get();
 	g.soundDevice.push_back(sndDevice);
 
+	/* example
+	SndList.SoundList.insert(pair<std::string, uint32_t*>("exampleSound", &exampleFile));
+	*/
 	//uint32_t = ALuint
-	uint32_t sndHit = soundBuffer::get()->addSoundEffect("./Sounds/hit.wav");
+	uint32_t sndHit = soundBuffer::get()->addSound("./Sounds/hit.wav");
 	//this is fine for now. will make a map so it isnt as messy
-	g.sounds.push_back(sndHit);
+	SndList.SoundList.insert(pair<std::string, uint32_t>("Hit", sndHit));
 
-	uint32_t sndGoal = soundBuffer::get()->addSoundEffect("./Sounds/score.wav");
-	g.sounds.push_back(sndGoal);
+	uint32_t sndGoal = soundBuffer::get()->addSound("./Sounds/score.wav");
+	SndList.SoundList.insert(pair<std::string, uint32_t>("Goal", sndGoal));
 
-	uint32_t sndPowerup = soundBuffer::get()->addSoundEffect("./Sounds/powerup.wav");
-	g.sounds.push_back(sndPowerup);
-
+	uint32_t sndPowerup = soundBuffer::get()->addSound("./Sounds/powerup.wav");
+	SndList.SoundList.insert(pair<std::string, uint32_t>("Powerup", sndPowerup));
 
 	soundSource crntSpeaker;
 	g.soundSource.push_back(&crntSpeaker);
 
-	//OpenAL does not like mp3's
-	musicBuffer bruhndertale("./Music/PongChamp.wav");
+	//A bit of a disaster, using soundBuffer instead
+	//musicBuffer mainTrack("./Music/notUndertale.ogg");
+	uint32_t mainTrack = soundBuffer::get()->addSound("./Music/notUndertale.ogg");
+	SndList.SoundList.insert(pair<std::string, uint32_t>("MainTrack", mainTrack));
+	
 
 	glfwWindowHint(GLFW_RED_BITS, mode->redBits);
 	glfwWindowHint(GLFW_GREEN_BITS, mode->greenBits);
@@ -525,10 +533,10 @@ int main() {
 		
 		//IMGUI
 		ImGui_ImplGlfwGL3_NewFrame();
-		bruhndertale.Play();
+		g.soundSource[0]->Play(g.SoundList[0]->SoundList["MainTrack"]);
 		g.drawScreen();
 		g.updateScreen();
-		bruhndertale.updateBufferStream();
+
 		//Error Checks For FBO
 		/*auto fboStatus = glCheckFramebufferStatus(GL_FRAMEBUFFER);
 		if (fboStatus != GL_FRAMEBUFFER_COMPLETE) {

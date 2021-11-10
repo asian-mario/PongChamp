@@ -40,6 +40,7 @@ class ScreenHandler;
 class Screen;
 class GUI;
 class GOList;
+class SoundList;
 class soundDevice;
 class soundBuffer;
 class soundSource;
@@ -66,11 +67,14 @@ class Game {
 		std::vector <Screen*> ScreenObject;
 		std::vector <GUI*> debugGUI;
 		std::vector <GOList*> OBJList;
+
+		//-----------------ROSE---------------------
 		std::vector <soundDevice*> soundDevice;
 		std::vector <soundBuffer*> soundBuffer;
 		std::vector <soundSource*> soundSource;
-		std::vector <uint32_t> sounds;
-		std::vector <musicBuffer*> musicBuffer;
+		std::vector <SoundList> SoundList;
+		//temporary on hold, issue with file reads
+		std::vector <musicBuffer*> musictracks;
 
 		std::vector <std::vector<GLuint>> indexVec;
 		std::vector <std::vector<Texture>> texturesVec;

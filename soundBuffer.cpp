@@ -9,7 +9,7 @@ soundBuffer* soundBuffer::get() {
 	return sndbuffer;
 }
 
-ALuint soundBuffer::addSoundEffect(const char* filename) {
+ALuint soundBuffer::addSound(const char* filename) {
 	//discalaimer: this is *mostly* from the openal-soft examples 
 
 	ALenum err, format;
@@ -91,17 +91,17 @@ ALuint soundBuffer::addSoundEffect(const char* filename) {
 		return 0;
 	}
 
-	p_soundEffectBuffers.push_back(buffer);  // add to the list of known buffers
+	se_soundEffectBuffers.push_back(buffer);  // add to the list of known buffers
 
 	return buffer;
 }
 
-bool soundBuffer::removeSoundEffect(const ALuint& buffer) {
-	auto it = p_soundEffectBuffers.begin();
-	while (it != p_soundEffectBuffers.end()) {
+bool soundBuffer::removeSound(const ALuint& buffer) {
+	auto it = se_soundEffectBuffers.begin();
+	while (it != se_soundEffectBuffers.end()) {
 		if (*it == buffer) {
 			alDeleteBuffers(1, &*it);
-			it = p_soundEffectBuffers.erase(it);
+			it = se_soundEffectBuffers.erase(it);
 			
 			return true;
 		}
@@ -115,12 +115,12 @@ bool soundBuffer::removeSoundEffect(const ALuint& buffer) {
 }
 
 soundBuffer::soundBuffer() {
-	p_soundEffectBuffers.clear();
+	se_soundEffectBuffers.clear();
 }
 
 soundBuffer::~soundBuffer() {
 	//no memory leaks today
-	alDeleteBuffers(p_soundEffectBuffers.size(), p_soundEffectBuffers.data());
+	alDeleteBuffers(se_soundEffectBuffers.size(), se_soundEffectBuffers.data());
 
-	p_soundEffectBuffers.clear();
+	se_soundEffectBuffers.clear();
 }

@@ -254,7 +254,9 @@ void GameScreen::drawScreen(Game* g) {
 			g->framestep--;
 	}
 
-	
+	g->musictracks[0]->Play();
+	g->musictracks[0]->updateBufferStream();
+
 	//Exporting data & Render
 	g->draw();
 	//-----------------------------------------------------------------
