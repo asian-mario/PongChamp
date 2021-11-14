@@ -193,10 +193,10 @@ int main() {
 	soundSource crntSpeaker;
 	g.soundSource.push_back(&crntSpeaker);
 
-	//A bit of a disaster, using soundBuffer instead
-	//musicBuffer mainTrack("./Music/notUndertale.ogg");
-	uint32_t mainTrack = soundBuffer::get()->addSound("./Music/notUndertale.ogg");
-	SndList.SoundList.insert(pair<std::string, uint32_t>("MainTrack", mainTrack));
+	//took way too long to make it work
+	musicBuffer mainTrack("./Music/notUndertale.ogg");
+	g.musictracks.push_back(&mainTrack);
+
 	
 
 	glfwWindowHint(GLFW_RED_BITS, mode->redBits);
@@ -519,7 +519,7 @@ int main() {
 	GUI DebugGUI;
 	g.debugGUI.push_back(&DebugGUI);
 
-	
+	g.musictracks[0]->Play();
 
 	while (!glfwWindowShouldClose(window)) {
 
@@ -530,10 +530,10 @@ int main() {
 		glClearColor(pow(0.0f, g.gamma), pow(0.0f, g.gamma), pow(0.01f, g.gamma), 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		
+		g.musictracks[0]->updateBufferStream();
 		//IMGUI
 		ImGui_ImplGlfwGL3_NewFrame();
-		g.soundSource[0]->Play(g.SoundList[0]->SoundList["MainTrack"]);
+		
 		g.drawScreen();
 		g.updateScreen();
 
