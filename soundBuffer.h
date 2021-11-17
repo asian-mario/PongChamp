@@ -9,6 +9,7 @@ public:
 	ALuint addSound(const char* filename);
 	bool removeSound(const ALuint& buffer);
 
+
 private:
 	soundBuffer();
 	~soundBuffer();

@@ -7,6 +7,9 @@ public:
 	~soundSource();
 
 	void Play(const ALuint buffer);
+	void Stop();
+	void Pause();
+	void Resume();
 
 private:
 	//audio settings

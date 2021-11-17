@@ -36,6 +36,21 @@ void musicBuffer::Play(){
 
 }
 
+void musicBuffer::Pause()
+{
+	alSourcePause(se_source);
+}
+
+void musicBuffer::Stop()
+{
+	alSourceStop(se_source);
+}
+
+void musicBuffer::Resume()
+{
+	alSourcePlay(se_source);
+}
+
 //refresh the buffers so they don't run out of info and stop playing
 void musicBuffer::updateBufferStream(){
 	ALint processed, state;
@@ -153,4 +168,11 @@ musicBuffer::~musicBuffer(){
 	//begone buffers
 	alDeleteBuffers(num_buffers, se_buffers);
 
+}
+
+bool musicBuffer::isPlaying() {
+	ALint playState;
+
+	alGetSourcei(se_source, AL_SOURCE_STATE, &playState);
+	return (playState == AL_PLAYING);
 }

@@ -428,6 +428,7 @@ void UltraSmashPowerup::delayEffect(Game* g) {
 
 	if (glfwGetKey(g->gameWindow, GLFW_KEY_U)) {
 		g->balls[0]->limitSpeed = false;
+		g->balls[0]->decreaseVal = 1.0;
 		exec = true;
 	}
 

@@ -5,13 +5,15 @@
 class musicBuffer{
 public:
 	void Play();
-	/*void Pause();
-	void Stop();*/
+	void Stop();
+	void Pause();
+	void Resume();
 
 	void updateBufferStream();
 	musicBuffer(const char* filename);
 	~musicBuffer();
 
+	bool isPlaying();
 private:
 	//sauce
 	ALuint se_source;

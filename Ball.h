@@ -14,6 +14,7 @@ class Ball : public GameObject {
 		double control = 2500.0;
 		const float maxSpeed = 200.0f;
 		double rad;
+		double decreaseVal = 0.85;
 		bool limitSpeed = true;
 
 		glm::vec4 color;

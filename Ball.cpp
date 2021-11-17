@@ -122,7 +122,7 @@ void Ball::update(Game* g) {
 		g->barriers[0]->barrierHit, g->barriers[1]->barrierHit = false;
 
 		velocity.x = -velocity.x;
-		velocity.y += g->paddles[0]->velocity.y * 0.75;
+		velocity.y += g->paddles[0]->velocity.y * decreaseVal;
 
 		g->paddles[1]->lastHit = false;
 		g->paddles[0]->lastHit = true;
@@ -134,7 +134,7 @@ void Ball::update(Game* g) {
 		g->barriers[0]->barrierHit, g->barriers[1]->barrierHit = false;
 
 		velocity.x = -velocity.x;
-		velocity.y += (g->paddles[1]->velocity.y) * 0.75;
+		velocity.y += (g->paddles[1]->velocity.y) * decreaseVal;
 
 		g->paddles[0]->lastHit = false;
 		g->paddles[1]->lastHit = true;

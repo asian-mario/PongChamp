@@ -441,7 +441,7 @@ int main() {
 	g.gameObjects.push_back(&BarrierER);
 	ObjectList.GOList.insert(pair<std::string, GameObject*>(BarrierER.name, &BarrierER));
 	//--------------BALL--------------------------------------
-	Ball ball1("Ball1", glm::vec3(-0.02f, 0.0f, 0.0f) * 100.0f, glm::vec3(0.096f, 0.191f, 1.0f) * 100.0f, 2.5, glm::vec3(-65.0f, rand() / 10000.0f, 0.0f));
+	Ball ball1("Ball1", glm::vec3(0.02f, 0.0f, 0.0f) * 100.0f, glm::vec3(0.096f, 0.191f, 1.0f) * 100.0f, 2.5, glm::vec3(-65.0f, rand() / 10000.0f, 0.0f));
 	ball1.mesh = Mesh(ballsverts, ballinds, ballTex);
 	g.balls.push_back(&ball1);
 	g.gameObjects.push_back(&ball1);
