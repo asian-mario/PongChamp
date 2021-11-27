@@ -174,11 +174,16 @@ int main() {
 	g.SoundList.push_back(&SndList);
 
 	soundDevice * sndDevice = soundDevice::get();
+	sndDevice->setAttunation(AL_INVERSE_DISTANCE_CLAMPED);
+	sndDevice->setLocation(0.0f, 0.0f, 0.0f);
+	sndDevice->setOrientation(0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f);
+
 	g.soundDevice.push_back(sndDevice);
 
 	/* example
 	SndList.SoundList.insert(pair<std::string, uint32_t*>("exampleSound", &exampleFile));
 	*/
+
 	//uint32_t = ALuint
 	uint32_t sndHit = soundBuffer::get()->addSound("./Sounds/hit.wav");
 	//this is fine for now. will make a map so it isnt as messy
@@ -197,7 +202,6 @@ int main() {
 	musicBuffer mainTrack("./Music/notUndertale.ogg");
 	g.musictracks.push_back(&mainTrack);
 
-	
 
 	glfwWindowHint(GLFW_RED_BITS, mode->redBits);
 	glfwWindowHint(GLFW_GREEN_BITS, mode->greenBits);
@@ -519,7 +523,7 @@ int main() {
 	GUI DebugGUI;
 	g.debugGUI.push_back(&DebugGUI);
 
-	g.musictracks[0]->Play();
+	//g.musictracks[0]->Play();
 
 	while (!glfwWindowShouldClose(window)) {
 
@@ -530,7 +534,7 @@ int main() {
 		glClearColor(pow(0.0f, g.gamma), pow(0.0f, g.gamma), pow(0.01f, g.gamma), 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		g.musictracks[0]->updateBufferStream();
+		//g.musictracks[0]->updateBufferStream();
 		//IMGUI
 		ImGui_ImplGlfwGL3_NewFrame();
 		

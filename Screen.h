@@ -60,6 +60,9 @@ public:
 	void drawScreen(Game* g) override;
 	void updateScreen(Game* g) override;
 	void remove(Game* g);
+
+	enum CRNTSETTING { VIDEOSET, AUDIOSET };
+	CRNTSETTING setting = VIDEOSET;
 };
 
 class GameScreen : public Screen {

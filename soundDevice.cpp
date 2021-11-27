@@ -52,6 +52,15 @@ void soundDevice::getOrientation(float orientation) {
 	alGetListenerfv(AL_ORIENTATION, &orientation);
 }
 
+
+void soundDevice::setAttunation(int key)
+{
+	if (key < AL_INVERSE_DISTANCE || key > AL_EXPONENT_DISTANCE_CLAMPED)
+		throw("ERROR: INVALID INTONATION KEY");
+
+	alDistanceModel(key);
+}
+
 //gives value of current audio gain on the listener
 float soundDevice::getGain() {
 	float crntGain;

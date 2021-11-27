@@ -9,6 +9,7 @@ public:
 	void getOrientation(float orientation);
 	float getGain();
 
+	void setAttunation(int key);
 	void setLocation(float x, float y, float z);
 	void setOrientation(
 		float atx, float aty, float atz,

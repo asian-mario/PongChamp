@@ -115,12 +115,19 @@ class Game {
 
 		//--SETTING
 		//Screen Settings
-		const char* settingType = "< VIDEO >";
+		const char* settingType = " VIDEO >";
 		const char* resSetting = "< 1920 X 1080 >";
 
 		enum RESID { HD, FHD, TWOK, FOURK };
 		RESID resID = FHD;
 
 		const char* debugSetting = "< ON ";
+
+		//Audio Settings
+		const char* musicSetting = "< ON ";
+		const char* sfxSetting = "< ON ";
+
+		bool musicOn = true;
+		bool sfxOn = true;
 };
 

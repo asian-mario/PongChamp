@@ -141,16 +141,28 @@ void SettingScreen::drawScreen(Game* g) {
 	glDisable(GL_CULL_FACE);
 	glDisable(GL_DEPTH_TEST);
 
-	g->fonts[1]->drawString(670.0f, 150.0f, g->settingType, g->shaders[2]);
-	g->fonts[1]->drawString(100.0f, 350.0f, "RESOLUTION:", g->shaders[2]);
-	g->fonts[1]->drawString(900.0f, 350.0f, g->resSetting, g->shaders[2]);
-	g->fonts[1]->drawString(100.0f, 500.0f, "DEBUG:", g->shaders[2]);
-	g->fonts[1]->drawString(550.0f, 500.0f, g->debugSetting, g->shaders[2]);
-	g->fonts[1]->drawString(100.0f, 1000.0f, "RETURN", g->shaders[2]);
+	if (setting == VIDEOSET) {
+		g->fonts[1]->drawString(670.0f, 150.0f, g->settingType, g->shaders[2]);
+		g->fonts[1]->drawString(100.0f, 350.0f, "RESOLUTION:", g->shaders[2]);
+		g->fonts[1]->drawString(900.0f, 350.0f, g->resSetting, g->shaders[2]);
+		g->fonts[1]->drawString(100.0f, 500.0f, "DEBUG:", g->shaders[2]);
+		g->fonts[1]->drawString(550.0f, 500.0f, g->debugSetting, g->shaders[2]);
+		g->fonts[1]->drawString(100.0f, 1000.0f, "RETURN", g->shaders[2]);
+	}
+
+	else if (setting == AUDIOSET) {
+		g->fonts[1]->drawString(670.0f, 150.0f, g->settingType, g->shaders[2]);
+		g->fonts[1]->drawString(100.0f, 350.0f, "MUSIC:", g->shaders[2]);
+		g->fonts[1]->drawString(500.0f, 350.0f, g->musicSetting, g->shaders[2]);
+		g->fonts[1]->drawString(100.0f, 500.0f, "SFX:", g->shaders[2]);
+		g->fonts[1]->drawString(400.0f, 500.0f, g->sfxSetting, g->shaders[2]);
+		g->fonts[1]->drawString(100.0f, 1000.0f, "RETURN", g->shaders[2]);
+	}
 }
 
 void SettingScreen::updateScreen(Game* g) {
 	int state = glfwGetMouseButton(g->gameWindow, GLFW_MOUSE_BUTTON_LEFT);
+
 
 	if (glfwGetKey(g->gameWindow, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
 		remove(g);
@@ -165,61 +177,100 @@ void SettingScreen::updateScreen(Game* g) {
 		cout << "X POS: " << g->ScreenObject[0]->xpos << endl;
 
 
-		if (g->ScreenObject[0]->xpos <= 1708.0 && g->ScreenObject[0]->xpos >= 1653.0 && g->ScreenObject[0]->ypos >= 284.0 && g->ScreenObject[0]->ypos <= 351.0) {
-			if (g->resID == g->FHD) {
-				g->resSetting = "< 2560 X 1440 >";
-				g->resID = g->TWOK;
-				g->screenWidth = 2560;
-				g->screenHeight = 1440;
+		if (setting == VIDEOSET) {
+			g->ScreenObject[0]->getCursorPosition(g);
+			if (g->ScreenObject[0]->xpos <= 1708.0 && g->ScreenObject[0]->xpos >= 1653.0 && g->ScreenObject[0]->ypos >= 284.0 && g->ScreenObject[0]->ypos <= 351.0) {
+				if (g->resID == g->FHD) {
+					g->resSetting = "< 2560 X 1440 >";
+					g->resID = g->TWOK;
+					g->screenWidth = 2560;
+					g->screenHeight = 1440;
+					glfwWaitEvents();
+				}
+
+				if (g->resID == g->HD) {
+					g->resSetting = "< 1920 X 1080 >";
+					g->resID = g->FHD;
+					g->screenWidth = 1920;
+					g->screenHeight = 1080;
+					glfwWaitEvents();
+				}
+			}
+
+			if (g->ScreenObject[0]->xpos <= 948.0 && g->ScreenObject[0]->xpos >= 893.0 && g->ScreenObject[0]->ypos >= 284.0 && g->ScreenObject[0]->ypos <= 351.0) {
+				if (g->resID == g->FHD) {
+					g->resSetting = "< 1280 X 720 >";
+					g->resID = g->HD;
+					g->screenWidth = 1280;
+					g->screenHeight = 720;
+					glfwWaitEvents();
+					//glfwWaitEventsTimeout(0.1); could work, a bit weird tho
+				}
+
+				if (g->resID == g->TWOK) {
+					g->resSetting = "< 1920 X 1080 >";
+					g->resID = g->FHD;
+					g->screenWidth = 1920;
+					g->screenHeight = 1080;
+					glfwWaitEvents();
+				}
+			}
+
+			if (g->ScreenObject[0]->xpos <= 600.0 && g->ScreenObject[0]->xpos >= 547.0 && g->ScreenObject[0]->ypos >= 434.0 && g->ScreenObject[0]->ypos <= 500.0) {
+				g->debugSetting = " OFF >";
+				g->inDebugMode = false;
+			}
+
+			if (g->ScreenObject[0]->xpos <= 876.0 && g->ScreenObject[0]->xpos >= 822.0 && g->ScreenObject[0]->ypos >= 434.0 && g->ScreenObject[0]->ypos <= 500.0) {
+				g->debugSetting = "< ON ";
+				g->inDebugMode = true;
+			}
+
+			if (g->ScreenObject[0]->xpos <= 379.0 && g->ScreenObject[0]->xpos >= 96.0 && g->ScreenObject[0]->ypos >= 960.0 && g->ScreenObject[0]->ypos <= 1030.0) {
+				remove(g);
+				g->ScreenHandler[0]->ScreenSwitch(ScreenHandler::SCREENTYPE::PAUSE, g);
+				g->ScreenHandler[0]->ScreenInit(g);
 				glfwWaitEvents();
 			}
 
-			if (g->resID == g->HD) {
-				g->resSetting = "< 1920 X 1080 >";
-				g->resID = g->FHD;
-				g->screenWidth = 1920;
-				g->screenHeight = 1080;
-				glfwWaitEvents();
+			if (g->ScreenObject[0]->xpos <= 1106.0 && g->ScreenObject[0]->xpos >= 1048.0 && g->ScreenObject[0]->ypos >= 88.0 && g->ScreenObject[0]->ypos <= 146.0) {
+				setting = AUDIOSET;
+				g->settingType = "< AUDIO ";
+				glfwWaitEventsTimeout(0.1);
 			}
 		}
-
-		if (g->ScreenObject[0]->xpos <= 948.0 && g->ScreenObject[0]->xpos >= 893.0 && g->ScreenObject[0]->ypos >= 284.0 && g->ScreenObject[0]->ypos <= 351.0) {
-			if (g->resID == g->FHD) {
-				g->resSetting = "< 1280 X 720 >";
-				g->resID = g->HD;
-				g->screenWidth = 1280;
-				g->screenHeight = 720;
-				glfwWaitEvents();
-				//glfwWaitEventsTimeout(0.1); could work, a bit weird tho
+		else if (setting == AUDIOSET) {
+			if (g->ScreenObject[0]->xpos <= 451.0 && g->ScreenObject[0]->xpos >= 393.0 && g->ScreenObject[0]->ypos >= 430.0 && g->ScreenObject[0]->ypos <= 500.0) {
+				g->sfxSetting = " OFF >";
+				g->sfxOn = false;
 			}
 
-			if (g->resID == g->TWOK) {
-				g->resSetting = "< 1920 X 1080 >";
-				g->resID = g->FHD;
-				g->screenWidth = 1920;
-				g->screenHeight = 1080;
-				glfwWaitEvents();
+			else if (g->ScreenObject[0]->xpos <= 725.0 && g->ScreenObject[0]->xpos >= 670.0 && g->ScreenObject[0]->ypos >= 430.0 && g->ScreenObject[0]->ypos <= 500.0) {
+				g->sfxSetting = "< ON ";
+				g->sfxOn = true;
+			}
+
+
+
+			if (g->ScreenObject[0]->xpos <= 451.0 && g->ScreenObject[0]->xpos >= 393.0 && g->ScreenObject[0]->ypos >= 430.0 && g->ScreenObject[0]->ypos <= 500.0) {
+				g->sfxSetting = " OFF >";
+				g->sfxOn = false;
+			}
+
+			else if (g->ScreenObject[0]->xpos <= 725.0 && g->ScreenObject[0]->xpos >= 670.0 && g->ScreenObject[0]->ypos >= 430.0 && g->ScreenObject[0]->ypos <= 500.0) {
+				g->sfxSetting = "< ON ";
+				g->sfxOn = true;
+			}
+
+			if (g->ScreenObject[0]->xpos <= 379.0 && g->ScreenObject[0]->xpos >= 96.0 && g->ScreenObject[0]->ypos >= 960.0 && g->ScreenObject[0]->ypos <= 1030.0) {
+				remove(g);
+				g->ScreenHandler[0]->ScreenSwitch(ScreenHandler::SCREENTYPE::PAUSE, g);
+				g->ScreenHandler[0]->ScreenInit(g);
+				glfwWaitEventsTimeout(0.1);
 			}
 		}
-
-		if (g->ScreenObject[0]->xpos <= 600.0 && g->ScreenObject[0]->xpos >= 547.0 && g->ScreenObject[0]->ypos >= 434.0 && g->ScreenObject[0]->ypos <= 500.0) {
-			g->debugSetting = " OFF >";
-			g->inDebugMode = false;
-		}
-
-		if (g->ScreenObject[0]->xpos <= 876.0 && g->ScreenObject[0]->xpos >= 822.0 && g->ScreenObject[0]->ypos >= 434.0 && g->ScreenObject[0]->ypos <= 500.0) {
-			g->debugSetting = "< ON ";
-			g->inDebugMode = true;
-		}
-
-		if (g->ScreenObject[0]->xpos <= 379.0 && g->ScreenObject[0]->xpos >= 96.0 && g->ScreenObject[0]->ypos >= 960.0 && g->ScreenObject[0]->ypos <= 1030.0) {
-			remove(g);
-			g->ScreenHandler[0]->ScreenSwitch(ScreenHandler::SCREENTYPE::PAUSE, g);
-			g->ScreenHandler[0]->ScreenInit(g);
-			glfwWaitEvents();
-		}
-
 	}
+	
 		
 	
 }
