@@ -88,7 +88,7 @@ class Game {
 		//i am sorry
 		std::vector <GLuint> FBOBuffers;
 		float lastTime;
-		bool pause = false;
+		bool pause = true;
 		bool inDebugMode = true;
 		bool postProcessingOn = true;
 		int framestep = 0;
@@ -101,8 +101,12 @@ class Game {
 		//--FRAME
 		bool timer(int time);
 		void update();
+		void dtUpdate();
 		void deleteObj(GameObject* GO);
 		void draw();
+		
+		void winReset(Game* g);
+		void gameReset(Game* g);
 
 		void drawScreen();
 		void removeScreen(Screen* S);
@@ -112,6 +116,7 @@ class Game {
 		void slowMo(float time);
 		float deltaTime;
 		float gamma = 2.2f;
+		bool gameStart = false;
 
 		//--SETTING
 		//Screen Settings
@@ -126,6 +131,9 @@ class Game {
 		//Audio Settings
 		const char* musicSetting = "< ON ";
 		const char* sfxSetting = "< ON ";
+
+		enum CRNTSETTING { VIDEOSET, AUDIOSET };
+		CRNTSETTING setting = VIDEOSET;
 
 		bool musicOn = true;
 		bool sfxOn = true;

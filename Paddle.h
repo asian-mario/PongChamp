@@ -23,7 +23,7 @@ class Paddle : public GameObject {
 		double height = 13.0;
 		float decayControl = 200.0f;
 
-		enum CONTROLTYPE { WASD, ARROW };
+		enum CONTROLTYPE { WASD, ARROW, AI_E, AI_MED, AI_HARD };
 		CONTROLTYPE type;
 
 		Paddle(glm::vec3 position, glm::vec3 scale, CONTROLTYPE type, glm::vec3 velocity, std::string name);

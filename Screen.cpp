@@ -50,26 +50,10 @@ void ScreenHandler::ScreenInit(Game* g) {
 
 void ScreenHandler::ScreenSwitch(SCREENTYPE screen, Game* g) {
 	this->screen = screen;
-
-	if (screen == PAUSE) {
-		g->pause = true;
-	}
-
-	if (screen == MAIN) {
-		g->pause = true;
-	}
-
-	if (screen == GAME) {
-		g->pause = false;
-	}
-
-	if (screen == SETTINGS) {
-		g->pause = true;
-	}
 }
 
-
 void PauseMenu::drawScreen(Game* g) {
+	g->dtUpdate();
 	g->shaders[2]->Activate();
 
 	int w, h;
@@ -132,6 +116,7 @@ void PauseMenu::remove(Game* g) {
 
 
 void SettingScreen::drawScreen(Game* g) {
+	g->dtUpdate();
 	g->shaders[2]->Activate();
 
 	int w, h;
@@ -141,22 +126,22 @@ void SettingScreen::drawScreen(Game* g) {
 	glDisable(GL_CULL_FACE);
 	glDisable(GL_DEPTH_TEST);
 
-	if (setting == VIDEOSET) {
+	if (g->setting == g->VIDEOSET) {
 		g->fonts[1]->drawString(670.0f, 150.0f, g->settingType, g->shaders[2]);
 		g->fonts[1]->drawString(100.0f, 350.0f, "RESOLUTION:", g->shaders[2]);
 		g->fonts[1]->drawString(900.0f, 350.0f, g->resSetting, g->shaders[2]);
 		g->fonts[1]->drawString(100.0f, 500.0f, "DEBUG:", g->shaders[2]);
 		g->fonts[1]->drawString(550.0f, 500.0f, g->debugSetting, g->shaders[2]);
-		g->fonts[1]->drawString(100.0f, 1000.0f, "RETURN", g->shaders[2]);
+		g->fonts[1]->drawString(100.0f, 1000.0f, "[ESC]", g->shaders[2]);
 	}
 
-	else if (setting == AUDIOSET) {
+	else if (g->setting == g->AUDIOSET) {
 		g->fonts[1]->drawString(670.0f, 150.0f, g->settingType, g->shaders[2]);
 		g->fonts[1]->drawString(100.0f, 350.0f, "MUSIC:", g->shaders[2]);
 		g->fonts[1]->drawString(500.0f, 350.0f, g->musicSetting, g->shaders[2]);
 		g->fonts[1]->drawString(100.0f, 500.0f, "SFX:", g->shaders[2]);
 		g->fonts[1]->drawString(400.0f, 500.0f, g->sfxSetting, g->shaders[2]);
-		g->fonts[1]->drawString(100.0f, 1000.0f, "RETURN", g->shaders[2]);
+		g->fonts[1]->drawString(100.0f, 1000.0f, "[ESC]", g->shaders[2]);
 	}
 }
 
@@ -177,7 +162,7 @@ void SettingScreen::updateScreen(Game* g) {
 		cout << "X POS: " << g->ScreenObject[0]->xpos << endl;
 
 
-		if (setting == VIDEOSET) {
+		if (g->setting == g->VIDEOSET) {
 			g->ScreenObject[0]->getCursorPosition(g);
 			if (g->ScreenObject[0]->xpos <= 1708.0 && g->ScreenObject[0]->xpos >= 1653.0 && g->ScreenObject[0]->ypos >= 284.0 && g->ScreenObject[0]->ypos <= 351.0) {
 				if (g->resID == g->FHD) {
@@ -226,20 +211,14 @@ void SettingScreen::updateScreen(Game* g) {
 				g->inDebugMode = true;
 			}
 
-			if (g->ScreenObject[0]->xpos <= 379.0 && g->ScreenObject[0]->xpos >= 96.0 && g->ScreenObject[0]->ypos >= 960.0 && g->ScreenObject[0]->ypos <= 1030.0) {
-				remove(g);
-				g->ScreenHandler[0]->ScreenSwitch(ScreenHandler::SCREENTYPE::PAUSE, g);
-				g->ScreenHandler[0]->ScreenInit(g);
-				glfwWaitEvents();
-			}
 
 			if (g->ScreenObject[0]->xpos <= 1106.0 && g->ScreenObject[0]->xpos >= 1048.0 && g->ScreenObject[0]->ypos >= 88.0 && g->ScreenObject[0]->ypos <= 146.0) {
-				setting = AUDIOSET;
+				g->setting = g->AUDIOSET;
 				g->settingType = "< AUDIO ";
-				glfwWaitEventsTimeout(0.1);
+				glfwWaitEvents();
 			}
 		}
-		else if (setting == AUDIOSET) {
+		else if (g->setting == g->AUDIOSET) {
 			if (g->ScreenObject[0]->xpos <= 451.0 && g->ScreenObject[0]->xpos >= 393.0 && g->ScreenObject[0]->ypos >= 430.0 && g->ScreenObject[0]->ypos <= 500.0) {
 				g->sfxSetting = " OFF >";
 				g->sfxOn = false;
@@ -252,21 +231,20 @@ void SettingScreen::updateScreen(Game* g) {
 
 
 
-			if (g->ScreenObject[0]->xpos <= 451.0 && g->ScreenObject[0]->xpos >= 393.0 && g->ScreenObject[0]->ypos >= 430.0 && g->ScreenObject[0]->ypos <= 500.0) {
-				g->sfxSetting = " OFF >";
-				g->sfxOn = false;
+			if (g->ScreenObject[0]->xpos <= 550.0 && g->ScreenObject[0]->xpos >= 495.0 && g->ScreenObject[0]->ypos >= 287.0 && g->ScreenObject[0]->ypos <= 350.0) {
+				g->musicSetting = " OFF >";
+				g->musicOn = false;
 			}
 
-			else if (g->ScreenObject[0]->xpos <= 725.0 && g->ScreenObject[0]->xpos >= 670.0 && g->ScreenObject[0]->ypos >= 430.0 && g->ScreenObject[0]->ypos <= 500.0) {
-				g->sfxSetting = "< ON ";
-				g->sfxOn = true;
+			else if (g->ScreenObject[0]->xpos <= 820.0 && g->ScreenObject[0]->xpos >= 770.0 && g->ScreenObject[0]->ypos >= 287.0 && g->ScreenObject[0]->ypos <= 350.0) {
+				g->musicSetting = "< ON ";
+				g->musicOn = true;
 			}
 
-			if (g->ScreenObject[0]->xpos <= 379.0 && g->ScreenObject[0]->xpos >= 96.0 && g->ScreenObject[0]->ypos >= 960.0 && g->ScreenObject[0]->ypos <= 1030.0) {
-				remove(g);
-				g->ScreenHandler[0]->ScreenSwitch(ScreenHandler::SCREENTYPE::PAUSE, g);
-				g->ScreenHandler[0]->ScreenInit(g);
-				glfwWaitEventsTimeout(0.1);
+			if (g->ScreenObject[0]->xpos <= 720.0 && g->ScreenObject[0]->xpos >= 670.0 && g->ScreenObject[0]->ypos >= 88.0 && g->ScreenObject[0]->ypos <= 146.0) {
+				g->setting = g->VIDEOSET;
+				g->settingType = " VIDEO > ";
+				glfwWaitEvents();
 			}
 		}
 	}
@@ -280,6 +258,7 @@ void SettingScreen::remove(Game* g) {
 }
 
 void MainMenu::drawScreen(Game* g) {
+	g->dtUpdate();
 	g->shaders[2]->Activate();
 
 	int w, h;
@@ -298,12 +277,15 @@ void MainMenu::remove(Game* g) {
 	g->removeScreen(this);
 }
 
-void GameScreen::drawScreen(Game* g) {
-	if (!g->pause || g->framestep > 0) {
+void GameScreen::drawScreen(Game* g) {	
+
+	if (g->pause == false || g->framestep > 0) {
 		g->update();
 		if (g->framestep > 0)
 			g->framestep--;
 	}
+	if(g->pause == true)
+		g->dtUpdate();
 
 	
 
@@ -330,6 +312,22 @@ void GameScreen::drawScreen(Game* g) {
 	g->fonts[0]->drawString(g->texts[0]->pos.x, g->texts[0]->pos.y, g->texts[0]->text, g->shaders[2]);
 	g->fonts[0]->drawString(g->texts[1]->pos.x, g->texts[1]->pos.y, g->texts[1]->text, g->shaders[2]);
 
+	if (!g->gameStart) {
+		if (countDown <= 10.0 && countDown > 4.0) {
+			g->fonts[1]->drawString(700.0f, 560.0f, "READY?", g->shaders[2]);
+			countDown -= 0.05;
+		}
+
+		else if (countDown <= 4.0) {
+			g->fonts[1]->drawString(810.0f, 560.0f, "GO!", g->shaders[2]);
+			countDown -= 0.05;
+			if (countDown <= 0.0) {
+				g->pause = false;
+				g->gameStart = true;
+			}
+		}
+	}
+
 	//--------------DEBUG----------------------------
 	g->debugGUI[0]->onClickDebug(g);
 
@@ -345,13 +343,16 @@ void GameScreen::drawScreen(Game* g) {
 }
 
 void GameScreen::updateScreen(Game* g) {
-	if (glfwGetKey(g->gameWindow, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
+	if (glfwGetKey(g->gameWindow, GLFW_KEY_ESCAPE) == GLFW_PRESS && g->gameStart) {
+		g->pause;
+
 		remove(g);
 		g->ScreenHandler[0]->ScreenSwitch(ScreenHandler::SCREENTYPE::PAUSE, g);
 		g->ScreenHandler[0]->ScreenInit(g);
-
-		g->pause = true;
 	}
+
+	if (g->texts[0]->score >= 5 || g->texts[1]->score >= 5)
+		g->winReset(g);
 }
 
 void GameScreen::remove(Game* g) {

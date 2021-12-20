@@ -22,13 +22,36 @@ void Paddle::update(Game* g) {
 		}
 	}
 
-	if (type == ARROW) {
+	else if (type == ARROW) {
 		if (glfwGetKey(g->gameWindow, GLFW_KEY_UP) == GLFW_PRESS) {
 			velocity.y = 110.0f;
 		}
 		else if (glfwGetKey(g->gameWindow, GLFW_KEY_DOWN) == GLFW_PRESS) {
 			velocity.y = -110.0f;
 		}
+	}
+
+	else if (type == AI_E) {
+		while (g->pause == true) {
+			bool isHit = false;
+
+			double randomVol = rand() % 40;
+			double trackDelay = rand() % 1;
+			trackDelay -= g->deltaTime;
+
+			if (trackDelay <= 0.0) {
+				while (isHit == false) {
+					if (position.y < g->balls[0]->position.y) {
+						position.y += randomVol * g->deltaTime;
+					}
+					else if (position.y > g->balls[0]->position.y) {
+						position.y -= randomVol * g->deltaTime;
+					}
+				}
+
+			}
+		}
+
 	}
 
 	if (velocity.y != 0)

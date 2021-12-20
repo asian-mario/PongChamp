@@ -74,6 +74,7 @@ decltype(seconds_t().count()) get_millis_since_epoch()
 
 int main() {
 	glfwInit();
+
 	srand(time(NULL));
 
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3); //Specifying OpenGL version
@@ -415,7 +416,7 @@ int main() {
 	//--------------Paddle1---------------------------------
 
 	//--------------Paddle2---------------------------------
-	Paddle paddle2(glm::vec3(0.85f, 0.0f, 0.0f) * 100.0f, glm::vec3(0.015f, 0.2f, 1.0f) * 100.0f, Paddle::CONTROLTYPE::ARROW, glm::vec3(0.0f), "Paddle2");
+	Paddle paddle2(glm::vec3(0.85f, 0.0f, 0.0f) * 100.0f, glm::vec3(0.015f, 0.2f, 1.0f) * 100.0f, Paddle::CONTROLTYPE::AI_E, glm::vec3(0.0f), "Paddle2");
 	paddle2.mesh = Mesh(sqrverts, sqrinds, paddle2Tex);
 	g.paddles.push_back(&paddle2);
 	g.gameObjects.push_back(&paddle2);
@@ -523,7 +524,7 @@ int main() {
 	GUI DebugGUI;
 	g.debugGUI.push_back(&DebugGUI);
 
-	//g.musictracks[0]->Play();
+	g.musictracks[0]->Play();
 
 	while (!glfwWindowShouldClose(window)) {
 
@@ -534,12 +535,16 @@ int main() {
 		glClearColor(pow(0.0f, g.gamma), pow(0.0f, g.gamma), pow(0.01f, g.gamma), 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		//g.musictracks[0]->updateBufferStream();
+		if (g.musicOn == true)
+			g.musictracks[0]->updateBufferStream();
+
 		//IMGUI
 		ImGui_ImplGlfwGL3_NewFrame();
+
 		
 		g.drawScreen();
 		g.updateScreen();
+	
 
 		//Error Checks For FBO
 		/*auto fboStatus = glCheckFramebufferStatus(GL_FRAMEBUFFER);

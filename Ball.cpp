@@ -151,7 +151,7 @@ void Ball::update(Game* g) {
 		g->paddles[1]->lastHit = true;
 	}
 
-	if (position.y >= 98.0f) {
+	if (position.y > 98.0) {
 		if (g->sfxOn == true) {
 			g->soundSource[0]->setPosition(0.0f, 1.2f, 0.0f);
 			g->soundSource[0]->Play(g->SoundList[0]->SoundList["Hit"]);
@@ -165,7 +165,7 @@ void Ball::update(Game* g) {
 		g->particleSystems[1]->spawn(g, glm::vec3(g->balls[0]->position.x, g->barriers[0]->position.y - 10.5f, g->barriers[0]->position.z), glm::vec3(0.0f, 25.0f, 0.0f), glm::vec3(20.0f), color, 1.5f);
 	}
 
-	if (position.y <= -98.0f) {
+	if (position.y < -98.0) {
 		if (g->sfxOn == true) {
 			g->soundSource[0]->setPosition(0.0f, -1.2f, 0.0f);
 			g->soundSource[0]->Play(g->SoundList[0]->SoundList["Hit"]);
