@@ -135,7 +135,7 @@ class Game {
 		enum CRNTSETTING { VIDEOSET, AUDIOSET };
 		CRNTSETTING setting = VIDEOSET;
 
-		bool musicOn = true;
+		bool musicOn = false;
 		bool sfxOn = true;
 };
 

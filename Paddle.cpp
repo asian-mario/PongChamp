@@ -32,26 +32,24 @@ void Paddle::update(Game* g) {
 	}
 
 	else if (type == AI_E) {
-		while (g->pause == true) {
-			bool isHit = false;
+		bool isHit = false;
 
-			double randomVol = rand() % 40;
-			double trackDelay = rand() % 1;
-			trackDelay -= g->deltaTime;
+		double randomVol = rand() % 40;
+		double trackDelay = rand() % 1;
+		trackDelay -= g->deltaTime;
 
-			if (trackDelay <= 0.0) {
-				while (isHit == false) {
-					if (position.y < g->balls[0]->position.y) {
-						position.y += randomVol * g->deltaTime;
-					}
-					else if (position.y > g->balls[0]->position.y) {
-						position.y -= randomVol * g->deltaTime;
-					}
+		if (trackDelay <= 0.0) {
+			while (isHit == false) {
+				if (position.y < g->balls[0]->position.y) {
+					position.y += randomVol * g->deltaTime;
 				}
-
+				else if (position.y > g->balls[0]->position.y) {
+					position.y -= randomVol * g->deltaTime;
+				}
 			}
-		}
 
+		}
+		 
 	}
 
 	if (velocity.y != 0)

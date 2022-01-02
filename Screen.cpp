@@ -87,20 +87,17 @@ void PauseMenu::updateScreen(Game* g) {
 			remove(g);
 			g->ScreenHandler[0]->ScreenSwitch(ScreenHandler::SCREENTYPE::GAME, g);
 			g->ScreenHandler[0]->ScreenInit(g);
-
-			g->pause = false;
 		}
 
 		if (g->ScreenObject[0]->xpos <= 550.0 && g->ScreenObject[0]->xpos >= 96.0 && g->ScreenObject[0]->ypos >= 412.0 && g->ScreenObject[0]->ypos <= 510.0) {
 			remove(g);
 			g->ScreenHandler[0]->ScreenSwitch(ScreenHandler::SCREENTYPE::SETTINGS, g);
 			g->ScreenHandler[0]->ScreenInit(g);
-
-			g->pause = false;
 		}
 
 		if (g->ScreenObject[0]->xpos <= 379.0 && g->ScreenObject[0]->xpos >= 96.0 && g->ScreenObject[0]->ypos >= 960.0 && g->ScreenObject[0]->ypos <= 1030.0) {
 			remove(g);
+			g->gameReset(g);
 			g->ScreenHandler[0]->ScreenSwitch(ScreenHandler::SCREENTYPE::MAIN, g);
 			g->ScreenHandler[0]->ScreenInit(g);
 
@@ -347,6 +344,8 @@ void GameScreen::updateScreen(Game* g) {
 		g->pause;
 
 		remove(g);
+		g->gameStart = false;
+		g->pause = true;
 		g->ScreenHandler[0]->ScreenSwitch(ScreenHandler::SCREENTYPE::PAUSE, g);
 		g->ScreenHandler[0]->ScreenInit(g);
 	}

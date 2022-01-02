@@ -55,7 +55,7 @@ void Game::update() {
 		if (o != nullptr) {
 			o->update(this);
 
-			if (o->name != "" && debugSetting) {
+			if (o->name != " " && inDebugMode) {
 				o->boundingBox = o->createBoundingBox();
 			}
 		}
@@ -100,10 +100,12 @@ void Game::winReset(Game* g) {
 			g->paddles[1]->velocity = glm::vec3(0.0f);
 			g->balls[0]->velocity = glm::vec3(-65.0f, 0.0f, 0.0f);
 
-			g->pause = false;
+			g->gameStart = false;
 		}
+
 		if (glfwGetKey(g->gameWindow, GLFW_KEY_N)) {
-			glfwSetWindowShouldClose(g->gameWindow, GL_TRUE);
+			g->ScreenHandler[0]->ScreenSwitch(ScreenHandler::SCREENTYPE::MAIN, g);
+			g->ScreenHandler[0]->ScreenInit(g);
 		}
 	}
 
@@ -130,10 +132,12 @@ void Game::winReset(Game* g) {
 			g->paddles[1]->velocity = glm::vec3(0.0f);
 			g->balls[0]->velocity = glm::vec3(65.0f, 0.0f, 0.0f);
 
-			g->pause = false;
+			g->ScreenHandler[0]->ScreenSwitch(ScreenHandler::SCREENTYPE::GAME, g);
+			g->ScreenHandler[0]->ScreenInit(g);
 		}
 		if (glfwGetKey(g->gameWindow, GLFW_KEY_N)) {
-			glfwSetWindowShouldClose(g->gameWindow, GL_TRUE);
+			g->ScreenHandler[0]->ScreenSwitch(ScreenHandler::SCREENTYPE::MAIN, g);
+			g->ScreenHandler[0]->ScreenInit(g);
 		}
 	}
 	//-------------------------Win Check-------------------------------------
