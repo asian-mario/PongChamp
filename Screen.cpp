@@ -296,12 +296,7 @@ void GameScreen::drawScreen(Game* g) {
 
 
 
-	int w, h;
-	glfwGetWindowSize(g->gameWindow, &w, &h);
-	glm::mat4 orthoP = roml::createOrto(0.0f, (float)w, (float)h, 0.0f);
-	glUniformMatrix4fv(glGetUniformLocation(g->shaders[2]->ID, "ModViewProj"), 1, GL_FALSE, &orthoP[0][0]);
-	glDisable(GL_CULL_FACE);
-	glDisable(GL_DEPTH_TEST);
+	g->fontSetup(g);
 
 	g->texts[0]->update(g, g->gameWindow);
 	g->texts[1]->update(g, g->gameWindow);

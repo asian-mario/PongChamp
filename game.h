@@ -118,6 +118,7 @@ class Game {
 		float gamma = 2.2f;
 		bool gameStart = false;
 		void tempText(const char* s, float xpos, float ypos, int duration, Game* g);
+		void fontSetup(Game* g);
 
 		//--SETTING
 		//Screen Settings

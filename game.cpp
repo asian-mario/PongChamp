@@ -33,6 +33,15 @@ void Game::tempText(const char* s, float xpos, float ypos, int duration, Game* g
 	}
 }
 
+void Game::fontSetup(Game* g) {
+	int w, h;
+	glfwGetWindowSize(g->gameWindow, &w, &h);
+	glm::mat4 orthoP = roml::createOrto(0.0f, (float)w, (float)h, 0.0f);
+	glUniformMatrix4fv(glGetUniformLocation(g->shaders[2]->ID, "ModViewProj"), 1, GL_FALSE, &orthoP[0][0]);
+	glDisable(GL_CULL_FACE);
+	glDisable(GL_DEPTH_TEST);
+}
+
 void Game::deleteObj(GameObject* GO) {	
 	for (auto c = gameObjects.begin(); c != gameObjects.end(); c++) {
 		if (*c == GO)
@@ -107,6 +116,10 @@ void Game::winReset(Game* g, Screen* S) {
 			g->paddles[1]->velocity = glm::vec3(0.0f);
 			g->balls[0]->velocity = glm::vec3(-65.0f, 0.0f, 0.0f);
 
+			g->removeScreen(S);
+			g->ScreenHandler[0]->ScreenSwitch(ScreenHandler::SCREENTYPE::GAME, g);
+			g->ScreenHandler[0]->ScreenInit(g);
+
 			g->gameStart = false;
 		}
 
@@ -145,9 +158,11 @@ void Game::winReset(Game* g, Screen* S) {
 		}
 		if (glfwGetKey(g->gameWindow, GLFW_KEY_N)) {
 			
-
+			g->removeScreen(S);
 			g->ScreenHandler[0]->ScreenSwitch(ScreenHandler::SCREENTYPE::MAIN, g);
 			g->ScreenHandler[0]->ScreenInit(g);
+
+			g->gameStart = false;
 		}
 	}
 	//-------------------------Win Check-------------------------------------

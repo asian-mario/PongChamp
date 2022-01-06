@@ -61,23 +61,22 @@ void Paddle::update(Game* g) {
 		bool isHit = false;
 
 		double randomVol = rand() % 100;
-		double trackDelay = rand() % 5;
+		double trackDelay = rand() % 3;
 		trackDelay -= g->deltaTime;
 
-		if (trackDelay < 0) {
-			if (position.y + 8.0 < g->balls[0]->position.y || position.y - 8.0 < g->balls[0]->position.y) {
-				velocity.y = randomVol;
 
-				allCheck(g);
-				trackDelay = rand() % 5;
-			}
-			else if (position.y + 8.0  > g->balls[0]->position.y || position.y - 8.0 > g->balls[0]->position.y) {
-				velocity.y = -randomVol;
+		if (position.y + 10.0 < g->balls[0]->position.y || position.y - 10.0 < g->balls[0]->position.y) {
+			velocity.y = randomVol;
 
-				allCheck(g);
-				trackDelay = rand() % 5;
-			}
+			trackDelay = rand() % 3;
 		}
+		else if (position.y + 10.0 > g->balls[0]->position.y || position.y - 10.0 > g->balls[0]->position.y) {
+			velocity.y = -randomVol;
+
+	
+			trackDelay = rand() % 3;
+		}
+		
 
 		allCheck(g);
 		
