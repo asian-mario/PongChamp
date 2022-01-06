@@ -541,7 +541,6 @@ int main() {
 		//IMGUI
 		ImGui_ImplGlfwGL3_NewFrame();
 
-		
 		g.drawScreen();
 		g.updateScreen();
 	

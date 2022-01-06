@@ -309,6 +309,8 @@ void GameScreen::drawScreen(Game* g) {
 	g->fonts[0]->drawString(g->texts[0]->pos.x, g->texts[0]->pos.y, g->texts[0]->text, g->shaders[2]);
 	g->fonts[0]->drawString(g->texts[1]->pos.x, g->texts[1]->pos.y, g->texts[1]->text, g->shaders[2]);
 
+	g->tempText("No Limits!", 520.0f, 80.0f, 6, g);
+
 	if (!g->gameStart) {
 		if (countDown <= 10.0 && countDown > 4.0) {
 			g->fonts[1]->drawString(700.0f, 560.0f, "READY?", g->shaders[2]);
@@ -351,7 +353,7 @@ void GameScreen::updateScreen(Game* g) {
 	}
 
 	if (g->texts[0]->score >= 5 || g->texts[1]->score >= 5)
-		g->winReset(g);
+		g->winReset(g, this);
 }
 
 void GameScreen::remove(Game* g) {

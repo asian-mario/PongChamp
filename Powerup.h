@@ -79,8 +79,6 @@ public:
 	bool hit = false;
 	double effect = 3.0;
 
-	bool exec = false;
-
 	UltraSmashPowerup(Game* g, glm::vec3 position, glm::vec3 scale, glm::vec3 velocity);
 
 	void delayEffect(Game* g);

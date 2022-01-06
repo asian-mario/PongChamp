@@ -135,9 +135,12 @@ void BallPlusPowerup::delayEffect(Game* g) {
 	double dt = g->deltaTime;
 	effect -= dt;
 
+	g->tempText("Ball Plus!", 520.0f, 80.0f, 6, g);
+
 	if (effect <= 0.0 || g->balls[0]->position.x >= 95.0f || g->balls[0]->position.x <= -95.0f) {
 		g->balls[0]->rad = 3.0f;
 		g->balls[0]->scale = glm::vec3(9.6f, 19.1f, 0.0f);
+		g->balls[0]->decreaseVal = 0.65;
 
 		g->PowerupSpawner[0]->deletePowerup(this);
 		g->deleteObj(this);
@@ -199,6 +202,7 @@ PaddlePlusPowerup::PaddlePlusPowerup(Game* g, glm::vec3 position, glm::vec3 scal
 void PaddlePlusPowerup::delayEffect(Game* g) {
 	double dt = g->deltaTime;
 	effect -= dt;
+	g->tempText("Paddle Plus!", 700.0f, 560.0f, 6, g);
 
 	if (effect <= 0.0) {
 		g->paddles[0]->height = 12.0;
@@ -220,7 +224,7 @@ void PaddlePlusPowerup::update(Game* g) {
 			for (int i = 0; i < 25; i++) {
 				g->particleSystems[0]->spawn(g, glm::vec3(position.x + 2.0f, position.y + 2.0f, 0.0f), glm::vec3(rand() / 400.0f, rand() / 400.0f, 0.0f), glm::vec3(2.0f), g->balls[0]->color, 1.0f);
 			}
-
+			g->tempText("Paddle Plus!", 700.0f, 560.0f, 6, g);
 			hit = true;
 		}
 
@@ -231,7 +235,7 @@ void PaddlePlusPowerup::update(Game* g) {
 			for (int i = 0; i < 25; i++) {
 				g->particleSystems[0]->spawn(g, glm::vec3(position.x + 2.0f, position.y + 2.0f, 0.0f), glm::vec3(rand() / 400.0f, rand() / 400.0f, 0.0f), glm::vec3(2.0f), g->balls[0]->color, 1.0f);
 			}
-
+			g->tempText("Paddle Plus!", 700.0f, 560.0f, 6, g);
 			hit = true;
 		}
 
@@ -275,7 +279,7 @@ PaddleMinusPowerup::PaddleMinusPowerup(Game* g, glm::vec3 position, glm::vec3 sc
 void PaddleMinusPowerup::delayEffect(Game* g) {
 	double dt = g->deltaTime;
 	effect -= dt;
-
+	g->tempText("Paddle Minus!", 520.0f, 80.0f, 6, g);
 	if (effect <= 0.0) {
 		g->paddles[0]->height = 12.0;
 		g->paddles[0]->scale.y = 20.0f;
@@ -301,6 +305,7 @@ void PaddleMinusPowerup::update(Game* g) {
 				g->particleSystems[0]->spawn(g, glm::vec3(position.x + 2.0f, position.y + 2.0f, 0.0f), glm::vec3(rand() / 400.0f, rand() / 400.0f, 0.0f), glm::vec3(2.0f), g->balls[0]->color, 1.0f);
 			}
 
+			g->tempText("Paddle Minus!", 700.0f, 560.0f, 6, g);
 			hit = true;
 		}
 
@@ -312,6 +317,7 @@ void PaddleMinusPowerup::update(Game* g) {
 				g->particleSystems[0]->spawn(g, glm::vec3(position.x + 2.0f, position.y + 2.0f, 0.0f), glm::vec3(rand() / 400.0f, rand() / 400.0f, 0.0f), glm::vec3(2.0f), g->balls[0]->color, 1.0f);
 			}
 
+			g->tempText("Paddle Minus!", 700.0f, 560.0f, 6, g);
 			hit = true;
 		}
 
@@ -354,6 +360,7 @@ ButterPowerup::ButterPowerup(Game* g, glm::vec3 position, glm::vec3 scale, glm::
 void ButterPowerup::delayEffect(Game* g) {
 	double dt = g->deltaTime;
 	effect -= dt;
+	g->tempText("Butterfingers!", 520.0f, 80.0f, 6, g);
 
 	if (effect <= 0.0) {
 		g->paddles[0]->decayControl = 200.0;
@@ -375,7 +382,7 @@ void ButterPowerup::update(Game* g) {
 			for (int i = 0; i < 25; i++) {
 				g->particleSystems[0]->spawn(g, glm::vec3(position.x + 2.0f, position.y + 2.0f, 0.0f), glm::vec3(rand() / 400.0f, rand() / 400.0f, 0.0f), glm::vec3(2.0f), g->balls[0]->color, 1.0f);
 			}
-
+			g->tempText("Butterfingers!", 700.0f, 560.0f, 6, g);
 			hit = true;
 		}
 
@@ -385,7 +392,7 @@ void ButterPowerup::update(Game* g) {
 			for (int i = 0; i < 25; i++) {
 				g->particleSystems[0]->spawn(g, glm::vec3(position.x + 2.0f, position.y + 2.0f, 0.0f), glm::vec3(rand() / 400.0f, rand() / 400.0f, 0.0f), glm::vec3(2.0f), g->balls[0]->color, 1.0f);
 			}
-
+			g->tempText("Butterfingers!", 700.0f, 560.0f, 6, g);
 			hit = true;
 		}
 
@@ -425,28 +432,17 @@ UltraSmashPowerup::UltraSmashPowerup(Game* g, glm::vec3 position, glm::vec3 scal
 
 void UltraSmashPowerup::delayEffect(Game* g) {
 	double dt = g->deltaTime;
+	effect -= dt;
+	g->tempText("No Limits!", 520.0f, 80.0f, 6, g);
 
-	if (glfwGetKey(g->gameWindow, GLFW_KEY_U)) {
-		g->balls[0]->limitSpeed = false;
-		g->balls[0]->decreaseVal = 1.0;
-		exec = true;
+	if (effect <= 0.0) {
+		g->balls[0]->limitSpeed = true;
+		g->balls[0]->decreaseVal = 0.85;
+
+		g->PowerupSpawner[0]->deletePowerup(this);
+		g->deleteObj(this);
 	}
-
-
-	if (exec == true) {
-		effect -= dt;
-
-		if (effect > 0) {
-			g->fonts[1]->drawString(700.0f, 1050.0f, "ACTIVATED", g->shaders[2]);
-		}
-
-		if (effect <= 0.0) {
-			g->balls[0]->limitSpeed = true;
-
-			g->PowerupSpawner[0]->deletePowerup(this);
-			g->deleteObj(this);
-		}
-	}
+	
 }
 
 void UltraSmashPowerup::update(Game* g) {
@@ -454,12 +450,14 @@ void UltraSmashPowerup::update(Game* g) {
 		bool intersect = g->balls[0]->circintersects(g->balls[0]->position, position, g->balls[0]->rad, 7.5, 7.5);
 
 		if (intersect) {
+			g->balls[0]->limitSpeed = false;
+			g->balls[0]->decreaseVal = 1.0;
 
 			for (int i = 0; i < 25; i++) {
 				g->particleSystems[0]->spawn(g, glm::vec3(position.x + 2.0f, position.y + 2.0f, 0.0f), glm::vec3(rand() / 400.0f, rand() / 400.0f, 0.0f), glm::vec3(2.0f), g->balls[0]->color, 1.0f);
 			}
 
-			position = glm::vec3(2000.0f, 2000.0f, 0.0f);
+			g->tempText("No Limits!", 520.0f, 80.0f, 6, g);
 			hit = true;
 		}
 

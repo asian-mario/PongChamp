@@ -23,3 +23,4 @@ void miscFont::smashDraw(Game* g) {
 
 	}	
 }
+

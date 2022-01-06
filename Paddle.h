@@ -27,6 +27,7 @@ class Paddle : public GameObject {
 		CONTROLTYPE type;
 
 		Paddle(glm::vec3 position, glm::vec3 scale, CONTROLTYPE type, glm::vec3 velocity, std::string name);
+		void allCheck(Game* g);
 		void update(Game* g) override;
 };
 

@@ -105,7 +105,7 @@ class Game {
 		void deleteObj(GameObject* GO);
 		void draw();
 		
-		void winReset(Game* g);
+		void winReset(Game* g, Screen* S);
 		void gameReset(Game* g);
 
 		void drawScreen();
@@ -117,6 +117,7 @@ class Game {
 		float deltaTime;
 		float gamma = 2.2f;
 		bool gameStart = false;
+		void tempText(const char* s, float xpos, float ypos, int duration, Game* g);
 
 		//--SETTING
 		//Screen Settings

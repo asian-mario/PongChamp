@@ -26,6 +26,13 @@ void Game::slowMo(float time) {
 	}
 }
 
+void Game::tempText(const char* s, float xpos, float ypos, int duration, Game* g) {
+	if (duration >= 0) {
+		g->fonts[1]->drawString(xpos, ypos, s, g->shaders[2]);
+		duration -= 0.05;
+	}
+}
+
 void Game::deleteObj(GameObject* GO) {	
 	for (auto c = gameObjects.begin(); c != gameObjects.end(); c++) {
 		if (*c == GO)
@@ -55,9 +62,9 @@ void Game::update() {
 		if (o != nullptr) {
 			o->update(this);
 
-			if (o->name != " " && inDebugMode) {
+			if (o->name != " " && inDebugMode || o->name != "" && inDebugMode) 
 				o->boundingBox = o->createBoundingBox();
-			}
+			
 		}
 
 	for (GameObject* p : particleSystems)
@@ -70,7 +77,7 @@ void Game::dtUpdate() {
 	lastTime = (float)glfwGetTime();
 }
 
-void Game::winReset(Game* g) {
+void Game::winReset(Game* g, Screen* S) {
 	//-------------------------Win Check-------------------------------------
 	if (g->texts[0]->score >= 5) {
 		g->balls[0]->velocity = glm::vec3(0.0f);
@@ -104,6 +111,7 @@ void Game::winReset(Game* g) {
 		}
 
 		if (glfwGetKey(g->gameWindow, GLFW_KEY_N)) {
+			g->removeScreen(S);
 			g->ScreenHandler[0]->ScreenSwitch(ScreenHandler::SCREENTYPE::MAIN, g);
 			g->ScreenHandler[0]->ScreenInit(g);
 		}
@@ -136,6 +144,8 @@ void Game::winReset(Game* g) {
 			g->ScreenHandler[0]->ScreenInit(g);
 		}
 		if (glfwGetKey(g->gameWindow, GLFW_KEY_N)) {
+			
+
 			g->ScreenHandler[0]->ScreenSwitch(ScreenHandler::SCREENTYPE::MAIN, g);
 			g->ScreenHandler[0]->ScreenInit(g);
 		}
