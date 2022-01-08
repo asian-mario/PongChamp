@@ -100,7 +100,7 @@ class Game {
 
 		//--FRAME
 		bool timer(int time);
-		void update();
+		void update(Game* g);
 		void dtUpdate();
 		void deleteObj(GameObject* GO);
 		void draw();
@@ -137,7 +137,7 @@ class Game {
 		enum CRNTSETTING { VIDEOSET, AUDIOSET };
 		CRNTSETTING setting = VIDEOSET;
 
-		bool musicOn = false;
+		bool musicOn = true;
 		bool sfxOn = true;
 };
 

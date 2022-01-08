@@ -63,7 +63,7 @@ void Game::removeScreen(Screen* S) {
 		}
 	}
 }
-void Game::update() {
+void Game::update(Game* g) {
 	deltaTime = (float)glfwGetTime() - lastTime;
 	lastTime = (float)glfwGetTime();
 
@@ -71,7 +71,7 @@ void Game::update() {
 		if (o != nullptr) {
 			o->update(this);
 
-			if (o->name != " " && inDebugMode || o->name != "" && inDebugMode) 
+			if (g->OBJList[0]->GOList.count(o->name)) 
 				o->boundingBox = o->createBoundingBox();
 			
 		}
