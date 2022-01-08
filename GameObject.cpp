@@ -12,7 +12,7 @@ glm::mat4 GameObject::getModelMatrix() {
 }
 
 glm::vec3 GameObject::findWorldPos() {
-	return getModelMatrix() * glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+	return getModelMatrix() * glm::vec4(1.0f);
 }
 
 //AABB because its easier to implement

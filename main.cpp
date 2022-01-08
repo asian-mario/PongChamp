@@ -478,7 +478,7 @@ int main() {
 	g.fonts.push_back(&font);
 
 	Font font2;
-	font2.initFont("chargen.ttf"); //Temporary Fix, still trying a lotta of solutions.
+	font2.initFont("chargen.ttf"); //Temporary Fix, still trying a multitude of solutions.
 	g.fonts.push_back(&font2);
 
 	gameFont score1(glm::vec3(200.0f, 150.0f, 0.0f));

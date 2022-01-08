@@ -132,7 +132,6 @@ BallPlusPowerup::BallPlusPowerup(Game* g, glm::vec3 position, glm::vec3 scale, g
 }
 
 void BallPlusPowerup::delayEffect(Game* g) {
-	g->fontSetup(g);
 	double dt = g->deltaTime;
 	effect -= dt;
 
@@ -150,7 +149,6 @@ void BallPlusPowerup::delayEffect(Game* g) {
 
 void BallPlusPowerup::update(Game* g) {
 	if (!hit) {
-		g->fontSetup(g);
 		bool intersect = g->balls[0]->circintersects(g->balls[0]->position, position, g->balls[0]->rad, 7.5, 7.5);
 
 		if (intersect) {
@@ -202,10 +200,8 @@ PaddlePlusPowerup::PaddlePlusPowerup(Game* g, glm::vec3 position, glm::vec3 scal
 }
 
 void PaddlePlusPowerup::delayEffect(Game* g) {
-	g->fontSetup(g);
 	double dt = g->deltaTime;
 	effect -= dt;
-
 	g->tempText("Paddle Plus!", 700.0f, 560.0f, 6, g);
 
 	if (effect <= 0.0) {
@@ -219,7 +215,6 @@ void PaddlePlusPowerup::delayEffect(Game* g) {
 
 void PaddlePlusPowerup::update(Game* g) {
 	if (!hit) {
-		g->fontSetup(g);
 		bool intersect = g->balls[0]->circintersects(g->balls[0]->position, position, g->balls[0]->rad, 7.5, 7.5);
 
 		if (intersect && g->paddles[0]->lastHit) {
@@ -229,6 +224,7 @@ void PaddlePlusPowerup::update(Game* g) {
 			for (int i = 0; i < 25; i++) {
 				g->particleSystems[0]->spawn(g, glm::vec3(position.x + 2.0f, position.y + 2.0f, 0.0f), glm::vec3(rand() / 400.0f, rand() / 400.0f, 0.0f), glm::vec3(2.0f), g->balls[0]->color, 1.0f);
 			}
+			g->tempText("Paddle Plus!", 700.0f, 560.0f, 6, g);
 			hit = true;
 		}
 
@@ -239,6 +235,7 @@ void PaddlePlusPowerup::update(Game* g) {
 			for (int i = 0; i < 25; i++) {
 				g->particleSystems[0]->spawn(g, glm::vec3(position.x + 2.0f, position.y + 2.0f, 0.0f), glm::vec3(rand() / 400.0f, rand() / 400.0f, 0.0f), glm::vec3(2.0f), g->balls[0]->color, 1.0f);
 			}
+			g->tempText("Paddle Plus!", 700.0f, 560.0f, 6, g);
 			hit = true;
 		}
 
@@ -280,12 +277,9 @@ PaddleMinusPowerup::PaddleMinusPowerup(Game* g, glm::vec3 position, glm::vec3 sc
 }
 
 void PaddleMinusPowerup::delayEffect(Game* g) {
-	g->fontSetup(g);
 	double dt = g->deltaTime;
 	effect -= dt;
-
 	g->tempText("Paddle Minus!", 520.0f, 80.0f, 6, g);
-
 	if (effect <= 0.0) {
 		g->paddles[0]->height = 12.0;
 		g->paddles[0]->scale.y = 20.0f;
@@ -301,7 +295,6 @@ void PaddleMinusPowerup::delayEffect(Game* g) {
 
 void PaddleMinusPowerup::update(Game* g) {
 	if (!hit) {
-		g->fontSetup(g);
 		bool intersect = g->balls[0]->circintersects(g->balls[0]->position, position, g->balls[0]->rad, 7.5, 7.5);
 
 		if (intersect && g->paddles[0]->lastHit) {
@@ -312,6 +305,7 @@ void PaddleMinusPowerup::update(Game* g) {
 				g->particleSystems[0]->spawn(g, glm::vec3(position.x + 2.0f, position.y + 2.0f, 0.0f), glm::vec3(rand() / 400.0f, rand() / 400.0f, 0.0f), glm::vec3(2.0f), g->balls[0]->color, 1.0f);
 			}
 
+			g->tempText("Paddle Minus!", 700.0f, 560.0f, 6, g);
 			hit = true;
 		}
 
@@ -323,6 +317,7 @@ void PaddleMinusPowerup::update(Game* g) {
 				g->particleSystems[0]->spawn(g, glm::vec3(position.x + 2.0f, position.y + 2.0f, 0.0f), glm::vec3(rand() / 400.0f, rand() / 400.0f, 0.0f), glm::vec3(2.0f), g->balls[0]->color, 1.0f);
 			}
 
+			g->tempText("Paddle Minus!", 700.0f, 560.0f, 6, g);
 			hit = true;
 		}
 
@@ -363,10 +358,8 @@ ButterPowerup::ButterPowerup(Game* g, glm::vec3 position, glm::vec3 scale, glm::
 }
 
 void ButterPowerup::delayEffect(Game* g) {
-	g->fontSetup(g);
 	double dt = g->deltaTime;
 	effect -= dt;
-
 	g->tempText("Butterfingers!", 520.0f, 80.0f, 6, g);
 
 	if (effect <= 0.0) {
@@ -381,7 +374,6 @@ void ButterPowerup::delayEffect(Game* g) {
 
 void ButterPowerup::update(Game* g) {
 	if (!hit) {
-		g->fontSetup(g);
 		bool intersect = g->balls[0]->circintersects(g->balls[0]->position, position, g->balls[0]->rad, 7.5, 7.5);
 
 		if (intersect && g->paddles[0]->lastHit) {
@@ -390,7 +382,7 @@ void ButterPowerup::update(Game* g) {
 			for (int i = 0; i < 25; i++) {
 				g->particleSystems[0]->spawn(g, glm::vec3(position.x + 2.0f, position.y + 2.0f, 0.0f), glm::vec3(rand() / 400.0f, rand() / 400.0f, 0.0f), glm::vec3(2.0f), g->balls[0]->color, 1.0f);
 			}
-
+			g->tempText("Butterfingers!", 700.0f, 560.0f, 6, g);
 			hit = true;
 		}
 
@@ -400,7 +392,7 @@ void ButterPowerup::update(Game* g) {
 			for (int i = 0; i < 25; i++) {
 				g->particleSystems[0]->spawn(g, glm::vec3(position.x + 2.0f, position.y + 2.0f, 0.0f), glm::vec3(rand() / 400.0f, rand() / 400.0f, 0.0f), glm::vec3(2.0f), g->balls[0]->color, 1.0f);
 			}
-
+			g->tempText("Butterfingers!", 700.0f, 560.0f, 6, g);
 			hit = true;
 		}
 
@@ -439,10 +431,8 @@ UltraSmashPowerup::UltraSmashPowerup(Game* g, glm::vec3 position, glm::vec3 scal
 }
 
 void UltraSmashPowerup::delayEffect(Game* g) {
-	g->fontSetup(g);
 	double dt = g->deltaTime;
 	effect -= dt;
-
 	g->tempText("No Limits!", 520.0f, 80.0f, 6, g);
 
 	if (effect <= 0.0) {
@@ -457,7 +447,6 @@ void UltraSmashPowerup::delayEffect(Game* g) {
 
 void UltraSmashPowerup::update(Game* g) {
 	if (!hit) {
-		g->fontSetup(g);
 		bool intersect = g->balls[0]->circintersects(g->balls[0]->position, position, g->balls[0]->rad, 7.5, 7.5);
 
 		if (intersect) {
@@ -468,6 +457,7 @@ void UltraSmashPowerup::update(Game* g) {
 				g->particleSystems[0]->spawn(g, glm::vec3(position.x + 2.0f, position.y + 2.0f, 0.0f), glm::vec3(rand() / 400.0f, rand() / 400.0f, 0.0f), glm::vec3(2.0f), g->balls[0]->color, 1.0f);
 			}
 
+			g->tempText("No Limits!", 520.0f, 80.0f, 6, g);
 			hit = true;
 		}
 

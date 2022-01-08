@@ -277,7 +277,7 @@ void MainMenu::remove(Game* g) {
 void GameScreen::drawScreen(Game* g) {	
 
 	if (g->pause == false || g->framestep > 0) {
-		g->update(g);
+		g->update();
 		if (g->framestep > 0)
 			g->framestep--;
 	}
@@ -304,6 +304,7 @@ void GameScreen::drawScreen(Game* g) {
 	g->fonts[0]->drawString(g->texts[0]->pos.x, g->texts[0]->pos.y, g->texts[0]->text, g->shaders[2]);
 	g->fonts[0]->drawString(g->texts[1]->pos.x, g->texts[1]->pos.y, g->texts[1]->text, g->shaders[2]);
 
+	g->tempText("No Limits!", 520.0f, 80.0f, 6, g);
 
 	if (!g->gameStart) {
 		if (countDown <= 10.0 && countDown > 4.0) {
